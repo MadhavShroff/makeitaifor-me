@@ -19,7 +19,7 @@ export default function Home() {
 
       <section className="flex flex-col md:flex-row items-center justify-between p-6 md:p-20">
         <h1 className="text-4xl md:text-6xl font-bold text-center md:text-left mb-4 md:mb-0">Welcome to Our Website</h1>
-        <Image src="/logo.png" alt="Logo" width={500} height={500} className="md:w-500 md:h-500" quality={80} placeholder="blur" blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADA...'/>
+        <Image src="/logo.png" alt="Logo" width={500} height={500} className="md:w-500 md:h-500" quality={80} placeholder="blur" blurDataURL='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADA...' unoptimized={true}/>
       </section>
 
       <section className="flex flex-col gap-10 p-10">
