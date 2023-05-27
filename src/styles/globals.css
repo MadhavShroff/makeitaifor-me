@@ -4,13 +4,65 @@
 
 :root {
   --primary-color: #1a202c;
-  --secondary-color: #2d3748;
+  --secondary-color: lightgray;
   --accent-color: #f56565;
-  --text-color: #e2e8f0;
+  --text-color: #ffffff;
   --background-color: rgb(25, 29, 30);
 }
 
 body {
   background-color: var(--background-color);
   color: var(--text-color);
+}
+
+.hor-scroll-wrap {
+  position: relative;
+}
+
+.hor-scroll-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 2rem;
+  background-image: linear-gradient( to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+  transition: all linear 0.3s;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hor-scroll-wrap::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 2rem;
+  background-image: linear-gradient( to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+  transition: all linear 0.3s;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hor-scroll-wrap.scrolled-right::after {
+  background-image: linear-gradient( to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+}
+
+.hor-scroll-wrap.scrolled-left::before {
+  background-image: linear-gradient( to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+}
+
+#navbar a {
+  position: relative;
+  z-index: 0;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
