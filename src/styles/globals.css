@@ -7,7 +7,7 @@
   --secondary-color: #2d3748;
   --accent-color: #f56565;
   --text-color: #e2e8f0;
-  --background-color: #191d1e;
+  --background-color: rgb(25, 29, 30);
 }
 
 body {
