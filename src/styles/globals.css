@@ -66,3 +66,17 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.box-item {
+  position: relative;
+}
+
+.box-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: black;
+}

@@ -1,5 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
+import Box from './Box';
+import IntroSection from './IntroSection';
 
 type Product = {
   title: string,
@@ -28,6 +30,17 @@ const defaults: Product[] = [
   // Add more products here
 ];
 
+const UserProfile = () => {
+  return (
+    <Box>
+      <a className="px-2 sm:px-4 py-1 sm:py-2 text-lg sm:text-xl font-bold text-black mr-4 hover:underline decoration-orange-500 decoration-4" href="/profile">Profile</a>
+      <a className="px-2 sm:px-4 py-1 sm:py-2 text-lg sm:text-xl font-bold text-black mr-4 hover:underline decoration-orange-500 decoration-4" href="/settings">Settings</a>
+      <a className="px-2 sm:px-4 py-1 sm:py-2 text-lg sm:text-xl font-bold text-black mr-4 hover:underline decoration-orange-500 decoration-4" href="/logout">Log out</a>
+    </Box>
+  );
+};
+
+
 const ProductDisplay = ({ product }: { product: Product }) => {
   return product.ltr == false || product.ltr != undefined ? (
     <div className="flex flex-row items-start justify-between p-6 bg-transparent rounded shadow-lg border-2 border-white">
@@ -55,6 +68,7 @@ const ProductDisplay = ({ product }: { product: Product }) => {
 const ProductSection = ({ products = defaults }: { products?: Product[] }) => {
   return (
     <section className="flex flex-col gap-10 p-10">
+      <IntroSection />
       {products.map((product) => (
         <ProductDisplay key={product.title} product={product} />
       ))}

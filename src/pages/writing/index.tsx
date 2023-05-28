@@ -5,14 +5,14 @@ import ProductSection from '@/components/ProductSection';
 import Footer from '@/components/Footer';
 
 const Home = () => {
-  return (
-    <>
-      <Navbar />
-      <ProductSection />
-      <HeroSection />
-      <Footer />
-    </>
-  );
+    return (
+        <>
+            <Navbar />
+
+            <Footer />
+        </>
+    );
 };
 
 export default Home;
+
