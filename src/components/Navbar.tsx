@@ -14,7 +14,7 @@ interface NavbarProps {
 const defaultLinks: LinkProps[] = [
   { href: '/scheduler', text: 'Scheduler' },
   { href: '/outreach', text: 'Outreach' },
-  { href: '/writing', text: 'Writing' },
+  { href: '/writing', text: 'Content Writing' },
   { href: '/Portfolio', text: 'Portfolio' },
   { href: '/newsletter', text: 'Newsletter' },
 ];
