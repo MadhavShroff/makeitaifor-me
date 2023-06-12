@@ -17,9 +17,9 @@ const defaults: Product[] = [
   {
     title: "Chat Pro",
     description: ["Full access to web browsing ", "with the most advanced AI models on the planet.", "Models available are updated regularly to make the latest and greatest available at the earliest. No configuarion or API keys needed. Simply sign up and get started."],
-    image: "/logo.png",
+    image: "/logo_nobg.png",
     subheading: "ChatGPT on Steroids",
-    bg: "bg-transparent",
+    bg: "bg-black",
   },
   {
     title: "Content Writing",
@@ -32,14 +32,14 @@ const defaults: Product[] = [
     title: "Outreach",
     description: `ChatGPT Pro is a cutting-edge AI tool that can carry out human-like text conversations. It's perfect for customer service, answering queries, and even for personal use as a virtual assistant.`,
     image: "/icon2.png",
-    bg: "bg-transparent"
+    bg: "bg-black"
 
   },
   {
     title: "Scheduler",
     description: "",
-    image: "/icon4.png",
-    bg: "bg-{rgb(16, 16, 16)}",
+    image: "/icon4_nobg.png",
+    bg: "bg-black",
     ltr: true
   }
   // Add more products here
@@ -58,7 +58,7 @@ const UserProfile = () => {
 
 const ProductDisplay = ({ product }: { product: Product }) => {
   return product.ltr == false || product.ltr != undefined ? (
-    <div className={"flex flex-row items-start justify-between p-6 rounded-lg shadow-lg border-2 border-white" + product.bg}>
+    <div className={"flex flex-row items-start justify-between p-6 rounded-lg shadow-lg border-2 border-white " + product.bg}>
       <div>
         <div className="pt-32 pb-36 relative antialiased text-left">
           <div className="container mx-auto">
@@ -79,7 +79,7 @@ const ProductDisplay = ({ product }: { product: Product }) => {
       </div>
     </div>
   ) : (
-    <div className={"flex flex-row items-start justify-between p-6 rounded-lg shadow-lg border-2 border-white" + product.bg}>
+    <div className={"flex flex-row items-start justify-between p-6 rounded-lg shadow-lg border-2 border-white " + product.bg}>
       <div className="pt-32 pb-36 flex h-full md:w-400 md:h-400 relative antialiased">
         <Image src={product.image} alt={product.title} width={500} height={500} />
       </div>
