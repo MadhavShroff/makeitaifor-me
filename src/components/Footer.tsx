@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import Image from 'next/image';
 
@@ -36,7 +37,7 @@ const Footer = () => {
           <div className="w-full md:w-2/12 mb-8 md:mb-0 flex flex-col items-start">
             <ul className="flex space-x-4 mb-8">
               <li><a href='https://github.com/MadhavShroff'><Image src="/github.png" alt="Instagram" width={50} height={50} className="border-4 border-black border-2 rounded"/></a></li>
-              <li><Image src="/twitter.png" alt="Twitter" width={50} height={50} /></li>
+              <li><a href='https://github.com/MadhavShroff'><Image src="/twitter.png" alt="Twitter" width={50} height={50} /></a></li>
               <li><Image src="/linkedin.png" alt="Facebook" width={50} height={50} /></li>
             </ul>
             <ul className="space-y-2">

@@ -13,6 +13,9 @@
 body {
   background-color: var(--background-color);
   color: var(--text-color);
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  color: white;
 }
 
 .hor-scroll-wrap {
