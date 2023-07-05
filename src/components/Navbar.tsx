@@ -25,22 +25,6 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const [user, setUser] = useState(null);
   const [isScrollable] = useState(false);
 
-  useEffect(() => {
-    fetch('http://localhost:3000/auth/session')
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data); // this will log the user object to the console
-        if (data.statusCode === 401) {
-          setUser(null);
-          return;
-        }
-        setUser(data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  }, []);
-
   return (
     <nav
       className={`flex items-center justify-between bg-white shadow-lg px-1`}
@@ -94,7 +78,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       ) : (
         <Link
           key={12}
-          href={'/auth/cognito/'} // replace with your logout link
+          href={'/auth/'} // replace with your logout link
           className="px-3 sm:px-4 py-1 sm:py-2 text-lg sm:text-xl border rounded-full hover:bg-orange-500 whitespace-nowrap text-center font-bold"
             style={{
             borderColor: 'var(--background-color)',

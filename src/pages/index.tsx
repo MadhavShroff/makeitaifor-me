@@ -1,15 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Navbar from "@/components/Navbar";
 import HeroSection from '@/components/HeroSection';
 import ProductSection from '@/components/ProductSection';
 import Footer from '@/components/Footer';
-import { Sora } from "next/font/google";
-
-const sora = Sora({
-  subsets: ['latin'],
-});
+import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 
 const Home = () => {
+  const router = useRouter();
+  const { code } = router.query;
+
+  useEffect(() => {
+    if (code) {
+      console.log(code);
+    }
+  }, [code]);
+
   return (
     <main className={'min-h-screen items-center '}>
       <Navbar />
@@ -33,6 +39,16 @@ const Home = () => {
       <Footer />
     </main>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { code } = context.query;
+
+  console.log(code);
+
+  return {
+    props: {},
+  };
 };
 
 export default Home;

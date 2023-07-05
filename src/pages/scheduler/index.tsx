@@ -4,7 +4,7 @@ import HeroSection from '@/components/HeroSection';
 import ProductSection from '@/components/ProductSection';
 import Footer from '@/components/Footer';
 
-const Home = () => {
+const Scheduler = () => {
   return (
     <>
       <Navbar />
@@ -14,4 +14,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Scheduler;

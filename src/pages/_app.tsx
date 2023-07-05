@@ -21,7 +21,7 @@ const App = ({ Component, pageProps }: AppProps) => {
               gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
             `}
       </Script>
-      <Component {...pageProps} />
+      <Component {...pageProps}/>
     </>
   );
 };

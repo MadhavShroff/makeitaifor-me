@@ -10,12 +10,20 @@
   --background-color: rgb(25, 29, 30);
 }
 
+html,
 body {
   background-color: var(--background-color);
   color: var(--text-color);
   font-family: 'Sora', sans-serif;
   font-weight: 700;
   color: white;
+  height: 100%;
+}
+
+body > div:first-child,
+div#__next,
+div#__next > div {
+  height: inherit;
 }
 
 .hor-scroll-wrap {
