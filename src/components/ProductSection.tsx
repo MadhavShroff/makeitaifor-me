@@ -124,7 +124,7 @@ const ProductSection = ({ products = defaults }: { products?: Product[] }) => {
   return (
     <section className="flex flex-col gap-10 p-10">
       <IntroSection />
-      <MarqueeText text={'Engage'} />
+      {/* <MarqueeText text={'Engage'} /> */}
       {products.map((product) => (
         <ProductDisplay key={product.title} product={product} />
       ))}

@@ -1,44 +1,42 @@
 import React, { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 import Navbar from "@/components/Navbar";
 import HeroSection from '@/components/HeroSection';
 import ProductSection from '@/components/ProductSection';
 import Footer from '@/components/Footer';
-import { useRouter } from 'next/router';
-import axios from 'axios';
-import Cookies from 'js-cookie';
 
 const Home = () => {
-  const router = useRouter();
-  const { code } = router.query;
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const exchangeCodeForTokens = async () => {
-      try {
-        const response = await axios.post('https://api.makeitaifor.me/exchange', { code });
-        const { accessToken, idToken, refreshToken } = response.data;
+    // Check if the JWT cookie exists
+    const token = Cookies.get('jwt');
 
-        // Set tokens as cookies
-        Cookies.set('accessToken', accessToken);
-        Cookies.set('idToken', idToken);
-        Cookies.set('refreshToken', refreshToken);
+    console.log(token);
 
-        // Optionally, you can set the user object as well
-        setUser(response.data.user);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    if (code) {
-      console.log(code);
-      exchangeCodeForTokens();
+    // If it does, then we fetch the user info
+    if (token) {
+      fetch('https://api.makeitaifor.me/auth/cognito/me', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data.user);
+          setUser(data.user)
+    })
+        .catch((err) => console.error(err));
     }
-  }, [code]);
+  }, []);
+
+  // Display different navbar based on whether user is logged in
+  const NavbarComponent = user ? <Navbar user={user} /> : <Navbar />;
 
   return (
     <main className={'min-h-screen items-center '}>
-      <Navbar />
+      {NavbarComponent}
       <HeroSection imageUrl="/logo_nobg.png">
         <h1>
           {' '}

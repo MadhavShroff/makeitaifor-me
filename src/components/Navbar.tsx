@@ -10,6 +10,7 @@ interface LinkProps {
 interface NavbarProps {
   links?: LinkProps[];
   title?: string;
+  user?: any;
 }
 
 const defaultLinks: LinkProps[] = [
@@ -22,7 +23,7 @@ const defaultLinks: LinkProps[] = [
 
 const Navbar: React.FC<NavbarProps> = (props) => {
   const links = props.links ? props.links : defaultLinks;
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(props.user);
   const [isScrollable] = useState(false);
 
   return (
@@ -78,7 +79,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       ) : (
         <Link
           key={12}
-          href={'/auth/'} // replace with your logout link
+          href={'/auth'} // replace with your logout link
           className="px-3 sm:px-4 py-1 sm:py-2 text-lg sm:text-xl border rounded-full hover:bg-orange-500 whitespace-nowrap text-center font-bold"
             style={{
             borderColor: 'var(--background-color)',
