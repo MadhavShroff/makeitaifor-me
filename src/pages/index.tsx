@@ -1,18 +1,38 @@
-import React, {useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from "@/components/Navbar";
 import HeroSection from '@/components/HeroSection';
 import ProductSection from '@/components/ProductSection';
 import Footer from '@/components/Footer';
-import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const Home = () => {
   const router = useRouter();
   const { code } = router.query;
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
+    const exchangeCodeForTokens = async () => {
+      try {
+        const response = await axios.post('https://api.makeitaifor.me/exchange', { code });
+        const { accessToken, idToken, refreshToken } = response.data;
+
+        // Set tokens as cookies
+        Cookies.set('accessToken', accessToken);
+        Cookies.set('idToken', idToken);
+        Cookies.set('refreshToken', refreshToken);
+
+        // Optionally, you can set the user object as well
+        setUser(response.data.user);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     if (code) {
       console.log(code);
+      exchangeCodeForTokens();
     }
   }, [code]);
 
@@ -39,16 +59,6 @@ const Home = () => {
       <Footer />
     </main>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { code } = context.query;
-
-  console.log(code);
-
-  return {
-    props: {},
-  };
 };
 
 export default Home;

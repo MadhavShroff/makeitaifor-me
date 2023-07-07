@@ -3,7 +3,7 @@ import React from 'react';
 import Img from 'next/image';
 import awsExports from '@/aws-exports';
 
-const cognitoHostedUI = `https://makeitaifor-me.auth.us-east-2.amazoncognito.com/login?client_id=1fu7ekpv47p0rbctrfagaimnjt&response_type=code&scope=aws.cognito.signin.user.admin+email+openid+phone+profile&redirect_uri=https%3A%2F%2Fmakeitaifor.me%2F`;
+const cognitoHostedUI = `https://api.makeitaifor.me/auth/cognito`;
 
 function LoginPage() {
     console.log(cognitoHostedUI)
