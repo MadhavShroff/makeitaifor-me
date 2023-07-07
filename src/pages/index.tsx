@@ -10,7 +10,7 @@ const Home = () => {
 
   useEffect(() => {
     // Check if the JWT cookie exists
-    const token = Cookies.get('jwt');
+    const token = Cookies.get('makeitaifor-me-jwt-cookie');
 
     console.log(token);
     fetch('https://api.makeitaifor.me/auth/cognito/me', {
