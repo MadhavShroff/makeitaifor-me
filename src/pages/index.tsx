@@ -15,9 +15,6 @@ const Home = () => {
     console.log(token);
     fetch('https://api.makeitaifor.me/auth/cognito/me', {
         method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
     }).then((res) => res.json())
       .then((data) => {
         console.log(data.user);
