@@ -13,22 +13,19 @@ const Home = () => {
     const token = Cookies.get('jwt');
 
     console.log(token);
-
-    // If it does, then we fetch the user info
-    if (token) {
-      fetch('https://api.makeitaifor.me/auth/cognito/me', {
+    fetch('https://api.makeitaifor.me/auth/cognito/me', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data.user);
-          setUser(data.user)
-    })
-        .catch((err) => console.error(err));
-    }
+    }).then((res) => res.json())
+      .then((data) => {
+        console.log(data.user);
+        setUser(data.user)
+    }).catch((err) => console.error(err));
+
+    // If it does, then we fetch the user info
+    if (token) {}
   }, []);
 
   // Display different navbar based on whether user is logged in
