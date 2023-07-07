@@ -10,6 +10,7 @@ const Home = () => {
 
   useEffect(() => {
     // Check if the JWT cookie exists
+    console.log(document.cookie);
     const token = Cookies.get('makeitaifor-me-jwt-cookie');
 
     console.log(token);
