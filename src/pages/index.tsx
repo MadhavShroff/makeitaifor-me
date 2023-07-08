@@ -16,6 +16,7 @@ const Home = () => {
     console.log(token);
     fetch('https://api.makeitaifor.me/auth/cognito/me', {
         method: 'GET',
+        credentials: 'include',
     }).then((res) => res.json())
       .then((data) => {
         console.log(data.user);
