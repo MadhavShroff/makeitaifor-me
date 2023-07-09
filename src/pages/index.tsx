@@ -1,30 +1,17 @@
+// Home.jsx
+
 import React, { useEffect, useState } from 'react';
-import Cookies from 'js-cookie';
 import Navbar from "@/components/Navbar";
 import HeroSection from '@/components/HeroSection';
 import ProductSection from '@/components/ProductSection';
 import Footer from '@/components/Footer';
+import { fetchUser } from '@/utils/fetches'; // import the fetchUser function
 
 const Home = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Check if the JWT cookie exists
-    console.log(document.cookie);
-    const token = Cookies.get('makeitaifor-me-jwt-cookie');
-
-    console.log(token);
-    fetch('https://api.makeitaifor.me/auth/cognito/me', {
-        method: 'GET',
-        credentials: 'include',
-    }).then((res) => res.json())
-      .then((data) => {
-        console.log(data.user);
-        setUser(data.user)
-    }).catch((err) => console.error(err));
-
-    // If it does, then we fetch the user info
-    if (token) {}
+    fetchUser(setUser);
   }, []);
 
   // Display different navbar based on whether user is logged in

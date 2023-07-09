@@ -23,7 +23,7 @@ const defaultLinks: LinkProps[] = [
 
 const Navbar: React.FC<NavbarProps> = (props) => {
   const links = props.links ? props.links : defaultLinks;
-  const [user, setUser] = useState(props.user);
+  const [user] = useState(props.user);
   const [isScrollable] = useState(false);
 
   return (
