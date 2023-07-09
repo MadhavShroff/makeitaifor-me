@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 
 interface ButtonProps {
-    key: number;
+    _key: number;
     href?: string;
     text: string;
     onClick?: () => void;
@@ -10,7 +10,7 @@ interface ButtonProps {
     active?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ key, href, text, onClick, color, active}) => {
+const Button: React.FC<ButtonProps> = ({ _key, href, text, onClick, color, active}) => {
     const router = useRouter();
 
     const handleClick = () => {
@@ -19,7 +19,7 @@ const Button: React.FC<ButtonProps> = ({ key, href, text, onClick, color, active
 
     return (
         <button
-            key={key}
+            key={_key}
             onClick={onClick ? onClick : handleClick}
             className={
                 "px-3 sm:px-4 py-1 sm:py-2 text-lg sm:text-xl border rounded-full hover:bg-orange-500 whitespace-nowrap font-bold m-1 " +  (active ? 'bg-orange-500' : '')

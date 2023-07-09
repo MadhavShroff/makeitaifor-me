@@ -23,8 +23,8 @@ function LoginPage() {
                     Log in with your account to continue
                 </div>
                 <div className="flex flex-row gap-3">
-                    <Button key={1} href={cognitoHostedUI} text='Login' color='black'/>
-                    <Button key={1} href='/auth/signup' text='Sign Up' color='black'/>
+                    <Button _key={1} href={cognitoHostedUI} text='Login' color='black'/>
+                    <Button _key={1} href='/auth/signup' text='Sign Up' color='black'/>
                 </div>
             </div>
             <div className="py-3 text-xs">
