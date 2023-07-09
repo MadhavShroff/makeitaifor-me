@@ -26,8 +26,6 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const [isScrollable] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  console.log('user: ', props.user);
-
   return (
     <nav
       className={`flex items-center justify-between bg-white shadow-lg px-1`}

@@ -18,6 +18,9 @@ module.exports = {
         'primary': ['var(--sora-font)', ...fontFamily.sans],
         'serif': ['var(--sora-font)', ...fontFamily.serif]
       },
+      screens: {
+        'sm': {'max': '767px'},
+      },
     }
   }
 }
