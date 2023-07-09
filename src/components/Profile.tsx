@@ -3,7 +3,8 @@ import Button from './Button';
 import Img from 'next/image';
 
 const Profile = (props) => {
-    const user = props.user || null;
+    // const user = props.user || null;
+    const user = {id: '915b7cd5-08c1-45c2-9709-7585af332ee4', username: 'libif87613@pixiil.com', name: 'Madhav Shroff'}
 
     const [activeTab, setActiveTab] = useState("Tokens Available");
     const cognitoHostedUI = `https://api.makeitaifor.me/auth/cognito`;
@@ -63,10 +64,10 @@ const Profile = (props) => {
                     </p>
                 </div>
             </div>
-            <div className="flex flex-col md:flex-row w-full mt-10 border-4 border-white rounded-lg max-w-4xl md:space-x-4 space-y-4 md:space-y-0">
-                <div className="flex flex-row flex-wrap md:flex-col p-2 border-b md:border-b-0 md:border-r border-white space-x-2 md:space-x-0 md:space-y-4">
+            <div className="flex flex-col w-full mt-10 border-4 border-white rounded-lg max-w-4xl md:space-x-4 space-y-4 md:space-y-0">
+                <div className="flex p-2 flex-row flex-wrap border-b border-white space-x-2">
                     {["Tokens Available", "Usage", "Billing", "Manage My Data"].map((tab, index) => (
-                        <Button key={index} text={tab} onClick={() => handleTabChange(tab)} color='white' />
+                        <Button key={index} text={tab} onClick={() => handleTabChange(tab)} color='white' active={activeTab == tab}/>
                     ))}
                 </div>
                 <div className="md:w-3/4 p-6 text-white">

@@ -7,9 +7,10 @@ interface ButtonProps {
     text: string;
     onClick?: () => void;
     color?: 'black' | string; // 'white' | 'black'
+    active?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ key, href, text, onClick, color}) => {
+const Button: React.FC<ButtonProps> = ({ key, href, text, onClick, color, active}) => {
     const router = useRouter();
 
     const handleClick = () => {
@@ -20,7 +21,9 @@ const Button: React.FC<ButtonProps> = ({ key, href, text, onClick, color}) => {
         <button
             key={key}
             onClick={onClick ? onClick : handleClick}
-            className="px-3 sm:px-4 py-1 sm:py-2 text-lg sm:text-xl border rounded-full hover:bg-orange-500 whitespace-nowrap font-bold "
+            className={
+                "px-3 sm:px-4 py-1 sm:py-2 text-lg sm:text-xl border rounded-full hover:bg-orange-500 whitespace-nowrap font-bold m-1 " +  (active ? 'bg-orange-500' : '')
+            }
             style={{
                 borderColor: color === 'black' ? 'var(--background-color)' : '#ffffff',
                 color: color === 'black' ? 'var(--background-color)' : '#ffffff',
