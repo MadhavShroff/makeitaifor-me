@@ -10,7 +10,7 @@ interface LinkProps {
 interface NavbarProps {
   links?: LinkProps[];
   title?: string;
-  user?: any;
+  user: null | {id: string, email: string, name: string};
 }
 
 const defaultLinks: LinkProps[] = [
@@ -25,6 +25,8 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const links = props.links ? props.links : defaultLinks;
   const [user] = useState(props.user);
   const [isScrollable] = useState(false);
+
+  console.log('user: ', user);
 
   return (
     <nav
@@ -68,10 +70,10 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             color: 'var(--background-color)',
           }}
         >
-          <span className="pr-2">{'Profile'}</span>
+          <span className="pr-2">{'Hi ' + user.name + "!"}</span>
           <div className="h-7 w-7 rounded-full object-cover border-black border-2">
             <img
-              src="https://source.boringavatars.com/marble/100/@Madhav?colors=EF233C,FED4E7,313638,003E1F"
+              src={`https://source.boringavatars.com/marble/100/${user.id}?colors=EF233C,FED4E7,313638,003E1F`}
               alt="Profile Picture"
             />
           </div>
