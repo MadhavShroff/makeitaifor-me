@@ -10,7 +10,7 @@ interface LinkProps {
 interface NavbarProps {
   links?: LinkProps[];
   title?: string;
-  user: null | {id: string, email: string, name: string};
+  user: null | { id: string, username: string, name: string };
 }
 
 const defaultLinks: LinkProps[] = [
@@ -23,10 +23,10 @@ const defaultLinks: LinkProps[] = [
 
 const Navbar: React.FC<NavbarProps> = (props) => {
   const links = props.links ? props.links : defaultLinks;
-  const [user] = useState(props.user);
   const [isScrollable] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
-  console.log('user: ', user);
+  console.log('user: ', props.user);
 
   return (
     <nav
@@ -60,7 +60,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
         </div>
         {isScrollable && <div className="navbar-fade"></div>}
       </div>
-      {user != null ? (
+      {props.user != null ? (
         <Link
           key={11}
           href={'/profile'}
@@ -69,11 +69,15 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             borderColor: 'var(--background-color)',
             color: 'var(--background-color)',
           }}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         >
-          <span className="pr-2">{'Hi ' + user.name + "!"}</span>
+          <span className="pr-2">
+            {isHovered ? "View Profile" : 'Hi ' + props.user.name.split(" ")[0] + '!'}
+          </span>
           <div className="h-7 w-7 rounded-full object-cover border-black border-2">
             <img
-              src={`https://source.boringavatars.com/marble/100/${user.id}?colors=EF233C,FED4E7,313638,003E1F`}
+              src={`https://source.boringavatars.com/marble/100/${props.user.id}?colors=EF233C,FED4E7,313638,003E1F`}
               alt="Profile Picture"
             />
           </div>
@@ -83,7 +87,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
           key={12}
           href={'/auth'} // replace with your logout link
           className="px-3 sm:px-4 py-1 sm:py-2 text-lg sm:text-xl border rounded-full hover:bg-orange-500 whitespace-nowrap text-center font-bold"
-            style={{
+          style={{
             borderColor: 'var(--background-color)',
             color: 'var(--background-color)',
           }}
