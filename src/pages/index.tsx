@@ -14,12 +14,11 @@ const Home = () => {
     fetchUser(setUser);
   }, []);
 
-  // Display different navbar based on whether user is logged in
-  const NavbarComponent = user ? <Navbar user={user} /> : <Navbar />;
+  console.log("user: ", user);
 
   return (
     <main className={'min-h-screen items-center '}>
-      {NavbarComponent}
+      <Navbar user={user} />
       <HeroSection imageUrl="/logo_nobg.png">
         <h1>
           {' '}
