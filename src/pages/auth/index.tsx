@@ -5,7 +5,6 @@ import Img from 'next/image';
 const cognitoHostedUI = `https://api.makeitaifor.me/auth/cognito`;
 
 function LoginPage() {
-    console.log(cognitoHostedUI)
     return (
         <div className="flex h-full w-full flex-col items-center justify-center bg-gray-50 dark:bg-gray-800 text-black">
             <div className="w-96 flex flex-col flex-auto justify-center items-center">

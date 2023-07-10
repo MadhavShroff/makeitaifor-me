@@ -14,8 +14,6 @@ const Home = () => {
     fetchUser(setUser);
   }, []);
 
-  console.log("user: ", user);
-
   return (
     <main className={'min-h-screen items-center '}>
       <Navbar user={user} />
