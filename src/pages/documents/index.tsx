@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import CollectionList from '@/components/documents/CollectionList';
 import FileUploadComponent from '@/components/documents/FileUploadComponent';
 import { fetchUser } from '@/utils/fetches';
+import { Stacks, ScrollableStackContainer } from '@/components/Stacks';
 
 const Documents = () => {
   const [user, setUser] = useState(null);
@@ -11,12 +12,14 @@ const Documents = () => {
   useEffect(() => {
     fetchUser(setUser);
   }, []);
-  
+
   return (
-    <main className={'min-h-screen items-center '}>
-      <Navbar user={user}/>
+    <main className={'flex flex-col'}>
+      <Navbar user={user} />
       <CollectionList />
       <FileUploadComponent />
+      {/* <Stacks title="Stacks" /> */}
+      <ScrollableStackContainer />
     </main>
   );
 };

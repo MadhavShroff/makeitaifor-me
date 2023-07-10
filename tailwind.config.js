@@ -21,6 +21,11 @@ module.exports = {
       screens: {
         'sm': {'max': '767px'},
       },
+      variants: {
+        extend: {
+            skew: ['group-hover'],  // Enable group-hover for skew
+        },
+    },
     }
   }
 }
