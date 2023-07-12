@@ -5,8 +5,8 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 
 const Profile = (props) => {
-    // const user = props.user || null;
-    const user = { id: '915b7cd5-08c1-45c2-9709-7585af332ee4', username: 'libif87613@pixiil.com', name: 'Madhav Shroff' }
+    const user = props.user || null;
+    // const user = { id: '915b7cd5-08c1-45c2-9709-7585af332ee4', username: 'libif87613@pixiil.com', name: 'Madhav Shroff' }
 
     const [activeTab, setActiveTab] = useState("Tokens Available");
     const cognitoHostedUI = `https://api.makeitaifor.me/auth/cognito`;
