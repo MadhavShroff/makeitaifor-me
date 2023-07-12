@@ -18,7 +18,6 @@ const Documents = () => {
       <Navbar user={user} />
       <CollectionList />
       <FileUploadComponent />
-      {/* <Stacks title="Stacks" /> */}
       <ScrollableStackContainer />
     </main>
   );
