@@ -22,7 +22,7 @@ export const handleFilesUpload = async (files: File[]) => {
   const uploadPromises = files.map(async (file) => {
     // Call backend to get the pre-signed URL
     const response = await fetch(
-      `http://localhost:3000/fileupload/generate-presigned-url?filename=${file.name}&mimetype=${file.type}`,
+      `https://api.makeitaifor.me/fileupload/generate-presigned-url?filename=${file.name}&mimetype=${file.type}`,
       { method: 'GET', credentials: 'include',}
     );
 
