@@ -14,26 +14,40 @@ export const fetchUser = (setUser) => {
   });
 };
 
-// fetches.tsx
-export const uploadFiles = (files, setUploadedFileUrl) => {
-  if (files.length > 0) {
-    const data = new FormData();
-    data.append('file', files[0]);
-
-    return fetch('https://api.makeitaifor.me/fileupload', {
-      method: 'POST',
-      body: data
-    })
-    .then((res) => {
-      if (!res.ok) { throw new Error('Network response was not ok'); }
-      return res.json();
-    })
-    .then((data) => {
-      console.log("uploadFiles data: ", data);
-      setUploadedFileUrl(data.url);
-    })
-    .catch((error) => {
-      setUploadedFileUrl(null);
-    });
+export const handleFilesUpload = async (files: File[]) => {
+  if (!files || files.length === 0) {
+    return;
   }
+
+  const uploadPromises = files.map(async (file) => {
+    // Call backend to get the pre-signed URL
+    const response = await fetch(
+      `http://localhost:3000/fileupload/generate-presigned-url?filename=${file.name}&mimetype=${file.type}`,
+    );
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const responseData = await response.json();
+    const { uploadUrl } = responseData;
+
+    // Upload the file directly to S3
+    const uploadResponse = await fetch(uploadUrl, {
+      method: 'PUT',
+      body: file,
+      headers: {
+        'Content-Type': file.type,
+      },
+    });
+
+    if (!uploadResponse.ok) {
+      throw new Error(`File upload was not successful for ${file.name}`);
+    }
+
+    console.log(`File ${file.name} uploaded successfully`);
+  });
+
+  // Wait for all uploads to complete
+  await Promise.all(uploadPromises);
 };

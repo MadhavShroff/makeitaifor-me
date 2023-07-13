@@ -1,6 +1,6 @@
 import { useDropzone } from 'react-dropzone';
 import Button from '../Button';
-import { uploadFiles } from '@/utils/fetches';
+import { handleFilesUpload } from '@/utils/fetches';
 import { useState } from 'react';
 
 interface FileDetailsProps {
@@ -48,14 +48,15 @@ interface ModalContentProps {
 }
 
 export const ModalContent: React.FC<ModalContentProps> = ({ onDrop, files }) => {
-  const { getRootProps, getInputProps } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop });
 
-  const [uploadedFileUrl, setUploadedFileUrl] = useState(null);
+  const [uploadedFileUrl] = useState(null);
 
   console.log("uploadedFileUrl: ", uploadedFileUrl);
 
+
   const handleUpload = () => {
-    uploadFiles(files, setUploadedFileUrl);
+    handleFilesUpload(acceptedFiles);
   };
 
   return (
