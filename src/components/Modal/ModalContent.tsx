@@ -1,18 +1,22 @@
 import { useDropzone } from 'react-dropzone';
+import Button from '../Button';
+import { uploadFiles } from '@/utils/fetches';
+import { useState } from 'react';
 
 interface FileDetailsProps {
   files: File[];
 }
 
 const FileDetails: React.FC<FileDetailsProps> = ({ files }) => (
-  <div className="flex flex-col w-full">
-    <div className="overflow-x-scroll w-full">
+  <div className="flex flex-col w-full overflow-auto">
+    <div className="w-full">
       <div className="inline-block py-2 w-full">
         <div className="overflow-hidden w-full">
           <table className="text-center text-sm font-light w-full">
             <thead
               className="border-b font-medium dark:border-neutral-500 dark:text-neutral-800">
               <tr>
+                <th scope="col" className=" px-6 py-4">Remove</th>
                 <th scope="col" className=" px-6 py-4">Name</th>
                 <th scope="col" className=" px-6 py-4">Type</th>
                 <th scope="col" className=" px-6 py-4">Size</th>
@@ -21,6 +25,9 @@ const FileDetails: React.FC<FileDetailsProps> = ({ files }) => (
             <tbody className='dark:bg-slate-800'>
               {files.map((file: any, index: number) => (
                 <tr key={index}>
+                  <td className="whitespace-nowrap border-b border-slate-100 dark:border-slate-700 pt-2 pb-2 text-slate-500 dark:text-slate-400 sm:truncate">
+                    <Button text='Remove' onClick={() => console.log('remove')} className='hover:bg-red-500 text-white font-bold text-sm' _key={index} />
+                  </td>
                   <td className="whitespace-nowrap border-b border-slate-100 dark:border-slate-700 pt-2 pb-2 text-slate-500 dark:text-slate-400 sm:truncate">{file.name}</td>
                   <td className="whitespace-nowrap border-b border-slate-100 dark:border-slate-700 pt-2 pb-2 text-slate-500 dark:text-slate-400">{file.type}</td>
                   <td className="whitespace-nowrap border-b border-slate-100 dark:border-slate-700 pt-2 pb-2 text-slate-500 dark:text-slate-400">{file.size}</td>
@@ -43,6 +50,14 @@ interface ModalContentProps {
 export const ModalContent: React.FC<ModalContentProps> = ({ onDrop, files }) => {
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
+  const [uploadedFileUrl, setUploadedFileUrl] = useState(null);
+
+  console.log("uploadedFileUrl: ", uploadedFileUrl);
+
+  const handleUpload = () => {
+    uploadFiles(files, setUploadedFileUrl);
+  };
+
   return (
     <div>
       <div className="w-full text-center flex items-center pb-6">
@@ -53,6 +68,9 @@ export const ModalContent: React.FC<ModalContentProps> = ({ onDrop, files }) => 
         </div>
       </div>
       <FileDetails files={files} />
+      <div className='w-full h-1/5 flex flex-col justify-center items-center'>
+        <Button text='Upload and Ingest' onClick={handleUpload} className='hover:bg-green-500 text-white font-bold text-sm' _key={0} />
+      </div>
     </div>
   );
 };
