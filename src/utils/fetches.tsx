@@ -23,6 +23,7 @@ export const handleFilesUpload = async (files: File[]) => {
     // Call backend to get the pre-signed URL
     const response = await fetch(
       `http://localhost:3000/fileupload/generate-presigned-url?filename=${file.name}&mimetype=${file.type}`,
+      { method: 'GET', credentials: 'include',}
     );
 
     if (!response.ok) {
@@ -31,6 +32,8 @@ export const handleFilesUpload = async (files: File[]) => {
 
     const responseData = await response.json();
     const { uploadUrl } = responseData;
+
+    console.log(`Uploading ${file.name} to ${uploadUrl}`);
 
     // Upload the file directly to S3
     const uploadResponse = await fetch(uploadUrl, {
