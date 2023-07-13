@@ -1,0 +1,28 @@
+
+.hasImage:hover .img-preview {
+    display: block;
+  }
+  #overlay {
+    background: rgba(0,0,0,.7);
+  }
+  article[aria-label="File Upload Modal"] {
+    display: none;
+  }
+  article[aria-label="File Upload Modal"].dragging {
+    display: flex;
+  }
+  article[aria-label="File Upload Modal"].dragging #overlay {
+    display: flex;
+  }
+  input[type="file"] {
+    white-space: nowrap;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    opacity: .01;
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  

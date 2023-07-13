@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import Box from './Box';
 import IntroSection from './IntroSection';
 import MarqueeText from './MarqueeText';
 import Link from 'next/link';
@@ -49,31 +48,6 @@ const defaults: Product[] = [
   },
   // Add more products here
 ];
-
-const UserProfile = () => {
-  return (
-    <Box>
-      <Link
-        className="px-2 sm:px-4 py-1 sm:py-2 text-lg sm:text-xl font-bold text-black mr-4 hover:underline decoration-orange-500 decoration-4"
-        href="/profile"
-      >
-        Profile
-      </Link>
-      <a
-        className="px-2 sm:px-4 py-1 sm:py-2 text-lg sm:text-xl font-bold text-black mr-4 hover:underline decoration-orange-500 decoration-4"
-        href="/settings"
-      >
-        Settings
-      </a>
-      <a
-        className="px-2 sm:px-4 py-1 sm:py-2 text-lg sm:text-xl font-bold text-black mr-4 hover:underline decoration-orange-500 decoration-4"
-        href="/logout"
-      >
-        Log out
-      </a>
-    </Box>
-  );
-};
 
 const ProductDisplay = ({ product }: { product: Product }) => {
   return (

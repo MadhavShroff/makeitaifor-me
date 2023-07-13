@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar';
 import CollectionList from '@/components/documents/CollectionList';
 import FileUploadComponent from '@/components/documents/FileUploadComponent';
 import { fetchUser } from '@/utils/fetches';
-import { Stacks, ScrollableStackContainer } from '@/components/Stacks';
+import {ScrollableStackContainer, ScrollableBoxContainer } from '@/components/Stacks';
 
 const Documents = () => {
   const [user, setUser] = useState(null);
@@ -16,9 +16,8 @@ const Documents = () => {
   return (
     <main className={'flex flex-col'}>
       <Navbar user={user} />
-      <CollectionList />
-      <FileUploadComponent />
       <ScrollableStackContainer />
+      <FileUploadComponent />
     </main>
   );
 };

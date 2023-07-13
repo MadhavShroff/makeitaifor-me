@@ -8,7 +8,18 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  plugins: [],
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: [
+      {
+        mytheme: {
+          "primary": "#ed8936",
+        },
+      },
+      "dark",
+      "cupcake",
+    ],
+  },
   theme: {
     extend: {
       colors: { 
