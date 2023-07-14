@@ -17,7 +17,7 @@ const Documents = () => {
     fetchDocs(user).then((data) => {
       console.log("fetchDocs data: ", data);
       if(!data) return;
-      const filtered = (data as any).map((doc) => {
+      const filtered = (data as any).files.map((doc) => {
         const fileName = doc.Key.split('/')[1];
         const w = fileName.split('.')[0];
         console.log("w: ", w);
