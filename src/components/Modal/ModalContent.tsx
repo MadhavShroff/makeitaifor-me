@@ -50,7 +50,7 @@ interface ModalContentProps {
 }
 
 export const ModalContent: React.FC<ModalContentProps> = ({ onDrop, files, removeFile }) => {
-  const { getRootProps, getInputProps, acceptedFiles } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps} = useDropzone({ onDrop });
 
   const [uploadedFileUrl] = useState(null);
 
@@ -58,9 +58,9 @@ export const ModalContent: React.FC<ModalContentProps> = ({ onDrop, files, remov
 
 
   const handleUpload = () => {
-    handleFilesUpload(acceptedFiles);
+    handleFilesUpload(files);
   };
-  
+
   return (
     <div>
       <div className="w-full text-center flex sm:flex-col items-center pb-6 justify-between">

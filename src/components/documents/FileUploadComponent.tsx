@@ -3,6 +3,7 @@ import { useDropzone, DropzoneOptions } from 'react-dropzone';
 import { ScrollableBoxContainer } from '../Stacks';
 import CustomModal from '../Modal/GenericModal';
 import FileUploadModal from '../Modal/ModalContent';
+import { handleFilesUpload } from '@/utils/fetches';
 
 interface UploadFileBoxProps {
   setShowModal: (show: boolean) => void;
@@ -50,7 +51,7 @@ const FileUploadComponent: FC = () => {
     <div className='flex sm:flex-col flex-row sm:w-full'>
       <UploadFileBox setShowModal={setShowModal} />
       <ScrollableBoxContainer />
-      <FileUploadModal visible={showModal} onClose={() => setShowModal(false)} onDrop={acceptedFiles => setFiles(prev => [...prev, ...acceptedFiles])} files={files} removeFile={removeFile} />
+      <FileUploadModal visible={showModal} onClose={() => setShowModal(false)} onDrop={acceptedFiles => setFiles(prev => [...prev, ...acceptedFiles])} files={files} removeFile={removeFile}/>
     </div>
   );
 }

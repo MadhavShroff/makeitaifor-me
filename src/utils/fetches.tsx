@@ -15,6 +15,8 @@ export const fetchUser = (setUser) => {
 };
 
 export const handleFilesUpload = async (files: File[]) => {
+  console.log("handleFilesUpload");
+  console.log("files: ", files);
   if (!files || files.length === 0) {
     return;
   }
@@ -43,7 +45,6 @@ export const handleFilesUpload = async (files: File[]) => {
         'Content-Type': file.type,
       },
     });
-    console.log("uploadResponse: ", JSON.stringify(uploadResponse));
 
     if (!uploadResponse.ok) {
       throw new Error(`File upload was not successful for ${file.name}`);
