@@ -25,7 +25,6 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const links = props.links ? props.links : defaultLinks;
   const [isScrollable] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const user = { id: "1", username: "test", name: "Test User"}
 
   return (
     <nav
@@ -56,7 +55,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
               {link.text}
             </Link>
           ))}
-          {user != null ? (
+          {props.user != null ? (
             <Link
               key={11}
               href={'/profile'}
@@ -69,11 +68,11 @@ const Navbar: React.FC<NavbarProps> = (props) => {
               onMouseLeave={() => setIsHovered(false)}
             >
               <span className="pr-2">
-                {isHovered ? "View Profile" : 'Hi ' + user.name.split(" ")[0] + '!'}
+                {isHovered ? "View Profile" : 'Hi ' + props.user.name.split(" ")[0] + '!'}
               </span>
               <div className="h-7 w-7 rounded-full object-cover border-black border-2">
                 <img
-                  src={`https://source.boringavatars.com/marble/100/${user.id}?colors=EF233C,FED4E7,313638,003E1F`}
+                  src={`https://source.boringavatars.com/marble/100/${props.user.id}?colors=EF233C,FED4E7,313638,003E1F`}
                   alt="Profile Picture"
                 />
               </div>
