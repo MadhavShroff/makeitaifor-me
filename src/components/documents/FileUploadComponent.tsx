@@ -36,6 +36,10 @@ const FileUploadComponent: FC = () => {
     }
   });
 
+  const removeFile = (fileName: string) => {
+    setFiles(prev => prev.filter(file => file.name !== fileName)); // Here is the removeFile function
+  };
+
   const filesList = acceptedFiles.map((file : File | any) => (
     <li key={file.path}>
       {file.name} - {file.size} bytes
@@ -46,7 +50,7 @@ const FileUploadComponent: FC = () => {
     <div className='flex sm:flex-col flex-row sm:w-full'>
       <UploadFileBox setShowModal={setShowModal} />
       <ScrollableBoxContainer />
-      <FileUploadModal visible={showModal} onClose={() => setShowModal(false)} onDrop={acceptedFiles => setFiles(prev => [...prev, ...acceptedFiles])} files={files} /> 
+      <FileUploadModal visible={showModal} onClose={() => setShowModal(false)} onDrop={acceptedFiles => setFiles(prev => [...prev, ...acceptedFiles])} files={files} removeFile={removeFile} />
     </div>
   );
 }

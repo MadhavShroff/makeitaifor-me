@@ -38,6 +38,7 @@ export const handleFilesUpload = async (files: File[]) => {
     // Upload the file directly to S3
     const uploadResponse = await fetch(uploadUrl, {
       method: 'PUT',
+      credentials: 'include',
       body: file,
       headers: {
         'Content-Type': file.type,
