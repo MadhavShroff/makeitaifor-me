@@ -12,10 +12,7 @@ const Documents = () => {
   useEffect(() => {
     fetchUser((user => {
       setUser(user);
-      fetchDocs(user, (docs) => {
-        console.log("docs: ", docs);
-        setDocs(docs);
-      })
+      fetchDocs(user, setDocs)
     }));
   }, []);
 

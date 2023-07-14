@@ -64,11 +64,8 @@ export const handleFilesUpload = async (files: File[], setMessage) => {
 };
 
 export const fetchDocs = (user, setDocs) => {
-  console.log("fetchDocs");
   console.log("user: ", user);
-  if (!user) {
-    return;
-  }
+  if (!user) return;
 
   fetch('https://api.makeitaifor.me/fileupload/list-files', { method: 'GET', credentials: 'include',})
   .then((res) => {
@@ -76,12 +73,14 @@ export const fetchDocs = (user, setDocs) => {
     return res.json();
   }).then((data) => {
     console.log("fetchDocs data: ", data);
-    setDocs(data.map((doc) => {
+    const filtered = data.map((doc) => {
       const fileName = doc.Key.split('/')[1];
       const w = fileName.split('.')[0];
       if(w.length > 70) return w.substring(0, 70) + '...' + fileName.split('.')[1]; // shorten the file name if it is too long
       else return fileName;
-    }));
+    });
+    console.log("filtered: ", filtered);
+    setDocs(filtered);
   }).catch((error) => {
     setDocs(null);
   });
