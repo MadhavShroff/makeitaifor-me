@@ -10,11 +10,12 @@ const Documents = () => {
   const [docs, setDocs] = useState<string[]>([]); 
 
   useEffect(() => {
-    fetchUser((user => {
-      setUser(user);
-      fetchDocs(user, setDocs)
-    }));
+    fetchUser(setUser);
   }, []);
+
+  if(user) {
+    fetchDocs(user, setDocs)
+  }
 
   console.log("docs: ", docs);
 

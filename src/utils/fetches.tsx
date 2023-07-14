@@ -72,6 +72,7 @@ export const fetchDocs = (user, setDocs) => {
     if (!res.ok) { throw new Error('Not authorized'); }
     return res.json();
   }).then((data) => {
+    console.log("data: ", data);
     setDocs(data.map((doc) => {
       const fileName = doc.Key.split('/')[1];
       const w = fileName.split('.')[0];
