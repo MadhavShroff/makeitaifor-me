@@ -71,10 +71,5 @@ export const fetchDocs = (user) : Promise<undefined> => {
   .then((res) => {
     if (!res.ok) { throw new Error('Not authorized'); }
     return res.json();
-  }).then((data) => {
-    console.log("data: ", data);
-    return data;
-  }).catch((error) => {
-    return { error: error.message }
   });
 }

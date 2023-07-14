@@ -7,7 +7,7 @@ import {ScrollableStackContainer, ScrollableBoxContainer } from '@/components/St
 
 const Documents = () => {
   const [user, setUser] = useState(null);
-  const [docs, setDocs] = useState<any[]>([]); 
+  const [docs, setDocs] = useState<string[]>([]); 
 
   useEffect(() => {
     fetchUser(setUser);
@@ -16,10 +16,19 @@ const Documents = () => {
   if(user) {
     fetchDocs(user).then((data) => {
       console.log("fetchDocs data: ", data);
-      setDocs(data as unknown as any[]);
+      if(!data) return;
+      const filtered = (data as any).map((doc) => {
+        const fileName = doc.Key.split('/')[1];
+        const w = fileName.split('.')[0];
+        console.log("w: ", w);
+        if(w.length > 70) return w.substring(0, 70) + '...' + fileName.split('.')[1]; // shorten the file name if it is too long
+        else return fileName;
+      })
+      return filtered;
+    }).then((filtered) => {
+      setDocs(filtered);
     }).catch((error) => {
-      console.log("fetchDocs error: ", error)
-      setDocs([]);
+      console.log("error: ", error);
     });
   }
 
