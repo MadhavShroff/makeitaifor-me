@@ -43,7 +43,7 @@ export const handleFilesUpload = async (files: File[]) => {
         'Content-Type': file.type,
       },
     });
-    console.log("uploadResponse: ", uploadResponse);
+    console.log("uploadResponse: ", JSON.stringify(uploadResponse));
 
     if (!uploadResponse.ok) {
       throw new Error(`File upload was not successful for ${file.name}`);
