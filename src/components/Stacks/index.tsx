@@ -18,7 +18,7 @@ export const ScrollableBoxContainer = (props) => {
     const titles = props.titles || ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
     console.log(titles);
     return (
-        <div className="flex overflow-x-scroll overflow-y-hidden">
+        <div className="flex overflow-x-scroll overflow-y-hidden p-1">
             {props.children}
             {titles.map((title, index) => (
                 <Box key={index}>

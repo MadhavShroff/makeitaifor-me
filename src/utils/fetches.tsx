@@ -14,13 +14,14 @@ export const fetchUser = (setUser) => {
   });
 };
 
-export const handleFilesUpload = async (files: File[]) => {
+export const handleFilesUpload = async (files: File[], setMessage) => {
   console.log("handleFilesUpload");
   console.log("files: ", files);
   if (!files || files.length === 0) {
     return;
   }
 
+  setMessage('Uploading ' + files.length + ' files...');
   const uploadPromises = files.map(async (file) => {
     // Call backend to get the pre-signed URL
     const response = await fetch(
@@ -54,5 +55,32 @@ export const handleFilesUpload = async (files: File[]) => {
   });
 
   // Wait for all uploads to complete
-  await Promise.all(uploadPromises);
+  await Promise.all(uploadPromises).then(() => {
+    setMessage('Upload complete');
+    setTimeout(() => setMessage('Upload More Files ?'), 3000);
+  }).catch((error) => {
+    setMessage('Upload failed. Try again?');
+  });
 };
+
+export const fetchDocs = (user, setDocs) => {
+  console.log("fetchDocs");
+  console.log("user: ", user);
+  if (!user) {
+    return;
+  }
+
+  fetch('https://api.makeitaifor.me/fileupload/list-files', { method: 'GET', credentials: 'include',})
+  .then((res) => {
+    if (!res.ok) { throw new Error('Not authorized'); }
+    return res.json();
+  })
+  .then((data) => {
+    console.log("fetchDocs data: ", data);
+    setDocs(data);
+  }
+  )
+  .catch((error) => {
+    setDocs(null);
+  });
+}
