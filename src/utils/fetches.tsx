@@ -74,13 +74,15 @@ export const fetchDocs = (user, setDocs) => {
   .then((res) => {
     if (!res.ok) { throw new Error('Not authorized'); }
     return res.json();
-  })
-  .then((data) => {
+  }).then((data) => {
     console.log("fetchDocs data: ", data);
-    setDocs(data);
-  }
-  )
-  .catch((error) => {
+    setDocs(data.map((doc) => {
+      const fileName = doc.Key.split('/')[1];
+      const w = fileName.split('.')[0];
+      if(w.length > 70) return w.substring(0, 70) + '...' + fileName.split('.')[1]; // shorten the file name if it is too long
+      else return fileName;
+    }));
+  }).catch((error) => {
     setDocs(null);
   });
 }

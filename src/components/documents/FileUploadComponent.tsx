@@ -36,7 +36,6 @@ const FileUploadComponent: FC = () => {
     <div className='flex sm:flex-col flex-row'>
       <UploadFileBox setShowModal={setShowModal} />
       <FileUploadModal visible={showModal} onClose={() => setShowModal(false)} onDrop={acceptedFiles => setFiles(prev => [...prev, ...acceptedFiles])} files={files} removeFile={removeFile}/>
-      <ScrollableBoxContainer />
     </div>
   );
 }
