@@ -7,14 +7,20 @@ import {ScrollableStackContainer, ScrollableBoxContainer } from '@/components/St
 
 const Documents = () => {
   const [user, setUser] = useState(null);
-  const [docs, setDocs] = useState(null); 
+  const [docs, setDocs] = useState<any[]>([]); 
 
   useEffect(() => {
     fetchUser(setUser);
   }, []);
 
   if(user) {
-    fetchDocs(user, setDocs);
+    fetchDocs(user).then((data) => {
+      console.log("fetchDocs data: ", data);
+      setDocs(data as unknown as any[]);
+    }).catch((error) => {
+      console.log("fetchDocs error: ", error)
+      setDocs([]);
+    });
   }
 
   console.log("docs: ", docs);
