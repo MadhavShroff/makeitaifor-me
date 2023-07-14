@@ -12,26 +12,28 @@ const Documents = () => {
   useEffect(() => {
     fetchUser(setUser);
   }, []);
-
-  if(user) {
-    fetchDocs(user).then((data) => {
-      console.log("fetchDocs data: ", data);
-      if(!data) return;
-      const filtered = (data as any).files.map((doc) => {
-        const fileName = doc.Key.split('/')[1];
-        const w = fileName.split('.')[0];
-        console.log("w: ", w);
-        if(w.length > 70) return w.substring(0, 70) + '...' + fileName.split('.')[1]; // shorten the file name if it is too long
-        else return fileName;
-      })
-      return filtered;
-    }).then((filtered) => {
-      setDocs(filtered);
-    }).catch((error) => {
-      console.log("error: ", error);
-    });
-  }
-
+  
+  useEffect(() => {
+    if (user) {
+      fetchDocs(user).then((data) => {
+        console.log("fetchDocs data: ", data);
+        if(!data) return;
+        const filtered = (data as any).files.map((doc) => {
+          const fileName = doc.Key.split('/')[1];
+          const w = fileName.split('.')[0];
+          console.log("w: ", w);
+          if(w.length > 70) return w.substring(0, 70) + '...' + fileName.split('.')[1]; // shorten the file name if it is too long
+          else return fileName;
+        })
+        return filtered;
+      }).then((filtered) => {
+        setDocs(filtered);
+      }).catch((error) => {
+        console.log("error: ", error);
+      });
+    }
+  }, [user]);
+  
   console.log("docs: ", docs);
 
   return (
