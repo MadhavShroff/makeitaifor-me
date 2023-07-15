@@ -6,7 +6,7 @@ const cognitoHostedUI = `https://api.makeitaifor.me/auth/cognito`;
 
 function LoginPage() {
     return (
-        <div className="flex h-full w-full flex-col items-center justify-center bg-gray-50 dark:bg-gray-800 text-black">
+        <div className="flex h-full w-full flex-col items-center justify-center bg-white dark:bg-black text-black dark:text-white">
             <div className="w-96 flex flex-col flex-auto justify-center items-center">
                 <div className="mb-5">
                     <Img
@@ -21,15 +21,15 @@ function LoginPage() {
                 <div className="mb-4 text-center">
                     Log in with your account to continue
                 </div>
-                <div className="flex flex-row gap-3">
+                <div className="flex flex-col w-full gap-3">
                     <Button _key={1} href={cognitoHostedUI} text='Login' color='black'/>
                     <Button _key={1} href='/auth/signup' text='Sign Up' color='black'/>
                 </div>
             </div>
             <div className="py-3 text-xs">
-                <a href="https://openai.com/policies/terms-of-use" target="_blank" className="mx-3 text-gray-500" rel="noreferrer">Terms of use</a>
+                <a href="https://openai.com/policies/terms-of-use" target="_blank" className="mx-3 text-gray-500 dark:text-white" rel="noreferrer">Terms of use</a>
                 <span className="text-gray-600">|</span>
-                <a href="https://openai.com/policies/privacy-policy" target="_blank" className="mx-3 text-gray-500" rel="noreferrer">Privacy policy</a>
+                <a href="https://openai.com/policies/privacy-policy" target="_blank" className="mx-3 text-gray-500 dark:text-white" rel="noreferrer">Privacy policy</a>
             </div>
         </div>
     );

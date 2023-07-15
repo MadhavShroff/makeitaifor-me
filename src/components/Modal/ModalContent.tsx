@@ -2,7 +2,7 @@ import { useDropzone } from 'react-dropzone';
 import Button from '../Button';
 import { handleFilesUpload } from '@/utils/fetches';
 import { useState } from 'react';
-import Link from 'next/link';
+import Image from 'next/image';
 
 interface FileDetailsProps {
   files: File[];
@@ -16,7 +16,7 @@ const FileDetails: React.FC<FileDetailsProps> = ({ files, removeFile }) => (
         <div className="overflow-hidden w-full">
           <table className="text-center text-sm font-light w-full">
             <thead
-              className="border-b font-medium dark:border-neutral-500 dark:text-neutral-800">
+              className="border-b font-medium dark:border-neutral-500 dark:text-neutral-300">
               <tr>
                 <th scope="col" className=" px-6 py-4">Remove</th>
                 <th scope="col" className=" px-6 py-4 text-left">Name</th>
@@ -28,7 +28,14 @@ const FileDetails: React.FC<FileDetailsProps> = ({ files, removeFile }) => (
               {files.map((file: any, index: number) => (
                 <tr key={index}>
                   <td className="whitespace-nowrap border-b border-slate-100 dark:border-slate-700 pt-2 pb-2 text-slate-500 dark:text-slate-400">
-                    <Button text='X' onClick={() => removeFile(file.name)} className='hover:bg-red-500 text-white font-bold text-xl p-0' _key={index} />
+                    <div onClick={() => removeFile(file.name)} className='flex justify-center items-center hover:border-red-500 hover:border-4 p-2 rounded text-white font-bold text-xl p-0 cursor-pointer'>
+                      <Image
+                        src="/trash-can.svg"
+                        alt="Delete"
+                        width={30}
+                        height={30}
+                      />
+                    </div>
                   </td>
                   <td className="whitespace-nowrap border-b border-slate-100 dark:border-slate-700 pt-2 pb-2 text-slate-500 dark:text-slate-400 sm:truncate text-left">{file.name}</td>
                   <td className="whitespace-nowrap border-b border-slate-100 dark:border-slate-700 pt-2 pb-2 text-slate-500 dark:text-slate-400 text-left">{file.type}</td>
@@ -42,7 +49,6 @@ const FileDetails: React.FC<FileDetailsProps> = ({ files, removeFile }) => (
     </div>
   </div>
 );
-
 
 interface ModalContentProps {
   onDrop: (acceptedFiles: File[]) => void;
@@ -65,7 +71,7 @@ export const ModalContent: React.FC<ModalContentProps> = ({ onDrop, files, remov
   return (
     <div>
       <div className="w-full text-center flex sm:flex-col items-center pb-6 justify-between">
-        <h1 className='text-3xl w-2/ sm:flex-col'>{message}</h1>
+        <h1 className='text-3xl sm:flex-col sm:text-xl pb-2'>{message}</h1>
         <div {...getRootProps({ className: 'dropzone md:w-3/5 h-32 align-middle flex sm:flex-col items-center justify-center border-4 border-dotted rounded' })}>
           <input {...getInputProps()} />
           <p>Drag 'n' drop some files here, or click to select files</p>
@@ -98,7 +104,7 @@ const FileUploadModal = ({ visible, onClose, onDrop, files, removeFile }) => {
       onClick={handleOnBackDropClick}
       className="bg-black bg-opacity-50 backdrop-blur-sm fixed inset-0 flex items-center justify-center z-50"
     >
-      <div className="bg-black w-4/5 h-1/2 p-5 rounded-xl border-4 border-white">
+      <div className="bg-black w-4/5 sm:w-full sm:p- p-4 rounded-xl border-4 border-white">
         <ModalContent onDrop={onDrop} files={files} removeFile={removeFile} />
       </div>
     </div>
