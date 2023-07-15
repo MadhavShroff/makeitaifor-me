@@ -70,22 +70,22 @@ export const ModalContent: React.FC<ModalContentProps> = ({ onDrop, files, remov
 
   return (
     <div>
-      <div className="w-full text-center flex sm:flex-col items-center pb-6 justify-between">
-        <h1 className='text-3xl sm:flex-col sm:text-xl pb-2'>{message}</h1>
+      <div className="w-full text-center flex sm:flex-col items-center pb-4 justify-between">
+        <h1 className='text-3xl sm:flex-col sm:text-xl'>{message}</h1>
         <div {...getRootProps({ className: 'dropzone md:w-3/5 h-32 align-middle flex sm:flex-col items-center justify-center border-4 border-dotted rounded' })}>
           <input {...getInputProps()} />
-          <p>Drag 'n' drop some files here, or click to select files</p>
+          <p>Click Here or Drag and Drop a file here to upload and process</p>
         </div>
       </div>
-      <div key={11} className="flex items-center pr-1 pt-1 pb-1 pl-3 border sm:text-sm rounded-full whitespace-nowrap font-bold">
+      <div key={11} className="flex items-center pr-1 pt-1 pb-1 pl-3 mb-2 border sm:text-sm rounded-full whitespace-nowrap font-bold">
         <input type="url" placeholder="Enter URL of a document, Youtube video or any other source..." className="pr-2 appearance-none bg-transparent border-none w-full text-orange-500 leading-tight focus:outline-none"></input>
         <button className="h-7 w-14 rounded-full object-cover border-white border-2 pl-1 pr-1 hover:bg-orange-500 hover:text-black">
           Add
         </button>
       </div>
-      <FileDetails files={files} removeFile={removeFile} />
-      <div className='w-full h-1/5 flex flex-col justify-center items-center'>
-        <Button text='Upload and Ingest' onClick={handleUpload} className='hover:bg-green-500 text-white font-bold text-sm' _key={0} />
+      {files.length > 0 && <FileDetails files={files} removeFile={removeFile} /> }
+      <div className='w-full h-1/5 flex text-xl flex-col justify-center items-center'>
+        <Button text='Upload and Ingest' onClick={handleUpload} className='hover:bg-green-500 text-white text-xl font-bold text-sm' _key={0} />
       </div>
     </div>
   );
@@ -104,7 +104,7 @@ const FileUploadModal = ({ visible, onClose, onDrop, files, removeFile }) => {
       onClick={handleOnBackDropClick}
       className="bg-black bg-opacity-50 backdrop-blur-sm fixed inset-0 flex items-center justify-center z-50"
     >
-      <div className="bg-black w-4/5 sm:w-full sm:p- p-4 rounded-xl border-4 border-white">
+      <div className="bg-black w-4/5 sm:w-full lg:w-1/2 p-4 h-fit rounded-xl border-4 border-white overflow-auto">
         <ModalContent onDrop={onDrop} files={files} removeFile={removeFile} />
       </div>
     </div>
