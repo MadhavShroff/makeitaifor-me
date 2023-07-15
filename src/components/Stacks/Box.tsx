@@ -1,11 +1,13 @@
+import Draggable from "../documents/Draggable";
+
 export const Box = (props) => {
     return (
-        <div className="group p-1">
-            <div className="relative w-72 h-40 sm:w-40 sm:h-32">
-                <div className="w-full sm:h-24 h-40 flex flex-col items-center border-4 border-white absolute rounded-lg text-xl sm:text-sm p-1 break-all">
+        <Draggable id={props.id}>
+            <div className="p-1 z-50">
+                <div className="w-72 sm:h-24 h-40 flex flex-col border-2 border-black text-black rounded-lg text-xl sm:text-sm pt-1.5 pl-2 break-all bg-white">
                     {props.children}
                 </div>
             </div>
-        </div>
+        </Draggable>
     );
 }
