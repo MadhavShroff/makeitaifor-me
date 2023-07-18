@@ -1,10 +1,10 @@
-import Button from "../Button";
-import Droppable from "../documents/Droppable";
+import Button from "../../Button";
+import Droppable from "../Droppable";
 
 export const Stack = (props) => {
     return (
         <Droppable id={props.title}>
-            <div className="group pl-16 sm:pl-12 pt-8 pb-8">
+            <div className="group pl-12 sm:pl-12 pt-8">
                 <div className="relative w-72 h-60 sm:w-40 sm:h-32">
                     <div className="w-full sm:h-24 sm:w-44 h-40 bg-green-400 transform transition-all absolute rounded-lg group-hover:skew-x-12 group-hover:-skew-y-12">
                     </div>

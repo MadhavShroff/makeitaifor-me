@@ -16,8 +16,6 @@ module.exports = {
           "primary": "#ed8936",
         },
       },
-      "dark",
-      "cupcake",
     ],
   },
   theme: {
@@ -36,7 +34,10 @@ module.exports = {
         extend: {
             skew: ['group-hover'],  // Enable group-hover for skew
         },
-    },
+      },
+      width: {
+        '160': '40rem',
+      },
     }
   }
 }

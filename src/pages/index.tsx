@@ -15,7 +15,7 @@ const Home = () => {
   }, []);
 
   return (
-    <main className={'min-h-screen items-center '}>
+    <main className={'min-h-screen items-center'}>
       <Navbar user={user} />
       <HeroSection imageUrl="/logo_nobg.png">
         <h1>

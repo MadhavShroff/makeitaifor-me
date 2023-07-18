@@ -6,7 +6,7 @@ const cognitoHostedUI = `https://api.makeitaifor.me/auth/cognito`;
 
 function LoginPage() {
     return (
-        <div className="flex h-full w-full flex-col items-center justify-center bg-white dark:bg-black text-black dark:text-white">
+        <div className="flex h-[95vh] w-full flex-col items-center justify-center bg-white dark:bg-black text-black dark:text-white">
             <div className="w-96 flex flex-col flex-auto justify-center items-center">
                 <div className="mb-5">
                     <Img
@@ -23,7 +23,7 @@ function LoginPage() {
                 </div>
                 <div className="flex flex-col w-full gap-3">
                     <Button _key={1} href={cognitoHostedUI} text='Login' color='black'/>
-                    <Button _key={1} href='/auth/signup' text='Sign Up' color='black'/>
+                    <Button _key={1} href={cognitoHostedUI} text='Sign Up' color='black'/>
                 </div>
             </div>
             <div className="py-3 text-xs">
