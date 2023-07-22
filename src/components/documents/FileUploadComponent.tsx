@@ -1,6 +1,4 @@
 import React, { FC, useState } from 'react';
-import { useDropzone, DropzoneOptions } from 'react-dropzone';
-import { ScrollableBoxContainer } from './Stacks';
 import FileUploadModal from '../Modal/ModalContent';
 
 interface UploadFileBoxProps {
@@ -25,7 +23,7 @@ export const UploadFileBox: FC<UploadFileBoxProps> = ({ setShowModal }) => {
                 <div className="w-full h-full flex flex-col justify-center text-white items-center border-4 border-dotted border-white absolute rounded-lg text-3xl p-2 visible group-hover:invisible">
                   Upload File(s) +
                 </div>
-                <div className="w-full h-full flex flex-col justify-center text-white items-center border-4 border-dotted border-white absolute rounded-lg sm:text-normal text-3xl p-2 invisible group-hover:visible text-center">
+                <div className="w-full h-full flex flex-col justify-center text-white items-center border-4 border-dotted border-white absolute rounded-lg sm:text-sm text-3xl p-2 invisible group-hover:visible text-center">
                   Click here or Drag and Drop to Upload +
                 </div>
               </div>

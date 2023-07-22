@@ -3,22 +3,19 @@ import { DndContext, DragMoveEvent, DragOverEvent, DragStartEvent } from '@dnd-k
 import { KeyboardSensor, PointerSensor } from '@dnd-kit/core';
 import { useSensor, useSensors } from '@dnd-kit/core';
 import Navbar from '@/components/Navbar';
-import FileUploadComponent from '@/components/documents/FileUploadComponent';
 import { fetchDocs, fetchUser } from '@/utils/fetches';
 import { ScrollableStackContainer, ScrollableBoxContainer } from '@/components/documents/Stacks';
-import Button from '@/components/Button';
-import Img from 'next/image';
 import Footer from '@/components/Footer';
 import LoginPage from '../auth';
 import { ChatComponent } from '@/components/documents/ChatComponent';
 
 const Documents = () => {
-  // const [user, setUser] = useState(null);
-  const [user, setUser] = useState({ // Mock user
-    id: "91231123-1230u1u-123132",
-    name: "John Doe",
-    username: "john@doe.com"
-  });
+  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState({ // Mock user
+  //   id: "91231123-1230u1u-123132",
+  //   name: "John Doe",
+  //   username: "john@doe.com"
+  // });
   const [docs, setDocs] = useState<string[]>([]); 
 
   const pointerSensorOptions = {
@@ -34,18 +31,18 @@ const Documents = () => {
   );
 
   useEffect(() => {
-    // fetchUser(setUser);
+    fetchUser(setUser);
   }, []);
     
   useEffect(() => {
-    // if (user) {
-    //   fetchDocs(user)
-    //     .then(setDocs)
-    //     .catch((error) => {
-    //       console.log("error: ", error);
-    //     });
-    // }
-    // setDocs(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]);
+    if (user) {
+      fetchDocs(user)
+        .then(setDocs)
+        .catch((error) => {
+          console.log("error: ", error);
+        });
+    }
+    // setDocs(["Hello Hi", "How", "Are", "You", "Doing", "Today", "On", "This", "Blessed", "Day"]);
   }, [user]);
 
   const handleDragStart = (event: DragStartEvent) => {
@@ -78,13 +75,12 @@ const Documents = () => {
       <DndContext sensors={sensors} onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
         <Navbar user={user} />
         { user && <div className=''>
-            <ScrollableStackContainer />
+            <ScrollableStackContainer fileNames={docs}/>
             <ChatComponent />
           </div>}
         { user == null &&
          <LoginPage />
         }
-        
         <Footer />
       </DndContext>
     </main>

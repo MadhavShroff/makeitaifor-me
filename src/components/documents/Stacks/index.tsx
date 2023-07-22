@@ -1,19 +1,16 @@
 import Stack from "./Stack";
 import { Box } from "./Box";
-import Droppable from "../Droppable";
 import FileUploadComponent from "../FileUploadComponent";
 import { FilesStack } from "../FilesStack";
 
 export const ScrollableStackContainer = (props) => {
-    const titles = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-
     return (
-        <div className="flex overflow-x-scroll sm:pl-2 pl-6">
+        <div className="flex overflow-auto no-scrollbar sm:pl-2 pl-6">
             <div className="">
             </div>
             <FileUploadComponent />
-            <FilesStack fileNames={titles} />
-            {titles.map((title, index) => (
+            <FilesStack fileNames={props.fileNames} />
+            {["Sample Collction : Podacasts", "Sample Research PDFs & Lectures"].map((title, index) => (
                 <Stack key={index} title={title} />
                 // <div className="transform translate-y-20"> {/* Increase translate value if needed */}
                 // </div>

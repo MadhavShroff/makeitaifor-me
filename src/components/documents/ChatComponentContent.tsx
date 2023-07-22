@@ -41,6 +41,7 @@ const ChatComponentInputField = ({handleFormSubmit, inputValue, handleInputChang
 const MDXChat = ({content}) => {
     return (
         <ReactMarkdown>
+            
             {content}
         </ReactMarkdown>
     );

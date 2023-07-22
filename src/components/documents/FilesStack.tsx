@@ -44,26 +44,39 @@ export const FilesStack: FC<{ fileNames: string[] }> = ({ fileNames }: { fileNam
         console.log(filesShown);
     }
 
+    let _0 = 0;
+    let _1 = 0;
+    let backCount = fileNames.length - 6;
+    const filesMap = fileNames.map((fileName, index) => {
+        if(backCount-- > 0) {
+            return [0, 0, fileName]
+        }
+        return [
+            _0++*2,
+            _1++*4,
+            fileName
+        ];
+    });
+
     return (
-        <div className="group pl-16 sm:pl-12 pt-7">
-            <div className={`relative h-60 sm:w-40 sm:h-32 transition-all duration-1000`}
+        <div className="group pl-12 sm:pl-12 pt-7">
+            <div className={`relative h-60 sm:h-32 transition-all duration-1000 ease-in-out`}
                 style={{
-                    width: `${filesShown ? 80 : componentWidth}rem`, // 20rem is the default width, 80rem is the width when files are shown
+                    width: `${filesShown ? componentWidth*(filesMap.length) - 2.5 : componentWidth}rem`, // 20rem is the default width, 80rem is the width when files are shown
                 }}>
                 <div className={`sm:w-full w-80 h-40 flex flex-col justify-between p-1 pl-2`} onClick={() => clicked()}>
                     <div className="w-full">
                         <div className="relative w-72 h-40 sm:w-full">
-                            {[[0, 0], [2, 4], [4, 8], [6, 12], [8, 16], [10, 20]].map(([_0, _1], index) => {
-                                const _rev = 4 - index;
+                            {filesMap.map(([_0, _1], index) => {
                                 return (
-                                    <div className={`group w-full sm:h-24 sm:w-44 h-40 transform transition-all duration-1000 absolute rounded-lg bg-blue-500 `
-                                        + (filesShown ? `sm:top-6 top-12` : `sm:top-${_0} top-${_1}`)
+                                    <div className={`group w-full sm:h-24 sm:w-44 h-40 transform transition-all duration-700 absolute rounded-lg bg-blue-500 ease-in-out `
+                                        + (filesShown ? `sm:top-10 top-20` : `sm:top-${_0} top-${_1}`)
                                     }
                                         style={{
-                                            left: `${filesShown ? initialOffset + _rev * offset : -_1 / (width < 768 ? 8 : 4)}rem`,
+                                            left: `${filesShown ? ((componentWidth*(filesMap.length-1)) - (componentWidth*(index))) - 5 : -_1 / (width < 768 ? 8 : 4)}rem`,
                                         }}
                                     >
-                                        <div className="w-full h-full flex flex-col justify-center text-white items-center sm:border-2 border-4 border-white absolute rounded-lg text-3xl p-2">{index}</div>
+                                        <div className="w-full h-full flex flex-col justify-center text-white items-center sm:border-2 border-4 border-white absolute rounded-lg text-3xl p-2">{fileNames[index]}</div>
                                     </div>
                                 );
                             })}
@@ -83,13 +96,3 @@ export const FilesStack: FC<{ fileNames: string[] }> = ({ fileNames }: { fileNam
 
     );
 }
-
-const FileUploadComponent: FC = () => {
-    return (
-        <div className='flex sm:flex-col flex-row'>
-            <FilesStack fileNames={["Hello Hi"]}/>
-        </div>
-    );
-}
-
-export default FileUploadComponent;
