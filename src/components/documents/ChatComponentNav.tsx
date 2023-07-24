@@ -1,7 +1,7 @@
 
 const NavButton = ({ toggleSideNav, showSideNav }) =>
     <button
-        className={"nav-button border-2 p-2 rounded hover:bg-orange-500" + (showSideNav ? " hidden" : "")}
+        className={"nav-button border-2 p-2 rounded hover:bg-orange-500 bg-black group" + (showSideNav ? " hidden" : "")}
         onClick={toggleSideNav}
     >
         <svg
@@ -59,7 +59,7 @@ const NavRow = ({text, onEditClicked, onDeleteClicked, onChatClicked}) => {
 }
 
 export const ChatComponentNav = ({ toggleSideNav, showSideNav }) =>
-    <div id="chat-nav" className={"p-2 w-fit absolute " + (showSideNav ? "border-r-2 border-b-2" : "")}>
+    <div id="chat-nav" className={"p-2 w-fit bg-black absolute top-1 left-1 " + (showSideNav ? "border-r-2 border-b-2" : "")}>
         <NavButton toggleSideNav={toggleSideNav} showSideNav={showSideNav} />
         {showSideNav &&
             <nav className="flex h-full w-full flex-col p-2" aria-label="Chat history">

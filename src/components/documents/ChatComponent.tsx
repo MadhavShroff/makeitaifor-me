@@ -11,12 +11,10 @@ export const ChatComponent = () => {
   };
 
   return (
-    <MDXProvider>
-      <div className="w-auto border-4 bg-black h-[98vh] m-2 relative rounded-xl">
-        <ChatComponentNav toggleSideNav={toggleSideNav} showSideNav={showSideNav} />
-        <ChatComponentContent />
-      </div>
-    </MDXProvider>
+    <div className="border-4 relative bg-black rounded-lg h-[100vh]">
+      <ChatComponentNav toggleSideNav={toggleSideNav} showSideNav={showSideNav} />
+      <ChatComponentContent />
+    </div>
   );
 };
 

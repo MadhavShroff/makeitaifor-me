@@ -33,6 +33,7 @@ body {
   font-weight: 700;
   color: white;
   height: 100%;
+  
 }
 
 body > div:first-child,
@@ -105,4 +106,10 @@ div#__next > div {
   bottom: 0;
   width: 4px;
   background-color: black;
+}
+
+.markdown > *, ::before, ::after {
+  all: revert;
+  font-weight: 100;
+  list-style: blue;
 }

@@ -95,7 +95,7 @@ export const FilesStack: FC<{ fileNames: string[] }> = ({ fileNames }: { fileNam
                                             <img
                                                 src={`https://source.boringavatars.com/marble/50/HelloHi?colors=EF233C,FED4E7,313638,003E1F`}
                                                 alt="Profile Picture"
-                                                className="rounded-full h-[40%]"
+                                                className="rounded-full h-[30%]"
                                             />
                                             {fileName}
                                         </div>

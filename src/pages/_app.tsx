@@ -4,6 +4,7 @@ import { AppProps } from 'next/app';
 import Script from 'next/script';
 import '../styles/globals.css';
 import '../styles/FileUpload.css';
+import '../styles/markdown.css';
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
