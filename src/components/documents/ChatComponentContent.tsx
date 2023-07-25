@@ -65,12 +65,12 @@ const ChatRow = (props) => {
         </div>
       </div>
       <div className='flex flex-col w-6/12 text-white markdown overflow-x-scroll' style={{ maxWidth: '100%', overflowWrap: 'break-word' }}>
-          <ReactMarkdown
-            children={props.message}
-            remarkPlugins={[remarkMath, remarkGfm]}
-            rehypePlugins={[rehypeKatex]}
-          // components={customComponents}
-          />  
+        <ReactMarkdown
+          children={props.message}
+          remarkPlugins={[remarkMath, remarkGfm]}
+          rehypePlugins={[rehypeKatex]}
+        // components={customComponents}
+        />
         {/* <MathJax.Provider input="tex">
          </MathJax.Provider> */}
         <div>
@@ -189,7 +189,6 @@ const exampleMarkdown = [
   "$$",
 ];
 
-
 class ChatComponentContent extends React.Component<ChatComponentContentProps, ChatComponentContentState> {
 
   constructor(props: ChatComponentContentProps) {
@@ -206,23 +205,15 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
           "$$",
           "where $\\mathcal{L}{\\mathrm{Higgs}}$ is the Higgs Lagrangian, $D\\mu$ is the covariant derivative, $\\phi$ is the Higgs field, $\\mu^2$ is the mass term, and $\\lambda$ is the self-interaction term.",
           "",
-          "Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:",
+          "The equation represents the Lagrangian density of the Higgs field in the context of the Standard Model of particle physics. The Higgs field is a scalar field that is responsible for the generation of mass for elementary particles such as the W and Z bosons and the fermions.",
           "",
-          "```bash",
-          "npx create-next-app --example blog-starter blog-starter-app",
-          "```",
-          "```bash",
-          "yarn create next-app --example blog-starter blog-starter-app",
-          "```",
-          "```bash",
-          "pnpm create next-app --example blog-starter blog-starter-app",
-          "```",
-          "Your blog should be up and running on [http://localhost:3000](http://localhost:3000)! If it doesn't work, post on [GitHub discussions](https://github.com/vercel/next.js/discussions).",
+          "The Lagrangian density consists of three terms:",
           "",
-          "Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).",
+          "The first term represents the kinetic energy of the Higgs field. It is given by $(D\\mu \\phi)^\\dagger (D^\\mu \\phi)$, where $\\phi$ is the Higgs field and $D_\\mu$ is the covariant derivative. The covariant derivative is used to ensure that the Lagrangian is invariant under local gauge transformations.",
           "",
-          "# Notes",
-          "`blog-starter` uses [Tailwind CSS](https://tailwindcss.com) [(v3.0)](https://tailwindcss.com/blog/tailwindcss-v3)."
+          "The second term represents the potential energy of the Higgs field. It is given by $-\\mu^2 \\phi^\\dagger \\phi$, where $\\mu$ is a constant parameter known as the Higgs mass parameter.",
+          "",
+          "The third term represents the self-interaction of the Higgs field. It is given by $-\\lambda (\\phi^\\dagger \\phi)^2$, where $\\lambda$ is a positive constant parameter known as the Higgs quartic coupling.", "The equation describes the behavior of the Higgs field in the presence of other particles and fields in the Standard Model. The dynamics of the Higgs field are determined by the principle of least action, which leads to the equations of motion for the field. The Higgs field is a scalar field, which means that it has a single degree of freedom, and it interacts with other particles in the Standard Model through the exchange of gauge bosons."
         ].join('\n'),
         md1.join('\n'),
         exampleMarkdown.join('\n'),

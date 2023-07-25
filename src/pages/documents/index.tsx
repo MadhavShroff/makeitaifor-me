@@ -10,12 +10,12 @@ import LoginPage from '../auth';
 import { ChatComponent } from '@/components/documents/ChatComponent';
 
 const Documents = () => {
-  // const [user, setUser] = useState(null);
-  const [user, setUser] = useState({ // Mock user
-    id: "91231123-1230u1u-123132",
-    name: "John Doe",
-    username: "john@doe.com"
-  });
+  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState({ // Mock user
+  //   id: "91231123-1230u1u-123132",
+  //   name: "John Doe",
+  //   username: "john@doe.com"
+  // });
   const [docs, setDocs] = useState<string[]>([]); 
 
   const pointerSensorOptions = {
@@ -31,18 +31,18 @@ const Documents = () => {
   );
 
   useEffect(() => {
-    // fetchUser(setUser);
+    fetchUser(setUser);
   }, []);
     
   useEffect(() => {
-    // if (user) {
-    //   fetchDocs(user)
-    //     .then(setDocs)
-    //     .catch((error) => {
-    //       console.log("error: ", error);
-    //     });
-    // }
-    setDocs(["Hello Hi", "How", "Are", "You", "Doing", "Today", "On", "This", "Blessed", "Day"]);
+    if (user) {
+      fetchDocs(user)
+        .then(setDocs)
+        .catch((error) => {
+          console.log("error: ", error);
+        });
+    }
+    // setDocs(["Hello Hi", "How", "Are", "You", "Doing", "Today", "On", "This", "Blessed", "Day"]);
   }, [user]);
 
   const handleDragStart = (event: DragStartEvent) => {
