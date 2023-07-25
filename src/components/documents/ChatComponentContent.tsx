@@ -6,6 +6,7 @@ import remarkGfm from 'remark-gfm';
 import rehypeKatex from 'rehype-katex';
 // import MathJax from 'react-mathjax';
 import 'katex/dist/katex.min.css';
+import { Chat, Message } from './ChatComponent';
 
 const ChatComponentInputField = ({ handleFormSubmit, inputValue, handleInputChange }) =>
   <div className="md:border-t-0 border-white/20 md:border-transparent md:border-transparent md:bg-vert-light-gradient pt-2 md:pl-2 md:w-[calc(100%-.5rem)]">
@@ -43,7 +44,7 @@ const ChatComponentInputField = ({ handleFormSubmit, inputValue, handleInputChan
     </div>
   </div>
 
-const ChatRow = (props) => {
+const MessageRow = (props) => {
   const customComponents = {
     h1: ({ node, ...props }) => <h1 className="my-heading1" {...props} />,
     h2: ({ node, ...props }) => <h2 className="my-heading2" {...props} />,
@@ -66,7 +67,7 @@ const ChatRow = (props) => {
       </div>
       <div className='flex flex-col w-6/12 text-white markdown overflow-x-scroll' style={{ maxWidth: '100%', overflowWrap: 'break-word' }}>
         <ReactMarkdown
-          children={props.message}
+          children={props.message == null ? '' : props.message}
           remarkPlugins={[remarkMath, remarkGfm]}
           rehypePlugins={[rehypeKatex]}
         // components={customComponents}
@@ -87,107 +88,13 @@ const ChatRow = (props) => {
 
 
 type ChatComponentContentState = {
-  inputValue: string,
-  messages: string[],
+  inputValue: string;
 };
 
 type ChatComponentContentProps = {
-  // add any props here
+  chat: Chat | undefined;
+  onChatSubmitted: (chatId: string) => void;
 };
-
-const md1 = [
-  "## How to use",
-  "Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:",
-  "",
-  "```bash",
-  "npx create-next-app --example blog-starter blog-starter-app",
-  "```",
-  "```bash",
-  "# github-markdown-css",
-  "> The minimal amount of CSS to replicate the GitHub Markdown style",
-  "**The CSS is generated. Contributions should go to [this repo](https://github.com/sindresorhus/generate-github-markdown-css).**",
-  "[<img src=\"https://cloud.githubusercontent.com/assets/170270/5219062/f22a978c-7685-11e4-8316-af25b6c89bc0.png\" width=\"300\">](http://sindresorhus.com/github-markdown-css)",
-  "## [Demo](https://sindresorhus.com/github-markdown-css)",
-  "## Install",
-  "Download [manually](https://raw.githubusercontent.com/sindresorhus/github-markdown-css/gh-pages/github-markdown.css), from [CDNJS](https://cdnjs.com/libraries/github-markdown-css), or with npm:",
-  "```sh",
-  "npm install github-markdown-css",
-  "```",
-  "## Usage",
-  "Import the `github-markdown.css` file and add a `markdown-body` class to the container of your rendered Markdown and set a width for it. GitHub uses `980px` width and `45px` padding, and `15px` padding for mobile.",
-  "```html",
-  "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">",
-  "<link rel=\"stylesheet\" href=\"github-markdown.css\">",
-  "<style>",
-  ".markdown-body {",
-  "  box-sizing: border-box;",
-  "  min-width: 200px;",
-  "  max-width: 980px;",
-  "  margin: 0 auto;",
-  "  padding: 45px;",
-  "}",
-  "@media (max-width: 767px) {",
-  "  .markdown-body {",
-  "    padding: 15px;",
-  "  }",
-  "}",
-  "</style>",
-  "<article class=\"markdown-body\">",
-  "  <h1>Unicorns</h1>",
-  "  <p>All the things</p>",
-  "</article>",
-  "```",
-  "You can use [GitHub's `/markdown` API](https://docs.github.com/en/free-pro-team@latest/rest/reference/markdown) to turn Markdown into the HTML that GitHub generates, which works well with the CSS in this repo. Other Markdown parsers will mostly work with these styles too. To mimic how GitHub highlights code, you can use [`starry-night`](https://github.com/wooorm/starry-night) with your Markdown parser of choice.",
-  "There are 3 themes provided in this package:",
-  "- **github-markdown.css**: (default) Automatically switches between light and dark through [`@media (prefers-color-scheme)`](https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme).",
-  "- **github-markdown-light.css**: Light-only.",
-  "- **github-markdown-dark.css**: Dark-only.",
-  "You may know that now GitHub supports more than 2 themes including `dark_dimmed`, `dark_high_contrast` and `colorblind` variants. If you want to try these themes, you can generate them on your own! See next section.",
-  "## How",
-  "See [`generate-github-markdown-css`](https://github.com/sindresorhus/generate-github-markdown-css) for how it's generated and ability to generate your own.",
-  "## Dev",
-  "Run `npm run make` to update the CSS."
-];
-
-
-const exampleMarkdown = [
-  "# Header 1",
-  "This is a paragraph with **bold text** and *italic text*.",
-  "## Header 2",
-  "This is a link: [OpenAI](https://openai.com)",
-  "### Header 3",
-  "This is a bullet list:",
-  "- Bullet 1",
-  "- Bullet 2",
-  "  - Bullet 2.1",
-  "This is a numbered list:",
-  "1. Number 1",
-  "2. Number 2",
-  "#### Header 4",
-  "This is a table:",
-  "| Column 1 | Column 2 |",
-  "|--------- |--------- |",
-  "| Cell 1   | Cell 2   |",
-  "##### Header 5",
-  "This is some inline `code`.",
-  "Here's a block of code:",
-  "```javascript",
-  "const hello = 'Hello, world!';",
-  "console.log(hello);",
-  "```",
-  "###### Header 6",
-  "This is a blockquote:",
-  "> Quote",
-  "And this is an image:",
-  "![alt text](https://placekitten.com/200/300)",
-  "Lastly, some inline math $ x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a} $ and a math block:",
-  "$$",
-  "\\begin{align*}",
-  "x &= {-b \\pm \\sqrt{b^2-4ac} \\over 2a} \\\\",
-  "y &= mx + b \\\\",
-  "\\end{align*}",
-  "$$",
-];
 
 class ChatComponentContent extends React.Component<ChatComponentContentProps, ChatComponentContentState> {
 
@@ -195,29 +102,6 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
     super(props);
     this.state = {
       inputValue: '',
-      messages: [
-        [
-          "## Heres some math:",
-          "$$",
-          "\\begin{align*}",
-          "\\mathcal{L}*{\\mathrm{Higgs}} = (D*\\mu \\phi)^\\dagger (D^\\mu \\phi) - \\mu^2 \\phi^\\dagger \\phi - \\lambda (\\phi^\\dagger \\phi)^2",
-          "\\end{align*}",
-          "$$",
-          "where $\\mathcal{L}{\\mathrm{Higgs}}$ is the Higgs Lagrangian, $D\\mu$ is the covariant derivative, $\\phi$ is the Higgs field, $\\mu^2$ is the mass term, and $\\lambda$ is the self-interaction term.",
-          "",
-          "The equation represents the Lagrangian density of the Higgs field in the context of the Standard Model of particle physics. The Higgs field is a scalar field that is responsible for the generation of mass for elementary particles such as the W and Z bosons and the fermions.",
-          "",
-          "The Lagrangian density consists of three terms:",
-          "",
-          "The first term represents the kinetic energy of the Higgs field. It is given by $(D\\mu \\phi)^\\dagger (D^\\mu \\phi)$, where $\\phi$ is the Higgs field and $D_\\mu$ is the covariant derivative. The covariant derivative is used to ensure that the Lagrangian is invariant under local gauge transformations.",
-          "",
-          "The second term represents the potential energy of the Higgs field. It is given by $-\\mu^2 \\phi^\\dagger \\phi$, where $\\mu$ is a constant parameter known as the Higgs mass parameter.",
-          "",
-          "The third term represents the self-interaction of the Higgs field. It is given by $-\\lambda (\\phi^\\dagger \\phi)^2$, where $\\lambda$ is a positive constant parameter known as the Higgs quartic coupling.", "The equation describes the behavior of the Higgs field in the presence of other particles and fields in the Standard Model. The dynamics of the Higgs field are determined by the principle of least action, which leads to the equations of motion for the field. The Higgs field is a scalar field, which means that it has a single degree of freedom, and it interacts with other particles in the Standard Model through the exchange of gauge bosons."
-        ].join('\n'),
-        md1.join('\n'),
-        exampleMarkdown.join('\n'),
-      ]
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -229,26 +113,29 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
 
   handleFormSubmit(e: React.FormEvent) {
     console.log("Form submitted");
+    this.props.onChatSubmitted(this.props.chat?.id ?? '');
     e.preventDefault();
-
-    this.setState((prevState) => ({
-      messages: [...prevState.messages, this.state.inputValue],
-      inputValue: ''
-    }));
-    console.log(this.state.messages);
   }
 
   render() {
-    let chats: JSX.Element[] = [];
-    console.log(this.state.messages.length);
-    for (let i = 0; i < this.state.messages.length; i++)
-      chats.push(<ChatRow message={this.state.messages[i]} />);
+    let messages: JSX.Element[] = [];
+    console.log(this.props.chat);
+
+    if(this.props.chat == undefined) {
+      messages = [];
+    } else if(this.props.chat.content == null) {
+      messages = [];
+    } else {
+      this.props.chat.content.forEach((message: Message) => {
+        messages.push(<MessageRow message={message.content?.join('\n')} />);
+      });
+    }
+    
     return (
       <div className="h-full flex flex-col justify-end items-center">
         <div className='w-full overflow-auto h-full'>
-          {chats}
+          {messages}
         </div>
-        Hello
         <ChatComponentInputField handleFormSubmit={this.handleFormSubmit} inputValue={this.state.inputValue} handleInputChange={this.handleInputChange} />
       </div>
     );

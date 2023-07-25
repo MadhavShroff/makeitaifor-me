@@ -4,10 +4,6 @@ import React from 'react';
 import { useEffect, useRef } from 'react';
 import SpanText from './SpanText';
 
-// type TestComponentProps = {
-// text: string
-// }
-
 const MarqueeText = ({ text }) => {
   const ref = useRef(null);
   const strokeOffsetRef = useRef(null);

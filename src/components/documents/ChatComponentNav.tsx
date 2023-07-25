@@ -1,3 +1,4 @@
+import { Chat } from "./ChatComponent";
 
 const NavButton = ({ toggleSideNav, showSideNav }) =>
     <button
@@ -21,17 +22,16 @@ const NavButton = ({ toggleSideNav, showSideNav }) =>
         </svg>
     </button>
 
-const NavRow = ({text, onEditClicked, onDeleteClicked, onChatClicked}) => {
+const NavRow = ({text, onEditClicked, onDeleteClicked, onChatClicked, isSelected}) => {
     return <li className="pt-2">
-        <a className="flex py-3 px-3 items-center gap-3 relative rounded-md cursor-pointer break-all border-2 group">
+        <a className={`flex py-3 px-3 items-center gap-3 relative rounded-md cursor-pointer border-2 hover:bg-orange-500 ${isSelected ? " bg-orange-500" : ""}`} >
             <svg className="h-4 w-4" onClick={onChatClicked} stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" >
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
             </svg>
-            <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative" onClick={onChatClicked}>
+            <div className="flex-1 text-ellipsis max-h-5 overflow-hidden relative" onClick={onChatClicked}>
                 {text}
-                <div className="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-black" />
             </div>
-            <div className="absolute flex right-1 z-10 text-white group-hover:visible invisible">
+            <div className="absolute flex right-1 z-10 text-white group-hover:visible">
                 <button className="p-1 hover:text-white" onClick={onEditClicked}>
                     <svg className="h-4 w-4" stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 20h9" />
@@ -58,8 +58,14 @@ const NavRow = ({text, onEditClicked, onDeleteClicked, onChatClicked}) => {
     </li>
 }
 
-export const ChatComponentNav = ({ toggleSideNav, showSideNav }) =>
-    <div id="chat-nav" className={"p-2 w-fit bg-black absolute top-1 left-1 " + (showSideNav ? "border-r-2 border-b-2" : "")}>
+export const ChatComponentNav = ({ toggleSideNav, showSideNav, onChatClicked, selectedChat, chats } : {
+    toggleSideNav: () => void,
+    showSideNav: boolean,
+    onChatClicked: (index: number) => void,
+    selectedChat: string | null,
+    chats: Chat[] | null,
+}) =>
+    <div id="chat-nav" className={"p-2 bg-black absolute top-1 left-1 " + (showSideNav ? "border-r-2 border-b-2" : "")}>
         <NavButton toggleSideNav={toggleSideNav} showSideNav={showSideNav} />
         {showSideNav &&
             <nav className="flex h-full w-full flex-col p-2" aria-label="Chat history">
@@ -74,38 +80,24 @@ export const ChatComponentNav = ({ toggleSideNav, showSideNav }) =>
                 </div>
                 <div className="flex-col flex-1 transition-opacity duration-500 overflow-y-auto">
                     <div className="flex flex-col space-y-2 pb-2 text-white text-sm">
-                        <div className="relative" data-projection-id="38" style={{ height: "auto", opacity: 1, transform: "none", transformOrigin: "50% 50% 0px" }}>
-                            <div className="sticky top-0 z-[16]" data-projection-id="39" style={{ transform: "none", transformOrigin: "50% 50% 0px", opacity: 1 }}>
+                        <div className="relative w-80" style={{ height: "auto", opacity: 1, transform: "none", transformOrigin: "50% 50% 0px" }}>
+                            {/* <div className="sticky top-0 z-[16]" style={{ transform: "none", transformOrigin: "50% 50% 0px", opacity: 1 }}>
                                 <h3 className="h-9 pb-2 pt-3 pl-1 text-xs text-white font-medium text-ellipsis overflow-hidden break-all">Yesterday</h3>
-                            </div>
+                            </div> */}
                             <ol>
                                 {
-                                    ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"].map((text, index) => <NavRow key={index} text={text}  onChatClicked={() => {
-                                        console.log("Chat clicked " + text);
+                                    chats != null && chats.map((chat : Chat, index : number) => <NavRow key={index} text={chat.title} isSelected={selectedChat == chat.id}
+                                    onChatClicked={() => {
+                                        onChatClicked(index);
+                                        console.log("Chat clicked " + chat.title);
                                     }} onEditClicked={() => {
-                                        console.log("Edit clicked " + text);
+                                        console.log("Edit clicked " + chat.title);
                                     }} onDeleteClicked={() => {
-                                        console.log("Delete clicked " + text);
+                                        console.log("Delete clicked " + chat.title);
                                     }} />)
                                 }
-                                <li className="relative" data-projection-id="41" style={{ opacity: 1, height: "auto", transform: "none", transformOrigin: "50% 50% 0px" }}>
-                                    <a className="flex py-3 px-3 items-center gap-3 relative rounded-md hover:bg-[#2A2B32] cursor-pointer break-all hover:pr-4 bg-orange-500 group">
-                                        <svg className="h-4 w-4" stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                                        </svg>
-                                        <div className="flex-1 text-ellipsis max-h-5 overflow-hidden break-all relative">
-                                            Delete Icon for Compact Web Tables
-                                            <div className="absolute inset-y-0 right-0 w-8 z-10 bg-gradient-to-l from-orange-500 group-hover:from-[#2A2B32]" />
-                                        </div>
-                                    </a>
-                                </li>
                             </ol>
                         </div>
-                    </div>
-                </div>
-                <div className="border-t border-white/20 pt-2 hidden">
-                    <div className="group relative">
-                        {/* Rest of the content goes here */}
                     </div>
                 </div>
             </nav>

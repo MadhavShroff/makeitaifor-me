@@ -1,3 +1,5 @@
+import { Chat } from "@/components/documents/ChatComponent";
+
 // fetches.tsx
 export const fetchUser = (setUser) => {
   return fetch('https://api.makeitaifor.me/auth/cognito/me', { method: 'GET', credentials: 'include',})
@@ -80,4 +82,28 @@ export const fetchDocs = async (user) => {
   });
   
   return filtered;
+};
+
+export const fetchChatsMeta = async (user) => {
+  if (!user) return;
+
+  const res = await fetch('https://api.makeitaifor.me/chats/getChatMeta', { method: 'GET', credentials: 'include',});
+  if (!res.ok) { throw new Error('Not authorized'); }
+  
+  const data = await res.json();
+  if(!data) return;
+
+  return data;
+};
+
+export const fetchChatContent = async (user, chatId) : Promise<Chat | null> => {
+  if (!user) return null;
+
+  const res = await fetch('https://api.makeitaifor.me/chats/getChatContent', { method: 'GET', credentials: 'include', body: JSON.stringify({ chatId: chatId })});
+  if (!res.ok) { throw new Error('Not authorized'); }
+  
+  const data = await res.json();
+  if(!data) return null;
+  
+  return data;
 };
