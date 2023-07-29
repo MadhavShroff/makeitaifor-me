@@ -15,7 +15,7 @@ async function getWebSocketToken() {
     return data.token;
 }
 
-const socket: Socket = io(`wss://api.makeitaifor.me?token=${getWebSocketToken()}`);
+const socket: Socket = io(`wss://api.makeitaifor.me?token=${() => getWebSocketToken()}`);
 
 socket.on('connect', () => {
     console.log('Connected to WebSocket');
