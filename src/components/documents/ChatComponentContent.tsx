@@ -4,13 +4,15 @@ import Button from '../Button';
 import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
 import rehypeKatex from 'rehype-katex';
+import Img from 'next/image';
 // import MathJax from 'react-mathjax';
 import 'katex/dist/katex.min.css';
 import { Chat, Message } from './ChatComponent';
+import { sendButtonClicked } from '@/utils/sockets';
 
 const ChatComponentInputField = ({ handleFormSubmit, inputValue, handleInputChange }) =>
   <div className="md:border-t-0 border-white/20 md:border-transparent md:border-transparent md:bg-vert-light-gradient pt-2 md:pl-2 md:w-[calc(100%-.5rem)]">
-    <form onSubmit={handleFormSubmit} className="stretch mx-2 flex flex-row gap-3 last:mb-2 md:mx-4 md:last:mb-6 lg:mx-auto lg:max-w-2xl xl:max-w-3xl">
+    <form onSubmit={handleFormSubmit} className="stretch mx-2 flex flex-row gap-3 lg:mx-auto lg:max-w-3xl xl:max-w-6xl">
       <div className="relative flex h-full flex-1 items-stretch md:flex-col" role="presentation">
         <div className="flex flex-col w-full py-[10px] flex-grow md:py-4 md:pl-4 relative border border-black/10 bg-black border-gray-900/50 text-white bg-gray-700 rounded-xl shadow-xs shadow-xs">
           <textarea
@@ -58,14 +60,14 @@ const MessageRow = (props) => {
   };
   return (
     <div className="flex flex-row w-full h-fit justify-start border-t-2 text-black">
-      <div className="flex flex-col w-4/12 mt-14">
+      <div className="flex flex-col w-3/12 mt-14">
         <div className="ml-2 mt-1">
           <div className="w-3 h-3 m-1 bg-blue-500 rounded-full"></div>
           <div className="text-white mt-1 ml-1 font-bold text-xs">John Doe</div>
           <div className="text-white ml-1 text-xs">Today at 12:34 AM</div>
         </div>
       </div>
-      <div className='flex flex-col w-6/12 text-white markdown overflow-x-scroll' style={{ maxWidth: '100%', overflowWrap: 'break-word' }}>
+      <div className='flex flex-col w-10/12 text-white markdown overflow-x-scroll' style={{ maxWidth: '100%', overflowWrap: 'break-word' }}>
         <ReactMarkdown
           children={props.message == null ? '' : props.message}
           remarkPlugins={[remarkMath, remarkGfm]}
@@ -79,7 +81,7 @@ const MessageRow = (props) => {
           <Button text='Reply' _key={1} className='w-fit' />
         </div>
       </div>
-      <div className='flex flex-col w-4/12'>
+      <div className='flex flex-col w-3/12'>
         <Button text='Reply' _key={1} className='w-fit' />
       </div>
     </div>
@@ -95,6 +97,14 @@ type ChatComponentContentProps = {
   chat: Chat | undefined;
   onChatSubmitted: (chatId: string) => void;
 };
+
+const TryOutBox = ({content}) => {
+  return (
+    <button className="w-48 m-2 text-center max-w-prose p-2 hover:bg-orange-500 bg-black border-white border-2 rounded-lg" onClick={() => sendButtonClicked(content)}>
+      {content}
+    </button>
+  );
+}
 
 class ChatComponentContent extends React.Component<ChatComponentContentProps, ChatComponentContentState> {
 
@@ -121,20 +131,48 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
     let messages: JSX.Element[] = [];
     console.log(this.props.chat);
 
-    if(this.props.chat == undefined) {
+    if (this.props.chat == undefined) {
       messages = [];
-    } else if(this.props.chat.content == null) {
+    } else if (this.props.chat.content == null) {
       messages = [];
     } else {
+      // messages = [];
       this.props.chat.content.forEach((message: Message) => {
         messages.push(<MessageRow message={message.content?.join('\n')} />);
       });
     }
-    
+
     return (
       <div className="h-full flex flex-col justify-end items-center">
         <div className='w-full overflow-auto h-full'>
-          {messages}
+          {messages.length != 0 && messages}
+          {messages.length == 0 &&
+            <div className="flex flex-row w-full h-full justify-start border-t-2 text-black">
+              <div className="flex flex-col w-4/12 mt-14"></div>
+              <div className='flex flex-col w-6/12 text-white items-center justify-center overflow-x-scroll' style={{ maxWidth: '100%', overflowWrap: 'break-word' }}>
+                <Img
+                  src={"/logo_nobg.png"}
+                  alt="Logo"
+                  width={500}
+                  height={1200}
+                />
+                <p>Heres some stuff you can try out</p>
+                <div className='flex flex-row '>
+                  <TryOutBox content={"What is this application good for?"} />
+                  <TryOutBox content={"List all relevant facts from this collection"} />
+                  <TryOutBox content={"Summarize all key points of this podcast episode"} />
+                </div>
+                <div className='flex flex-row '>
+                  <TryOutBox content={"What is this application good for?"} />
+                  <TryOutBox content={"List all relevant facts from this collection"} />
+                  <TryOutBox content={"Summarize all key points of this podcast episode"} />
+                </div>
+              </div>
+              <div className='flex flex-col w-4/12'>
+                <Button text='Reply' _key={1} className='w-fit' />
+              </div>
+            </div>
+          }
         </div>
         <ChatComponentInputField handleFormSubmit={this.handleFormSubmit} inputValue={this.state.inputValue} handleInputChange={this.handleInputChange} />
       </div>
