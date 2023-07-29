@@ -15,16 +15,21 @@ async function getWebSocketToken() {
     return data.token;
 }
 
-const socket: Socket = io(`wss://api.makeitaifor.me?token=${() => getWebSocketToken()}`);
+let socket: Socket;
 
-socket.on('connect', () => {
-    console.log('Connected to WebSocket');
-})
+(async () => {
+  const token = await getWebSocketToken();
+  socket = io(`wss://api.makeitaifor.me?token=${token}`);
+  
+  socket.on('connect', () => {
+      console.log('Connected to WebSocket');
+  })
 
-socket.emit('message', 'Hello from client lalalalal');
+  socket.emit('message', 'Hello from client lalalalal');
 
-socket.on('message', (message) => {
-    console.log('Received message from server: ', message);
-});
+  socket.on('message', (message) => {
+      console.log('Received message from server: ', message);
+  });
+})()
 
 export const sendButtonClicked = (content: string) => socket.emit('buttonClicked', { content: content });
