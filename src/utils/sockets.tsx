@@ -25,11 +25,17 @@ let socket: Socket;
       console.log('Connected to WebSocket');
   })
 
-  socket.emit('message', 'Hello from client lalalalal');
+  socket.emit('message', 'Hello from client lalalalal', (response) => {
+    console.log(response);
+  });
+  
 
   socket.on('message', (message) => {
       console.log('Received message from server: ', message);
   });
 })()
 
-export const sendButtonClicked = (content: string) => socket.emit('buttonClicked', { content: content });
+export const sendButtonClicked = (content: string) => {
+  console.log("sendButtonClicked");
+  socket.emit('buttonClicked', { content: content })
+};
