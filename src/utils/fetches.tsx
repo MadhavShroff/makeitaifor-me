@@ -1,4 +1,4 @@
-import { Chat } from "@/components/documents/ChatComponent";
+import { Chat } from "./types";
 
 // fetches.tsx
 export const fetchUser = (setUser) => {

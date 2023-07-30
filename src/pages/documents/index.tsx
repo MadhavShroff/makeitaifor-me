@@ -7,7 +7,8 @@ import { fetchDocs, fetchUser, fetchChatContent, fetchChatsMeta } from '@/utils/
 import { ScrollableStackContainer, ScrollableBoxContainer } from '@/components/documents/Stacks';
 import Footer from '@/components/Footer';
 import LoginPage from '../auth';
-import { Chat, ChatComponent, Message } from '@/components/documents/ChatComponent';
+import { ChatComponent } from '@/components/documents/ChatComponent';
+import { Chat, Message } from '@/utils/types';
 
 type User = {
   id: string;
@@ -25,29 +26,63 @@ const Documents = () => {
   const [docs, setDocs] = useState<string[]>([]); // names of all documents the user has uploaded
   const [chatsMeta, setChatsMeta] = useState<Chat[]>([]);
 
-  const pointerSensorOptions = {
-    activationConstraint: {
-      delay: 150,
-      tolerance: 5,
-    },
-  };
-
-  const sensors = useSensors(
-    useSensor(PointerSensor, pointerSensorOptions),
-    useSensor(KeyboardSensor),
-  );
-
   useEffect(() => {
     fetchUser(setUser);
   }, []);
 
   useEffect(() => {
     if (user) fetchDocs(user).then(setDocs).catch(console.error);
-    if (user) fetchChatsMeta(user).then(setChatsMeta).catch(console.error);
+    // if (user) fetchChatsMeta(user).then(setChatsMeta).catch(console.error);
     // if (user && chatsMeta && chatsMeta[0] && chatsMeta[0].id) fetchChatContent(user, chatsMeta[0].id).then(setChatContent).catch(console.error);
     // setDocs(["Hello Hi", "How", "Are", "You", "Doing", "Today", "On", "This", "Blessed", "Day"]);
     setChatsMeta(mockChats);
   }, [user]);
+
+  const appendEmptyMessageToChat = (chatId: string) => {
+    setChatsMeta(chatsMeta.map((chat) => {
+      if (chat.id == chatId) {
+        return {
+          ...chat,
+          content: [{
+            id: "temp",
+            content: null,
+            whoSent: user?.name ?? "John Doe",
+            whenSent: new Date()
+          }]
+        };
+      } else {
+        return chat;
+      }
+    }));
+  }
+
+  const appendContentToMessageInChat = (chatId: string, messageId: string, content: string) => {
+    const newContent = chatsMeta;
+    newContent.forEach((chat) => {
+      if (chat.id == chatId) {
+        if(chat.content == null) chat.content = [];
+        chat.content.forEach((message) => {
+          if (message.id == messageId) {
+            if (message.content == null) message.content = [];
+            message.content.push(content);
+          }
+        });
+      }
+    });
+  }
+  
+  const pointerSensorOptions = {
+    activationConstraint: {
+      delay: 150,
+      tolerance: 5,
+    },
+  };
+  
+  const sensors = useSensors(
+    useSensor(PointerSensor, pointerSensorOptions),
+    useSensor(KeyboardSensor),
+  );
+
 
   const handleDragStart = (event: DragStartEvent) => {
     console.log(`Drag started: ${event.active.id}`);
@@ -64,8 +99,7 @@ const Documents = () => {
   const handleDragEnd = (event) => {
     // Dragged-from id is active.id
     console.log(`Dragged from: ${event.active.id}`);
-
-    // Dragged-to id is over.id. It can be null if the item was not dragged over a droppable area.
+     // Dragged-to id is over.id. It can be null if the item was not dragged over a droppable area.
     if (event.over) {
       console.log(`Dragged to: ${event.over.id}`);
 
@@ -86,6 +120,8 @@ const Documents = () => {
             onChatSubmitted={(chatId : string) => {
               console.log("Chat submitted " + chatId + " for user " + user.username);
             }}
+            appendEmptyMessageToChat={appendEmptyMessageToChat}
+            appendContentToMessageInChat={appendContentToMessageInChat}
           />
         </div>}
         {user == null &&

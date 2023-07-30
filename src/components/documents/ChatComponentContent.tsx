@@ -7,14 +7,16 @@ import rehypeKatex from 'rehype-katex';
 import Img from 'next/image';
 // import MathJax from 'react-mathjax';
 import 'katex/dist/katex.min.css';
-import { Chat, Message } from './ChatComponent';
 import { emitTryButtonClicked } from '@/utils/sockets';
+import { Chat, Message } from '@/utils/types';
 
 type ChatComponentContentState = { inputValue: string; };
 
 type ChatComponentContentProps = {
   chat: Chat | undefined;
   onChatSubmitted: (chatId: string) => void;
+  appendEmptyMessageToChat: (chatId: string) => void;
+  appendContentToMessageInChat: (chatId: string, messageId: string, content: string) => void;
 };
 
 class ChatComponentContent extends React.Component<ChatComponentContentProps, ChatComponentContentState> {
@@ -68,14 +70,14 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
               <p>Heres some stuff you can try out</p>
               <div className='flex flex-col max-w-xl'>
                 <div className='flex flex-row '>
-                  <TryOutBox content={"What is this app good for?"} />
-                  <TryOutBox content={"List all relevant facts from this collection"} />
-                  <TryOutBox content={"Summarize all key points of this podcast episode"} />
+                  <TryOutBox content={"What is this app good for?"} appendContentToMessageInChat appendEmptyMessageToChat/>
+                  <TryOutBox content={"List all relevant facts from this collection"} appendContentToMessageInChat appendEmptyMessageToChat/>
+                  <TryOutBox content={"Summarize all key points of this podcast episode"} appendContentToMessageInChat appendEmptyMessageToChat/>
                 </div>
                 <div className='flex flex-row '>
-                  <TryOutBox content={"What is this application good for?"} />
-                  <TryOutBox content={"Summarize all key points of this podcast episode"} />
-                  <TryOutBox content={"List all relevant facts from this collection"} />
+                  <TryOutBox content={"What is this application good for?"} appendContentToMessageInChat appendEmptyMessageToChat/>
+                  <TryOutBox content={"Summarize all key points of this podcast episode"} appendContentToMessageInChat appendEmptyMessageToChat/>
+                  <TryOutBox content={"List all relevant facts from this collection"} appendContentToMessageInChat appendEmptyMessageToChat/>
                 </div>
               </div>
             </div>
@@ -168,9 +170,10 @@ const MessageRow = (props) => {
   );
 }
 
-const TryOutBox = ({ content }) => {
+const TryOutBox = ({ content, appendContentToMessageInChat, appendEmptyMessageToChat }) => {
   return (
-    <button className="m-2 text-center max-w-prose p-2 hover:bg-orange-500 bg-black border-white border-2 rounded-lg" onClick={() => emitTryButtonClicked(content)}>
+    <button className="m-2 text-center max-w-prose p-2 hover:bg-orange-500 bg-black border-white border-2 rounded-lg"
+      onClick={() => emitTryButtonClicked(content, appendEmptyMessageToChat, appendContentToMessageInChat)}>
       {content}
     </button>
   );

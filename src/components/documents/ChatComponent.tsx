@@ -2,28 +2,20 @@ import React, { useState } from "react";
 import { MDXProvider } from "@mdx-js/react";
 import { ChatComponentNav } from "./ChatComponentNav";
 import ChatComponentContent from "./ChatComponentContent";
-
-export type Message = {
-  id: string;
-  content: string[] | null; 
-  whoSent: string; // user name or "bot"
-  whenSent: Date; // timestamp
-}
-
-export type Chat = {
-  id: string;
-  title: string;
-  content: Message[] | null; // array of strings of markdown with math and images, where each \ is escaped. 
-}
+import { Chat } from "@/utils/types";
 
 export const ChatComponent = ({
   chatsMeta,
   onNewChatClicked,
   onChatSubmitted,
+  appendEmptyMessageToChat,
+  appendContentToMessageInChat,
 } : {
   chatsMeta: Chat[],
   onNewChatClicked: () => void,
   onChatSubmitted: (chatId: string) => void,
+  appendEmptyMessageToChat : (chatId: string) => void,
+  appendContentToMessageInChat : (chatId: string, messageId: string, content: string) => void
 }) => {
   const [showSideNav, setShowSideNav] = useState(false);
   const [selectedChat, setSelectedChat] = useState<string | null>(null); // Chat.id
@@ -46,7 +38,11 @@ export const ChatComponent = ({
         }}/>
       <ChatComponentContent chat={chatsMeta.find((chat) => {
         return selectedChat == chat.id;
-      })} onChatSubmitted={onChatSubmitted}/>
+      })} 
+        onChatSubmitted={onChatSubmitted}
+        appendEmptyMessageToChat={appendEmptyMessageToChat}
+        appendContentToMessageInChat={appendContentToMessageInChat}
+      />
     </div>
   );
 };
