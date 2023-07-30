@@ -58,23 +58,24 @@ const NavRow = ({text, onEditClicked, onDeleteClicked, onChatClicked, isSelected
     </li>
 }
 
-export const ChatComponentNav = ({ toggleSideNav, showSideNav, onChatClicked, selectedChat, chats } : {
+export const ChatComponentNav = ({ toggleSideNav, showSideNav, onChatClicked, selectedChat, chats, onNewChatClicked } : {
     toggleSideNav: () => void,
     showSideNav: boolean,
     onChatClicked: (index: number) => void,
     selectedChat: string | null,
     chats: Chat[] | null,
+    onNewChatClicked: () => void,
 }) =>
     <div id="chat-nav" className={"p-2 bg-black absolute top-1 left-1 " + (showSideNav ? "border-r-2 border-b-2" : "")}>
         <NavButton toggleSideNav={toggleSideNav} showSideNav={showSideNav} />
         {showSideNav &&
             <nav className="flex h-full w-full flex-col p-2" aria-label="Chat history">
                 <div className="mb-1 flex flex-row space-x-2">
-                    <a className="flex p-3 items-center transition-colors duration-200 text-white cursor-pointer text-sm rounded-md border border-white hover:bg-orange-500 h-11 flex-shrink-0 flex-grow">
+                    <a className="flex p-3 items-center transition-colors duration-200 text-white cursor-pointer text-sm rounded-md border border-white hover:bg-orange-500 h-11 flex-shrink-0 flex-grow" onClick={onNewChatClicked}>
                         <div className="text-xl p-2">
                             +
                         </div>
-                        New chat +
+                        New chat
                     </a>
                     <NavButton toggleSideNav={toggleSideNav} showSideNav={false} />
                 </div>

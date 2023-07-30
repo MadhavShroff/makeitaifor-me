@@ -18,8 +18,12 @@ export type Chat = {
 
 export const ChatComponent = ({
   chatsMeta,
+  onNewChatClicked,
+  onChatSubmitted,
 } : {
   chatsMeta: Chat[],
+  onNewChatClicked: () => void,
+  onChatSubmitted: (chatId: string) => void,
 }) => {
   const [showSideNav, setShowSideNav] = useState(false);
   const [selectedChat, setSelectedChat] = useState<string | null>(null); // Chat.id
@@ -32,14 +36,14 @@ export const ChatComponent = ({
     setSelectedChat(chatsMeta[index].id);
     console.log("Chat clicked " + index);
   };
-  
-  const onChatSubmitted = (chatId : string) => {
-    console.log("Chat submitted " + chatId);
-  }
 
   return (
     <div className="border-4 relative bg-black rounded-lg h-[100vh]">
-      <ChatComponentNav toggleSideNav={toggleSideNav} showSideNav={showSideNav} onChatClicked={onChatClicked} selectedChat={selectedChat} chats={chatsMeta} />
+      <ChatComponentNav toggleSideNav={toggleSideNav} showSideNav={showSideNav} onChatClicked={onChatClicked} selectedChat={selectedChat} chats={chatsMeta} 
+        onNewChatClicked={() => {
+          chatsMeta.find((chat) => chat.id == "temp") == undefined &&  onNewChatClicked();
+          setSelectedChat("temp");
+        }}/>
       <ChatComponentContent chat={chatsMeta.find((chat) => {
         return selectedChat == chat.id;
       })} onChatSubmitted={onChatSubmitted}/>

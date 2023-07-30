@@ -9,13 +9,19 @@ import Footer from '@/components/Footer';
 import LoginPage from '../auth';
 import { Chat, ChatComponent, Message } from '@/components/documents/ChatComponent';
 
+type User = {
+  id: string;
+  name: string;
+  username: string;
+};
+
 const Documents = () => {
-  // const [user, setUser] = useState(null);
-  const [user, setUser] = useState({ // Mock user
-    id: "91231123-1230u1u-123132",
-    name: "John Doe",
-    username: "john@doe.com"
-  });
+  const [user, setUser] = useState<User | null>(null);
+  // const [user, setUser] = useState({ // Mock user
+  //   id: "91231123-1230u1u-123132",
+  //   name: "John Doe",
+  //   username: "john@doe.com"
+  // });
   const [docs, setDocs] = useState<string[]>([]); // names of all documents the user has uploaded
   const [chatsMeta, setChatsMeta] = useState<Chat[]>([]);
 
@@ -32,14 +38,14 @@ const Documents = () => {
   );
 
   useEffect(() => {
-    // fetchUser(setUser);
+    fetchUser(setUser);
   }, []);
 
   useEffect(() => {
-    // if (user) fetchDocs(user).then(setDocs).catch(console.error);
-    // if (user) fetchChatsMeta(user).then(setChatsMeta).catch(console.error);
+    if (user) fetchDocs(user).then(setDocs).catch(console.error);
+    if (user) fetchChatsMeta(user).then(setChatsMeta).catch(console.error);
     // if (user && chatsMeta && chatsMeta[0] && chatsMeta[0].id) fetchChatContent(user, chatsMeta[0].id).then(setChatContent).catch(console.error);
-    setDocs(["Hello Hi", "How", "Are", "You", "Doing", "Today", "On", "This", "Blessed", "Day"]);
+    // setDocs(["Hello Hi", "How", "Are", "You", "Doing", "Today", "On", "This", "Blessed", "Day"]);
     setChatsMeta(mockChats);
   }, [user]);
 
@@ -74,7 +80,13 @@ const Documents = () => {
         <Navbar user={user} />
         {user && <div className=''>
           <ScrollableStackContainer fileNames={docs} />
-          <ChatComponent chatsMeta={chatsMeta}/>
+          <ChatComponent 
+            chatsMeta={chatsMeta} 
+            onNewChatClicked={() => {setChatsMeta([{"content": null, "id": "temp", "title" : "New Chat"}, ...chatsMeta])}}
+            onChatSubmitted={(chatId : string) => {
+              console.log("Chat submitted " + chatId + " for user " + user.username);
+            }}
+          />
         </div>}
         {user == null &&
           <LoginPage />

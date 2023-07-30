@@ -8,7 +8,87 @@ import Img from 'next/image';
 // import MathJax from 'react-mathjax';
 import 'katex/dist/katex.min.css';
 import { Chat, Message } from './ChatComponent';
-import { sendButtonClicked } from '@/utils/sockets';
+import { emitTryButtonClicked } from '@/utils/sockets';
+
+type ChatComponentContentState = { inputValue: string; };
+
+type ChatComponentContentProps = {
+  chat: Chat | undefined;
+  onChatSubmitted: (chatId: string) => void;
+};
+
+class ChatComponentContent extends React.Component<ChatComponentContentProps, ChatComponentContentState> {
+
+  constructor(props: ChatComponentContentProps) {
+    super(props);
+    this.state = {
+      inputValue: '',
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  }
+
+  handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+    this.setState({ inputValue: e.target.value });
+  }
+
+  handleFormSubmit(e: React.FormEvent) {
+    console.log("Form submitted");
+    this.props.onChatSubmitted(this.props.chat?.id ?? '');
+    e.preventDefault();
+  }
+
+  render() {
+    let messages: JSX.Element[] = [];
+    console.log(this.props.chat);
+
+    if (this.props.chat == undefined) {
+      messages = [];
+    } else if (this.props.chat.content == null) {
+      messages = [];
+    } else {
+      // messages = [];
+      this.props.chat.content.forEach((message: Message) => {
+        messages.push(<MessageRow message={message.content?.join('\n')} />);
+      });
+    }
+
+    return (
+      <div className="h-full flex flex-col justify-end items-center">
+        <div className='w-full overflow-auto h-full'>
+          {messages.length != 0 && messages}
+          {messages.length == 0 &&
+            <div className="flex flex-col items-center h-full justify-center border-t-2 text-white">
+              <Img
+                src={"/logo_nobg.png"}
+                alt="Logo"
+                width={500}
+                height={1200}
+              />
+              <p>Heres some stuff you can try out</p>
+              <div className='flex flex-col max-w-xl'>
+                <div className='flex flex-row '>
+                  <TryOutBox content={"What is this app good for?"} />
+                  <TryOutBox content={"List all relevant facts from this collection"} />
+                  <TryOutBox content={"Summarize all key points of this podcast episode"} />
+                </div>
+                <div className='flex flex-row '>
+                  <TryOutBox content={"What is this application good for?"} />
+                  <TryOutBox content={"Summarize all key points of this podcast episode"} />
+                  <TryOutBox content={"List all relevant facts from this collection"} />
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+        <ChatComponentInputField handleFormSubmit={this.handleFormSubmit} inputValue={this.state.inputValue} handleInputChange={this.handleInputChange} />
+      </div>
+    );
+  }
+}
+
+
+export default ChatComponentContent;
 
 const ChatComponentInputField = ({ handleFormSubmit, inputValue, handleInputChange }) =>
   <div className="md:border-t-0 border-white/20 md:border-transparent md:border-transparent md:bg-vert-light-gradient pt-2 md:pl-2 md:w-[calc(100%-.5rem)]">
@@ -88,97 +168,10 @@ const MessageRow = (props) => {
   );
 }
 
-
-type ChatComponentContentState = {
-  inputValue: string;
-};
-
-type ChatComponentContentProps = {
-  chat: Chat | undefined;
-  onChatSubmitted: (chatId: string) => void;
-};
-
-const TryOutBox = ({content}) => {
+const TryOutBox = ({ content }) => {
   return (
-    <button className="w-48 m-2 text-center max-w-prose p-2 hover:bg-orange-500 bg-black border-white border-2 rounded-lg" onClick={() => sendButtonClicked(content)}>
+    <button className="m-2 text-center max-w-prose p-2 hover:bg-orange-500 bg-black border-white border-2 rounded-lg" onClick={() => emitTryButtonClicked(content)}>
       {content}
     </button>
   );
 }
-
-class ChatComponentContent extends React.Component<ChatComponentContentProps, ChatComponentContentState> {
-
-  constructor(props: ChatComponentContentProps) {
-    super(props);
-    this.state = {
-      inputValue: '',
-    };
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
-  }
-
-  handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({ inputValue: e.target.value });
-  }
-
-  handleFormSubmit(e: React.FormEvent) {
-    console.log("Form submitted");
-    this.props.onChatSubmitted(this.props.chat?.id ?? '');
-    e.preventDefault();
-  }
-
-  render() {
-    let messages: JSX.Element[] = [];
-    console.log(this.props.chat);
-
-    if (this.props.chat == undefined) {
-      messages = [];
-    } else if (this.props.chat.content == null) {
-      messages = [];
-    } else {
-      // messages = [];
-      this.props.chat.content.forEach((message: Message) => {
-        messages.push(<MessageRow message={message.content?.join('\n')} />);
-      });
-    }
-
-    return (
-      <div className="h-full flex flex-col justify-end items-center">
-        <div className='w-full overflow-auto h-full'>
-          {messages.length != 0 && messages}
-          {messages.length == 0 &&
-            <div className="flex flex-row w-full h-full justify-start border-t-2 text-black">
-              <div className="flex flex-col w-4/12 mt-14"></div>
-              <div className='flex flex-col w-6/12 text-white items-center justify-center overflow-x-scroll' style={{ maxWidth: '100%', overflowWrap: 'break-word' }}>
-                <Img
-                  src={"/logo_nobg.png"}
-                  alt="Logo"
-                  width={500}
-                  height={1200}
-                />
-                <p>Heres some stuff you can try out</p>
-                <div className='flex flex-row '>
-                  <TryOutBox content={"What is this application good for?"} />
-                  <TryOutBox content={"List all relevant facts from this collection"} />
-                  <TryOutBox content={"Summarize all key points of this podcast episode"} />
-                </div>
-                <div className='flex flex-row '>
-                  <TryOutBox content={"What is this application good for?"} />
-                  <TryOutBox content={"List all relevant facts from this collection"} />
-                  <TryOutBox content={"Summarize all key points of this podcast episode"} />
-                </div>
-              </div>
-              <div className='flex flex-col w-4/12'>
-                <Button text='Reply' _key={1} className='w-fit' />
-              </div>
-            </div>
-          }
-        </div>
-        <ChatComponentInputField handleFormSubmit={this.handleFormSubmit} inputValue={this.state.inputValue} handleInputChange={this.handleInputChange} />
-      </div>
-    );
-  }
-}
-
-
-export default ChatComponentContent;

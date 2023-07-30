@@ -38,7 +38,7 @@ let socket: Socket;
   });
 })()
 
-export const sendButtonClicked = (content: string) => {
+export const emitTryButtonClicked = (content: string) => {
   console.log("sendButtonClicked");
   socket.emit('buttonClicked', { content: content })
 };
