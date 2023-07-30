@@ -70,14 +70,14 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
               <p>Heres some stuff you can try out</p>
               <div className='flex flex-col max-w-xl'>
                 <div className='flex flex-row '>
-                  <TryOutBox content={"What is this app good for?"} appendContentToMessageInChat appendEmptyMessageToChat/>
-                  <TryOutBox content={"List all relevant facts from this collection"} appendContentToMessageInChat appendEmptyMessageToChat/>
-                  <TryOutBox content={"Summarize all key points of this podcast episode"} appendContentToMessageInChat appendEmptyMessageToChat/>
+                  {["What is this app good for?", "List all relevant facts from this collection", "Summarize all key points of this podcast episode"].map((content) => {
+                      return <TryOutBox content={content} appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendEmptyMessageToChat={this.props.appendEmptyMessageToChat} />;
+                  })}
                 </div>
                 <div className='flex flex-row '>
-                  <TryOutBox content={"What is this application good for?"} appendContentToMessageInChat appendEmptyMessageToChat/>
-                  <TryOutBox content={"Summarize all key points of this podcast episode"} appendContentToMessageInChat appendEmptyMessageToChat/>
-                  <TryOutBox content={"List all relevant facts from this collection"} appendContentToMessageInChat appendEmptyMessageToChat/>
+                  {["What is this app good for?", "Summarize all key points of this podcast episode", "Write all the important math formulas in Integration, with Latex inline"].map((content) => {
+                      return <TryOutBox content={content} appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendEmptyMessageToChat={this.props.appendEmptyMessageToChat} />;
+                  })}
                 </div>
               </div>
             </div>

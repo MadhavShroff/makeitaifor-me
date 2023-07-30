@@ -1,7 +1,7 @@
-import { ChatComponent, Message } from "@/components/documents/ChatComponent"
-import { Chat } from "@/components/documents/ChatComponent"
+import { ChatComponent} from "@/components/documents/ChatComponent"
 import React, { useEffect, useState } from "react";
 import { mockChats } from "../documents";
+import { Chat } from "@/utils/types";
 
 const ChatPage = () => {
     // const [user, setUser] = useState(null);
@@ -13,6 +13,39 @@ const ChatPage = () => {
     const [docs, setDocs] = useState<string[]>([]); // names of all documents the user has uploaded
     const [chatsMeta, setChatsMeta] = useState<Chat[]>([]);
     const [chatContent, setChatContent] = useState<Chat | null>(null);
+
+    const appendEmptyMessageToChat = (chatId: string) => {
+        setChatsMeta(chatsMeta.map((chat) => {
+          if (chat.id == chatId) {
+            return {
+              ...chat,
+              content: [{
+                id: "temp",
+                content: null,
+                whoSent: user?.name ?? "John Doe",
+                whenSent: new Date()
+              }]
+            };
+          } else {
+            return chat;
+          }
+        }));
+      }
+    
+      const appendContentToMessageInChat = (chatId: string, messageId: string, content: string) => {
+        const newContent = chatsMeta;
+        newContent.forEach((chat) => {
+          if (chat.id == chatId) {
+            if(chat.content == null) chat.content = [];
+            chat.content.forEach((message) => {
+              if (message.id == messageId) {
+                if (message.content == null) message.content = [];
+                message.content.push(content);
+              }
+            });
+          }
+        });
+      }
 
     const pointerSensorOptions = {
         activationConstraint: {
@@ -39,7 +72,10 @@ const ChatPage = () => {
             onNewChatClicked={() => {setChatsMeta([{"content": null, "id": "temp", "title" : "New Chat"}, ...chatsMeta])}}
             onChatSubmitted={(chatId : string) => {
               console.log("Chat submitted " + chatId + " for user " + user.username);
-            }}/>
+            }}
+            appendContentToMessageInChat={appendContentToMessageInChat}
+            appendEmptyMessageToChat={appendEmptyMessageToChat}
+            />
         </main>
     )
 }
