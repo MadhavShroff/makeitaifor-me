@@ -18,8 +18,8 @@ async function getWebSocketToken() {
 let socket: Socket;
 
 (async () => {
-  const token = await getWebSocketToken();
-  socket = io(`wss://api.makeitaifor.me?/?token=${token}`);
+  // const token = await getWebSocketToken();
+  socket = io(`wss://api.makeitaifor.me?/`);
 
   socket.on('connect', () => {
     console.log('Connected to WebSocket');
