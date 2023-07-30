@@ -10,13 +10,11 @@ const ChatPage = () => {
     name: "John Doe",
     username: "john@doe.com"
   });
-  const [docs, setDocs] = useState<string[]>([]); // names of all documents the user has uploaded
-  const [chatsMeta, setChatsMeta] = useState<Chat[]>([]);
-  const [chatContent, setChatContent] = useState<Chat | null>(null);
+  const [chats, setChats] = useState<Chat[]>([]);
 
   const appendEmptyMessageToChat = (chatId: string) => {
     console.log("Appending empty message to chat " + chatId);
-    setChatsMeta(chatsMeta.map((chat) => {
+    setChats(chats.map((chat) => {
       if (chat.id == chatId) {
         return {
           ...chat,
@@ -34,18 +32,27 @@ const ChatPage = () => {
   }
 
   const appendContentToMessageInChat = (chatId: string, messageId: string, content: string) => {
-    const newContent = chatsMeta;
-    newContent.forEach((chat) => {
-      if (chat.id == chatId) {
-        if (chat.content == null) chat.content = [];
-        chat.content.forEach((message) => {
-          if (message.id == messageId) {
-            if (message.content == null) message.content = [];
-            message.content.push(content);
-          }
-        });
+    console.log(`Appending content to message in chat ${chatId} with message id ${messageId}`);
+    console.log("Content: " + content);
+    setChats(chats.map((chat) => {
+      if (chat.id === chatId) {
+        return {
+          ...chat,
+          content: chat.content ? chat.content.map((message) => {
+            if (message.id === messageId) {
+              return {
+                ...message,
+                content: content.split('\n')
+              };
+            } else {
+              return message;
+            }
+          }) : []
+        };
+      } else {
+        return chat;
       }
-    });
+    }));
   }
 
   const pointerSensorOptions = {
@@ -63,14 +70,12 @@ const ChatPage = () => {
     // if (user) fetchDocs(user).then(setDocs).catch(console.error);
     // if (user) fetchChatsMeta(user).then(setChatsMeta).catch(console.error);
     // if (user && chatsMeta && chatsMeta[0] && chatsMeta[0].id) fetchChatContent(user, chatsMeta[0].id).then(setChatContent).catch(console.error);
-    setDocs(["Hello Hi", "How", "Are", "You", "Doing", "Today", "On", "This", "Blessed", "Day"]);
-    setChatsMeta(mockChats);
-    setChatContent(mockChats[0]);
+    setChats(mockChats);
   }, [user]);
   return (
     <main className="overflow-hidden">
-      <ChatComponent chatsMeta={chatsMeta}
-        onNewChatClicked={() => { setChatsMeta([{ "content": null, "id": "temp", "title": "New Chat" }, ...chatsMeta]) }}
+      <ChatComponent chatsMeta={chats}
+        onNewChatClicked={() => { setChats([{ "content": null, "id": "temp", "title": "New Chat" }, ...chats]) }}
         onChatSubmitted={(chatId: string) => {
           console.log("Chat submitted " + chatId + " for user " + user.username);
         }}

@@ -58,30 +58,36 @@ const Documents = () => {
   }
 
   const appendContentToMessageInChat = (chatId: string, messageId: string, content: string) => {
-    console.log("Appending content to message in chat " + chatId + " with message id " + messageId);
-    console.log("Content: " + content)
-    const newContent = chatsMeta;
-    newContent.forEach((chat) => {
-      if (chat.id == chatId) {
-        if(chat.content == null) chat.content = [];
-        chat.content.forEach((message) => {
-          if (message.id == messageId) {
-            if (message.content == null) message.content = [];
-            message.content = content.split('\n');
-          }
-        });
+    console.log(`Appending content to message in chat ${chatId} with message id ${messageId}`);
+    console.log("Content: " + content);
+    setChatsMeta(chatsMeta.map((chat) => {
+      if (chat.id === chatId) {
+        return {
+          ...chat,
+          content: chat.content ? chat.content.map((message) => {
+            if (message.id === messageId) {
+              return {
+                ...message,
+                content: content.split('\n')
+              };
+            } else {
+              return message;
+            }
+          }) : []
+        };
+      } else {
+        return chat;
       }
-    });
-    setChatsMeta(newContent);
+    }));
   }
-  
+
   const pointerSensorOptions = {
     activationConstraint: {
       delay: 150,
       tolerance: 5,
     },
   };
-  
+
   const sensors = useSensors(
     useSensor(PointerSensor, pointerSensorOptions),
     useSensor(KeyboardSensor),
@@ -103,7 +109,7 @@ const Documents = () => {
   const handleDragEnd = (event) => {
     // Dragged-from id is active.id
     console.log(`Dragged from: ${event.active.id}`);
-     // Dragged-to id is over.id. It can be null if the item was not dragged over a droppable area.
+    // Dragged-to id is over.id. It can be null if the item was not dragged over a droppable area.
     if (event.over) {
       console.log(`Dragged to: ${event.over.id}`);
 
@@ -118,10 +124,10 @@ const Documents = () => {
         <Navbar user={user} />
         {user && <div className=''>
           <ScrollableStackContainer fileNames={docs} />
-          <ChatComponent 
-            chatsMeta={chatsMeta} 
-            onNewChatClicked={() => {setChatsMeta([{"content": null, "id": "temp", "title" : "New Chat"}, ...chatsMeta])}}
-            onChatSubmitted={(chatId : string) => {
+          <ChatComponent
+            chatsMeta={chatsMeta}
+            onNewChatClicked={() => { setChatsMeta([{ "content": null, "id": "temp", "title": "New Chat" }, ...chatsMeta]) }}
+            onChatSubmitted={(chatId: string) => {
               console.log("Chat submitted " + chatId + " for user " + user.username);
             }}
             appendEmptyMessageToChat={appendEmptyMessageToChat}
