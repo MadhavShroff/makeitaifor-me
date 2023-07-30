@@ -3,18 +3,12 @@ import { DndContext, DragMoveEvent, DragOverEvent, DragStartEvent } from '@dnd-k
 import { KeyboardSensor, PointerSensor } from '@dnd-kit/core';
 import { useSensor, useSensors } from '@dnd-kit/core';
 import Navbar from '@/components/Navbar';
-import { fetchDocs, fetchUser, fetchChatContent, fetchChatsMeta } from '@/utils/fetches';
+import { fetchDocs, fetchUser, fetchChatContent, fetchChats } from '@/utils/fetches';
 import { ScrollableStackContainer, ScrollableBoxContainer } from '@/components/documents/Stacks';
 import Footer from '@/components/Footer';
 import LoginPage from '../auth';
 import { ChatComponent } from '@/components/documents/ChatComponent';
-import { Chat, Message } from '@/utils/types';
-
-type User = {
-  id: string;
-  name: string;
-  username: string;
-};
+import { Chat, Message, User } from '@/utils/types';
 
 const Documents = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -24,7 +18,6 @@ const Documents = () => {
   //   username: "john@doe.com"
   // });
   const [docs, setDocs] = useState<string[]>([]); // names of all documents the user has uploaded
-  const [chatsMeta, setChatsMeta] = useState<Chat[]>([]);
 
   useEffect(() => {
     fetchUser(setUser);
@@ -32,54 +25,8 @@ const Documents = () => {
 
   useEffect(() => {
     if (user) fetchDocs(user).then(setDocs).catch(console.error);
-    // if (user) fetchChatsMeta(user).then(setChatsMeta).catch(console.error);
-    // if (user && chatsMeta && chatsMeta[0] && chatsMeta[0].id) fetchChatContent(user, chatsMeta[0].id).then(setChatContent).catch(console.error);
     // setDocs(["Hello Hi", "How", "Are", "You", "Doing", "Today", "On", "This", "Blessed", "Day"]);
-    setChatsMeta(mockChats);
   }, [user]);
-
-  const appendEmptyMessageToChat = (chatId: string) => {
-    console.log("Appending empty message to chat " + chatId);
-    setChatsMeta(chatsMeta.map((chat) => {
-      if (chat.id == chatId) {
-        return {
-          ...chat,
-          content: [{
-            id: "temp",
-            content: null,
-            whoSent: user?.name ?? "John Doe",
-            whenSent: new Date()
-          }]
-        };
-      } else {
-        return chat;
-      }
-    }));
-  }
-
-  const appendContentToMessageInChat = (chatId: string, messageId: string, content: string) => {
-    console.log(`Appending content to message in chat ${chatId} with message id ${messageId}`);
-    console.log("Content: " + content);
-    setChatsMeta(chatsMeta.map((chat) => {
-      if (chat.id === chatId) {
-        return {
-          ...chat,
-          content: chat.content ? chat.content.map((message) => {
-            if (message.id === messageId) {
-              return {
-                ...message,
-                content: content.split('\n')
-              };
-            } else {
-              return message;
-            }
-          }) : []
-        };
-      } else {
-        return chat;
-      }
-    }));
-  }
 
   const pointerSensorOptions = {
     activationConstraint: {
@@ -124,15 +71,6 @@ const Documents = () => {
         <Navbar user={user} />
         {user && <div className=''>
           <ScrollableStackContainer fileNames={docs} />
-          <ChatComponent
-            chatsMeta={chatsMeta}
-            onNewChatClicked={() => { setChatsMeta([{ "content": null, "id": "temp", "title": "New Chat" }, ...chatsMeta]) }}
-            onChatSubmitted={(chatId: string) => {
-              console.log("Chat submitted " + chatId + " for user " + user.username);
-            }}
-            appendEmptyMessageToChat={appendEmptyMessageToChat}
-            appendContentToMessageInChat={appendContentToMessageInChat}
-          />
         </div>}
         {user == null &&
           <LoginPage />
@@ -289,23 +227,28 @@ const content4: Message[] = [{
 
 export const mockChats = [ // metadata of all chats of the user
   {
-    id: "345",
-    title: "Hello",
+    id: "temp",
+    title: "New Chat",
     content: content1
   },
-  {
-    id: "135",
-    title: "Some title",
-    content: content2
-  },
-  {
-    id: "142",
-    title: "Hello 2",
-    content: content3,
-  },
-  {
-    id: "153",
-    title: "Some title 3",
-    content: content4,
-  },
+  // {
+  //   id: "345",
+  //   title: "Hello",
+  //   content: content1
+  // },
+  // {
+  //   id: "135",
+  //   title: "Some title",
+  //   content: content2
+  // },
+  // {
+  //   id: "142",
+  //   title: "Hello 2",
+  //   content: content3,
+  // },
+  // {
+  //   id: "153",
+  //   title: "Some title 3",
+  //   content: content4,
+  // },
 ]

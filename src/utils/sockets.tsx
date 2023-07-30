@@ -48,7 +48,7 @@ export const emitTryButtonClicked = (
   // create new message row
   appendEmptyMessageToChat("temp");
   socket.on('textGenerated', (response) => {
-    console.log('text generated from server: ', response);
+    console.log('text generated message from server: ', response);
     appendContentToMessageInChat("temp", "temp", response);
   });
 };

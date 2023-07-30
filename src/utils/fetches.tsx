@@ -84,7 +84,7 @@ export const fetchDocs = async (user) => {
   return filtered;
 };
 
-export const fetchChatsMeta = async (user) => {
+export const fetchChats = async (user) => {
   if (!user) return;
 
   const res = await fetch('https://api.makeitaifor.me/chats/getChatMeta', { method: 'GET', credentials: 'include',});
