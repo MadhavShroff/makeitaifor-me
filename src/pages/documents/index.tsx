@@ -39,6 +39,7 @@ const Documents = () => {
   }, [user]);
 
   const appendEmptyMessageToChat = (chatId: string) => {
+    console.log("Appending empty message to chat " + chatId);
     setChatsMeta(chatsMeta.map((chat) => {
       if (chat.id == chatId) {
         return {
@@ -57,6 +58,8 @@ const Documents = () => {
   }
 
   const appendContentToMessageInChat = (chatId: string, messageId: string, content: string) => {
+    console.log("Appending content to message in chat " + chatId + " with message id " + messageId);
+    console.log("Content: " + content)
     const newContent = chatsMeta;
     newContent.forEach((chat) => {
       if (chat.id == chatId) {
@@ -64,11 +67,12 @@ const Documents = () => {
         chat.content.forEach((message) => {
           if (message.id == messageId) {
             if (message.content == null) message.content = [];
-            message.content.push(content);
+            message.content = content.split('\n');
           }
         });
       }
     });
+    setChatsMeta(newContent);
   }
   
   const pointerSensorOptions = {

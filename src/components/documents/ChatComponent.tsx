@@ -37,7 +37,7 @@ export const ChatComponent = ({
           setSelectedChat("temp");
         }}/>
       <ChatComponentContent chat={chatsMeta.find((chat) => {
-        return selectedChat == chat.id;
+        return selectedChat == chat.id || (selectedChat == "temp");
       })} 
         onChatSubmitted={onChatSubmitted}
         appendEmptyMessageToChat={appendEmptyMessageToChat}
