@@ -49,6 +49,6 @@ export const emitTryButtonClicked = (
   appendEmptyMessageToChat("temp");
   socket.on('textGenerated', (response) => {
     console.log('Received message from server: ', response);
-    appendContentToMessageInChat("temp", "temp", response.data);
+    appendContentToMessageInChat("temp", "temp", response);
   });
 };
