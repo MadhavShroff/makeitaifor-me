@@ -1,4 +1,4 @@
-import { Chat } from "./ChatComponent";
+import { Chat } from "@/utils/types";
 
 const NavButton = ({ toggleSideNav, showSideNav }) =>
     <button
