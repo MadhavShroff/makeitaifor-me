@@ -147,7 +147,7 @@ const MessageRow = (props) => {
           <div className="text-white ml-1 text-xs">Today at 12:34 AM</div>
         </div>
       </div>
-      <div className='flex flex-col w-10/12 text-white markdown overflow-x-scroll' style={{ maxWidth: '100%', overflowWrap: 'break-word' }}>
+      <div className='flex flex-col w-10/12 text-white markdown overflow-x-scroll break-words max-w-full z-0'>
         <ReactMarkdown
           children={props.message == null ? '' : props.message}
           remarkPlugins={[remarkMath, remarkGfm]}
