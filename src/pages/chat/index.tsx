@@ -38,16 +38,14 @@ const ChatPage = () => {
       if (chat.id === chatId) {
         return {
           ...chat,
-          content: chat.content ? chat.content.map((message) => {
-            if (message.id === messageId) {
-              return {
-                ...message,
-                content: content.split('\n')
-              };
-            } else {
-              return message;
-            }
-          }) : []
+          content: [
+            ...(chat.content == null ? [] : chat.content.filter((message) => message.id != messageId)),
+            {
+            id: "temp",
+            content: content.split("\n"),
+            whoSent: user?.name ?? "John Doe",
+            whenSent: new Date()
+          }]
         };
       } else {
         return chat;
