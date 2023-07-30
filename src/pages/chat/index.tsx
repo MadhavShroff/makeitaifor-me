@@ -35,7 +35,11 @@ const ChatPage = () => {
     }, [user]);
     return (
         <main className="overflow-hidden">
-            <ChatComponent chatsMeta={mockChats}/>
+            <ChatComponent chatsMeta={chatsMeta} 
+            onNewChatClicked={() => {setChatsMeta([{"content": null, "id": "temp", "title" : "New Chat"}, ...chatsMeta])}}
+            onChatSubmitted={(chatId : string) => {
+              console.log("Chat submitted " + chatId + " for user " + user.username);
+            }}/>
         </main>
     )
 }
