@@ -36,13 +36,15 @@ let socket: Socket;
 
 export const emitTryButtonClicked = (
   content: string, 
-  appendEmptyMessageToChat: (chatId: string) => void, 
+  appendMessageToChat: (chatId: string) => string, 
   appendContentToMessageInChat: (chatId: string, messageId: string, content: string) => void
 ) => {
   console.log("tryButtonClicked");
   socket.emit('tryButtonClicked', { content: content });
   // create new message row
-  appendEmptyMessageToChat("temp");
+  let mid = appendMessageToChat("temp");
+  appendContentToMessageInChat("temp", mid, content);
+  appendMessageToChat("temp");
   socket.on('textGenerated', (response) => {
     console.log('text generated message from server: ', response);
     appendContentToMessageInChat("temp", "temp", response);

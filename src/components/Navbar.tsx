@@ -41,7 +41,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       <div className="relative w-full h-full overflow-hidden hor-scroll-wrap justify-end">
         <div
           id="navbar"
-          className="flex gap-2 sm:gap-2 overflow-x-auto justify-start scrollbar-hide hor-scroll pr-8 pl-5"
+          className="flex gap-2 sm:gap-2 overflow-x-auto justify-end scrollbar-hide hor-scroll pl-5"
         >
           {links.map((link, index) => (
             <Link

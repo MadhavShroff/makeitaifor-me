@@ -15,73 +15,68 @@ type Product = {
 
 const defaults: Product[] = [
   {
-    title: 'Chat Pro',
+    title: 'Collections Search',
     description: [
-      'Full access to web browsing ',
-      'with the most advanced AI models on the planet.',
-      'Models available are updated regularly to make the latest and greatest available at the earliest. No configuarion or API keys needed. Simply sign up and get started.',
+      "AI, understands, and fetches information from a range of document types for you.",
+      "Create, modify and then interface with document collections.",
+      "Supports ingesting and searching through PDFs, Research papers (Yes, including the math), youtube videos, Web articles. More coming up soon.",
     ],
     image: '/logo_nobg.png',
-    subheading: 'ChatGPT on Steroids',
+    subheading: 'The Future of information retrieval',
     bg: 'bg-black',
   },
   {
     title: 'Content Writing',
-    description:
+    description: [
       'Write content for your website, blog, or social media with the help of AI. Simply provide a few keywords and let the AI do the rest.',
+      "Coming Soon ...",
+    ],
     image: '/icon3.png',
     bg: 'bg-black',
     ltr: true,
   },
   {
-    title: 'Outreach',
-    description: `ChatGPT Pro is a cutting-edge AI tool that can carry out human-like text conversations. It's perfect for customer service, answering queries, and even for personal use as a virtual assistant.`,
+    title: 'And a Lot More',
+    description: [
+      'As AI becomes more and more powerful, we will provide more and more services that build upon the latest models available.',
+      "Stay tuned for more ...",
+    ],
     image: '/icon2.png',
-    bg: 'bg-black',
-  },
-  {
-    title: 'Scheduler',
-    description: '',
-    image: '/icon4_nobg.png',
     bg: 'bg-black',
     ltr: true,
   },
-  // Add more products here
 ];
 
 const ProductDisplay = ({ product }: { product: Product }) => {
   return (
     <div
       className={
-        'flex flex-col md:flex-row items-start justify-between p-6 rounded-lg shadow-lg border-2 border-white ' +
+        'flex flex-col md:flex-row items-start justify-between p-6 sm:p-2 rounded-lg shadow-lg border-2 border-white ' +
         product.bg
       }
     >
-      <div className="text-4xl md:text-6xl font-bold text-center md:text-left mb-4 md:mb-0">
-        <div className="container mx-auto">
-          <h2 className="text-4xl sm:text-6xl lg:text-8xl leading-7 font-normal mb-4">
+      <div className="text-4xl md:text-6xl font-bold text-center md:text-left">
+        <div className="container mx-auto max-w-prose">
+          <h2 className="text-4xl sm:text-4xl lg:text-7xl leading-7 font-normal mb-4 mt-4">
             {product.title}
           </h2>
-          <p className="text-xl sm:text-3xl lg:text-5xl leading-7 font-normal mb-4 text-orange-500">
+          <p className="text-xl lg:text-4xl leading-7 font-normal mb-4 text-orange-500">
             {product.subheading}
           </p>
           {Array.isArray(product.description) ? (
             product.description.map((desc, index) => (
-              <p
-                key={index}
-                className="text-xl sm:text-2xl lg:text-4xl leading-7 font-normal"
-              >
+              <p key={index} className={"pb-1 sm:text-sm text-lg lg:text-2xl font-normal " + ((index%2==1) ? "text-orange-500" : "")} >
                 {desc}
               </p>
             ))
           ) : (
-            <p className="text-xl sm:text-2xl lg:text-4xl leading-7 font-normal">
+            <p className="pb-1 sm:text-sm text-normal">
               {product.description}
             </p>
           )}
         </div>
       </div>
-      <div className="flex h-full w-full md:w-400 md:h-400 relative antialiased justify-end">
+      <div className="flex h-full w-full md:w-400 md:h-400 relative antialiased justify-center">
         <Image
           src={product.image}
           alt={product.title}
@@ -96,7 +91,7 @@ const ProductDisplay = ({ product }: { product: Product }) => {
 
 const ProductSection = ({ products = defaults }: { products?: Product[] }) => {
   return (
-    <section className="flex flex-col gap-10 p-10">
+    <section className="flex flex-col gap-5 sm:gap-5 p-10 sm:p-3">
       <IntroSection />
       {/* <MarqueeText text={'Engage'} /> */}
       {products.map((product) => (

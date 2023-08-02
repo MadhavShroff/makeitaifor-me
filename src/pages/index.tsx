@@ -6,6 +6,8 @@ import HeroSection from '@/components/HeroSection';
 import ProductSection from '@/components/ProductSection';
 import Footer from '@/components/Footer';
 import { fetchUser } from '@/utils/fetches'; // import the fetchUser function
+import Button from '@/components/Button';
+import Link from 'next/link';
 
 const Home = () => {
   const [user, setUser] = useState(null);
@@ -30,8 +32,11 @@ const Home = () => {
           to work for <span className="text-orange-500">
             Your Business
           </span>{' '}
-          <br></br> <br></br>🦾🤖🦾
+          <br></br>🦾🤖🦾
         </h2>
+        <Link href="/chat">
+          <Button _key={0} text={"Start for Free"} className="lg:text-4xl lg:mb-4"/> 
+        </Link> 
       </HeroSection>
       <ProductSection />
       <Footer />

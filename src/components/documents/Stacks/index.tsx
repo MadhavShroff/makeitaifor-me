@@ -10,7 +10,7 @@ export const ScrollableStackContainer = (props) => {
             </div>
             <FileUploadComponent />
             <FilesStack fileNames={props.fileNames} />
-            {["Sample Collction : Podacasts", "Sample Research PDFs & Lectures"].map((title, index) => (
+            {["Sample: Podcasts", "Sample: Research PDFs & Lectures", "Sample: Tax Documents"].map((title, index) => (
                 <Stack key={index} title={title} />
                 // <div className="transform translate-y-20"> {/* Increase translate value if needed */}
                 // </div>

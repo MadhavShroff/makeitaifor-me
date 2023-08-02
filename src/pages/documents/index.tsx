@@ -69,7 +69,7 @@ const Documents = () => {
     <main className={'flex flex-col overflow-hidden'}>
       <DndContext sensors={sensors} onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
         <Navbar user={user} />
-        {user && <div className=''>
+        {user && <div className='h-[96vh]'>
           <ScrollableStackContainer fileNames={docs} />
         </div>}
         {user == null &&

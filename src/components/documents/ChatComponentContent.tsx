@@ -15,7 +15,7 @@ type ChatComponentContentState = { inputValue: string; };
 type ChatComponentContentProps = {
   chat: Chat | undefined;
   onChatSubmitted: (chatId: string) => void;
-  appendEmptyMessageToChat: (chatId: string) => void;
+  appendMessageToChat: (chatId: string) => string;
   appendContentToMessageInChat: (chatId: string, messageId: string, content: string) => void;
 };
 
@@ -59,23 +59,24 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
         <div className='w-full overflow-auto h-full'>
           {messages.length != 0 && messages}
           {messages.length == 0 &&
-            <div className="flex flex-col items-center h-full justify-center border-t-2 text-white">
+            <div className="flex flex-col items-center h-full justify-center sm:justify-start border-t-2 text-white">
               <Img
                 src={"/logo_nobg.png"}
                 alt="Logo"
-                width={500}
-                height={1200}
+                width={1000}
+                height={1000}
+                className="object-contain w-[50%] h-[50%] sm:w-full sm:h-full"
               />
               <p>Heres some stuff you can try out</p>
               <div className='flex flex-col max-w-xl'>
-                <div className='flex flex-row '>
+                <div className='flex flex-row sm:flex-col'>
                   {["What is this app good for?", "List all relevant facts from this collection", "Summarize all key points of this podcast episode"].map((content) => {
-                      return <TryOutBox content={content} appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendEmptyMessageToChat={this.props.appendEmptyMessageToChat} />;
+                      return <TryOutBox content={content} appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendMessageToChat={this.props.appendMessageToChat} />;
                   })}
                 </div>
-                <div className='flex flex-row '>
+                <div className='flex flex-row sm:flex-col'>
                   {["What is this app good for?", "Summarize all key points of this podcast episode", "Write all the important math formulas in Integration, with Latex inline"].map((content) => {
-                      return <TryOutBox content={content} appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendEmptyMessageToChat={this.props.appendEmptyMessageToChat} />;
+                      return <TryOutBox content={content} appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendMessageToChat={this.props.appendMessageToChat} />;
                   })}
                 </div>
               </div>
@@ -169,10 +170,10 @@ const MessageRow = (props) => {
   );
 }
 
-const TryOutBox = ({ content, appendContentToMessageInChat, appendEmptyMessageToChat }) => {
+const TryOutBox = ({ content, appendContentToMessageInChat, appendMessageToChat }) => {
   return (
     <button className="m-2 text-center max-w-prose p-2 hover:bg-orange-500 bg-black border-white border-2 rounded-lg"
-      onClick={() => emitTryButtonClicked(content, appendEmptyMessageToChat, appendContentToMessageInChat)}>
+      onClick={() => emitTryButtonClicked(content, appendMessageToChat, appendContentToMessageInChat)}>
       {content}
     </button>
   );

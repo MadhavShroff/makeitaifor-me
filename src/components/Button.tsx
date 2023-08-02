@@ -14,9 +14,7 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({ _key, href, text, onClick, color, active, className}) => {
     const router = useRouter();
 
-    const handleClick = () => {
-        router.push(href ? href : '/');
-    };
+    const handleClick = () => {};
 
     return (
         <button
@@ -29,6 +27,7 @@ const Button: React.FC<ButtonProps> = ({ _key, href, text, onClick, color, activ
             }
         >
             {text}
+            
         </button>
     );
 };

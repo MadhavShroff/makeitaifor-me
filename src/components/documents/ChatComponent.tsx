@@ -8,13 +8,13 @@ export const ChatComponent = ({
   chats: chats,
   onNewChatClicked,
   onChatSubmitted,
-  appendEmptyMessageToChat,
+  appendMessageToChat,
   appendContentToMessageInChat,
 } : {
   chats: Chat[],
   onNewChatClicked: () => void,
   onChatSubmitted: (chatId: string) => void,
-  appendEmptyMessageToChat : (chatId: string) => void,
+  appendMessageToChat : (chatId: string) => string,
   appendContentToMessageInChat : (chatId: string, messageId: string, content: string) => void
 }) => {
   const [showSideNav, setShowSideNav] = useState(false);
@@ -40,7 +40,7 @@ export const ChatComponent = ({
         return selectedChat == chat.id
       }) ?? chats[0]} 
         onChatSubmitted={onChatSubmitted}
-        appendEmptyMessageToChat={appendEmptyMessageToChat}
+        appendMessageToChat={appendMessageToChat}
         appendContentToMessageInChat={appendContentToMessageInChat}
       />
     </div>
