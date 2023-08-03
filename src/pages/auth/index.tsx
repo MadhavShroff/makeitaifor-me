@@ -3,8 +3,7 @@ import React from 'react';
 import Img from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-
-const cognitoHostedUI = `https://api.makeitaifor.me/auth/cognito`;
+import { cognitoHostedUI } from '@/utils/constants';
 
 function LoginPage() {
     const router = useRouter();

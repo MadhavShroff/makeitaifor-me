@@ -3,13 +3,14 @@ import Button from './Button';
 import Img from 'next/image';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
+import { cognitoHostedUI, cookieName } from '@/utils/constants';
+import { performLogout } from '@/utils/fetches';
 
 const Profile = (props) => {
     const user = props.user || null;
     // const user = { id: '915b7cd5-08c1-45c2-9709-7585af332ee4', username: 'libif87613@pixiil.com', name: 'Madhav Shroff' }
 
     const [activeTab, setActiveTab] = useState("Tokens Available");
-    const cognitoHostedUI = `https://api.makeitaifor.me/auth/cognito`;
 
     const handleTabChange = (tab) => {
         setActiveTab(tab);
@@ -71,8 +72,7 @@ const Profile = (props) => {
                 </div>
                 <div className='md:flex-row'>
                     <Button _key={1} onClick={() => {
-                        Cookies.remove('makeitaifor-me-jwt-cookie');
-                        router.push('/');
+                        performLogout();
                     }} text='Logout' />
                 </div>
             </div>

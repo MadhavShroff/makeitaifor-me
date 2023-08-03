@@ -7,7 +7,6 @@ import { fetchDocs, fetchUser, fetchChatContent, fetchChats } from '@/utils/fetc
 import { ScrollableStackContainer, ScrollableBoxContainer } from '@/components/documents/Stacks';
 import Footer from '@/components/Footer';
 import LoginPage from '../auth';
-import { ChatComponent } from '@/components/documents/ChatComponent';
 import { Chat, Message, User } from '@/utils/types';
 
 const Documents = () => {
@@ -67,6 +66,7 @@ const Documents = () => {
 
   return (
     <main className={'flex flex-col overflow-hidden'}>
+      <div> Disclaimer: </div>
       <DndContext sensors={sensors} onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
         <Navbar user={user} />
         {user && <div className='h-[96vh]'>

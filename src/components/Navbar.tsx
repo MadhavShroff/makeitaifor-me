@@ -17,8 +17,8 @@ const defaultLinks: LinkProps[] = [
   // { href: '/scheduler', text: 'Scheduler' },
   // { href: '/outreach', text: 'Outreach' },
   // { href: '/writing', text: 'Content Writing' },
-  { href: '/documents', text: 'Manage Documents' },
   { href: '/chat', text: 'Chat' },
+  { href: '/documents', text: 'Manage Documents' },
   // { href: '/newsletter', text: 'Newsletter' },
 ];
 

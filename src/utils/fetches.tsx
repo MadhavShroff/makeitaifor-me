@@ -65,6 +65,20 @@ export const handleFilesUpload = async (files: File[], setMessage) => {
   });
 };
 
+export const  performLogout = async () => {
+  const res = await fetch('https://api.makeitaifor.me/auth/cognito/logout', { // replace with your server url
+    method: 'POST',
+    credentials: 'include',
+  });
+
+  if (res.ok) {
+    console.log('Logged out');
+    // Now redirect the user or update the state
+  } else {
+    console.error('Logout failed');
+  }
+}
+
 export const fetchDocs = async (user) => {
   if (!user) return;
 

@@ -70,7 +70,7 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
               <p>Heres some stuff you can try out</p>
               <div className='flex flex-col max-w-xl'>
                 <div className='flex flex-row sm:flex-col'>
-                  {["What is this app good for?", "List all relevant facts from this collection", "Summarize all key points of this podcast episode"].map((content) => {
+                  {["What is the Higgs Boson? Explain it to me with math using inline Latex Equations", "Write an article using markdown", "Summarize all key points of this podcast episode"].map((content) => {
                       return <TryOutBox content={content} appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendMessageToChat={this.props.appendMessageToChat} />;
                   })}
                 </div>
