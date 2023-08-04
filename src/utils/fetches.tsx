@@ -1,4 +1,5 @@
 import { Chat } from "./types";
+import { cognitoLogoutUrl } from "./constants";
 
 // fetches.tsx
 export const fetchUser = (setUser) => {
@@ -65,13 +66,15 @@ export const handleFilesUpload = async (files: File[], setMessage) => {
   });
 };
 
-export const  performLogout = async () => {
-  return fetch('https://api.makeitaifor.me/auth/cognito/logout', { method: 'GET', credentials: 'include',})
+export const performLogout = async () => {
+  return fetch(cognitoLogoutUrl, { method: 'GET', credentials: 'include',})
   .then((res) => {
     if (!res.ok) { throw new Error('Not authorized'); }
     return res.json();
   }).then((data) => {
-    console.log(data);
+    if (data.logout_url) {
+      window.location.href = data.logout_url;
+    }
   }).catch((error) => {
     console.log(error);
   });
