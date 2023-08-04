@@ -66,7 +66,6 @@ const Documents = () => {
 
   return (
     <main className={'flex flex-col overflow-hidden'}>
-      <div> Disclaimer: </div>
       <DndContext sensors={sensors} onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
         <Navbar user={user} />
         {user && <div className='h-[96vh]'>
