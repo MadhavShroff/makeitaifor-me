@@ -7,8 +7,8 @@ import { cognitoHostedUI, cookieName } from '@/utils/constants';
 import { performLogout } from '@/utils/fetches';
 
 const Profile = (props) => {
-    const user = props.user || null;
-    // const user = { id: '915b7cd5-08c1-45c2-9709-7585af332ee4', username: 'libif87613@pixiil.com', name: 'Madhav Shroff' }
+    // const user = props.user || null;
+    const user = { id: '915b7cd5-08c1-45c2-9709-7585af332ee4', username: 'libif87613@pixiil.com', name: 'Madhav Shroff' }
 
     const [activeTab, setActiveTab] = useState("Tokens Available");
 
@@ -59,10 +59,10 @@ const Profile = (props) => {
                         />
                     </div>
                     <div id='profileMetadata' className="flex flex-col justify-center text-6xl font-bold text-center md:text-left mb-4 md:mb-0">
-                        <h2 className="text-5xl sm:text-6xl lg:text-8xl leading-7 font-normal mb-4">
+                        <h2 className="text-5xl sm:text-4xl lg:text-8xl leading-7 font-normal mb-4">
                             {user.name}
                         </h2>
-                        <p className="text-xl sm:text-3xl lg:text-4xl leading-7 text-orange-500 font-bold">
+                        <p className="text-xl sm:text-xl lg:text-4xl leading-7 text-orange-500 font-bold">
                             {user.username}
                         </p>
                         <p className="text-sm leading-7 font-normal">
