@@ -66,17 +66,15 @@ export const handleFilesUpload = async (files: File[], setMessage) => {
 };
 
 export const  performLogout = async () => {
-  const res = await fetch('https://api.makeitaifor.me/auth/cognito/logout', { // replace with your server url
-    method: 'POST',
-    credentials: 'include',
+  return fetch('https://api.makeitaifor.me/auth/cognito/logout', { method: 'POST', credentials: 'include',})
+  .then((res) => {
+    if (!res.ok) { throw new Error('Not authorized'); }
+    return res.json();
+  }).then((data) => {
+    console.log(data);
+  }).catch((error) => {
+    console.log(error);
   });
-
-  if (res.ok) {
-    console.log('Logged out');
-    // Now redirect the user or update the state
-  } else {
-    console.error('Logout failed');
-  }
 }
 
 export const fetchDocs = async (user) => {
