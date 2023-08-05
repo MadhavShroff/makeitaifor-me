@@ -18,8 +18,13 @@ async function getWebSocketToken() {
 let socket: Socket;
 
 (async () => {
-  const token = await getWebSocketToken();
-  socket = io(`wss://api.makeitaifor.me?token=${token}`);
+
+  if(process.env.NODE_ENV === 'development') {
+    socket = io(`ws://localhost:3000/`);
+  } else {
+    const token = await getWebSocketToken();
+    socket = io(`wss://api.makeitaifor.me?token=${token}`);
+  }
 
   socket.on('connect', () => {
     console.log('Connected to WebSocket');
