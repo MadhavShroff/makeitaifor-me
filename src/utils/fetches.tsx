@@ -67,18 +67,7 @@ export const handleFilesUpload = async (files: File[], setMessage) => {
 };
 
 export const performLogout = async () => {
-  console.log("performLogout")
-  return fetch(cognitoLogoutUrl, { method: 'GET', credentials: 'include',})
-  .then((res) => {
-    if (!res.ok) { throw new Error('Not authorized'); }
-    return res.json();
-  }).then((data) => {
-    if (data.logout_url) {
-      window.location.href = data.logout_url;
-    }
-  }).catch((error) => {
-    console.log(error);
-  });
+  window.location.href = cognitoLogoutUrl;
 }
 
 export const fetchDocs = async (user) => {
