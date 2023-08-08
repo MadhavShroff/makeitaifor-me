@@ -24,11 +24,11 @@ const NavButton = ({ toggleSideNav, showSideNav }) =>
 
 const NavRow = ({text, onEditClicked, onDeleteClicked, onChatClicked, isSelected}) => {
     return <li className="pt-2">
-        <a className={`flex py-3 px-3 items-center gap-3 relative rounded-md cursor-pointer border-2 hover:bg-orange-500 ${isSelected ? " bg-orange-500" : ""}`} >
-            <svg className="h-4 w-4" onClick={onChatClicked} stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" >
+        <a className={`flex py-3 px-3 items-center gap-3 relative rounded-md cursor-pointer border-2 hover:bg-orange-500 ${isSelected ? " bg-orange-500" : ""}`} onClick={onChatClicked}>
+            <svg className="h-4 w-4"  stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" >
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
             </svg>
-            <div className="flex-1 text-ellipsis max-h-5 overflow-hidden relative" onClick={onChatClicked}>
+            <div className="flex-1 text-ellipsis max-h-5 overflow-hidden relative">
                 {text}
             </div>
             <div className="absolute flex right-1 z-10 text-white group-hover:visible">
