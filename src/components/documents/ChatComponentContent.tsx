@@ -104,7 +104,7 @@ const ChatComponentInputField = ({ handleFormSubmit, inputValue, handleInputChan
     <div className="md:border-t-0 md:border-transparent md:border-transparent pt-2 md:pl-2 md:w-[calc(100%-.5rem)]">
       <form onSubmit={handleFormSubmit} className="stretch mx-2 flex flex-row gap-3 lg:mx-auto lg:max-w-3xl xl:max-w-6xl">
         <div className="relative flex h-full flex-1 items-stretch md:flex-col" role="presentation">
-          <div className="flex flex-row w-fullflex-grow md:pl-4 relative border border-black/10 bg-black border-gray-900/50 text-white border-white rounded-xl shadow-xs shadow-xs">
+          <div className="flex flex-row w-fullflex-grow md:pl-4 relative border border-black/10 bg-black border-gray-900/50 border-white rounded-xl shadow-xs shadow-xs">
             <textarea
               id="prompt-textarea"
               tabIndex={0}
@@ -116,8 +116,8 @@ const ChatComponentInputField = ({ handleFormSubmit, inputValue, handleInputChan
               onInput={handleInput}
             ></textarea>
             <button type="submit" 
-              className={"my-1 mx-1 flex items-center justify-center h-10 w-10 rounded-md hover:bg-orange-500 text-white transition-colors" + 
-              (inputValue.length == 0 ? " text-gray-500 cursor-default" : " bg-black cursor-pointer")
+              className={"my-1 mx-1 flex items-center justify-center h-10 w-10 rounded-md transition-colors" + 
+                (inputValue.length == 0 ? " cursor-default" : " border-2 border-orange-500 bg-black cursor-pointer hover:bg-orange-500")
               }>
               <span data-state="closed">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" className="h-4 w-4 m-1 md:m-0" stroke-width="2">
