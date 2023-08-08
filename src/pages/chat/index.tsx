@@ -9,31 +9,36 @@ import LoginPage from "../auth";
 
 const ChatPage = () => {
   const [user, setUser] = useState<User | null>(null);
-  // const [user, setUser] = useState({ // Mock user
-  //   id: "91231123-1230u1u-123132",
-  //   name: "John Doe",
-  //   username: "john@doe.com"
-  // });
+
   // const [docs, setDocs] = useState<string[]>([]); // names of all documents the user has uploaded
   const [chats, setChats] = useState<Chat[]>([]);
 
-  useEffect(() => {
-    fetchUser(setUser);
-  }, []);
 
   useEffect(() => {
-    // if (user) fetchDocs(user).then(setDocs).catch(console.error);
+    // DEV ONLY
+    if (process.env.NODE_ENV === "development") { // If in development mode, mock user and chats
+      setUser({ // Mock user
+        id: "91231123-1230u1u-123132",
+        name: "John Doe",
+        username: "john@doe.com"
+      });
+    } else fetchUser(setUser);
+    }, []);
+
+  useEffect(() => {
     // if (user) fetchChatsMeta(user).then(setChatsMeta).catch(console.error);
     // if (user && chatsMeta && chatsMeta[0] && chatsMeta[0].id) fetchChatContent(user, chatsMeta[0].id).then(setChatContent).catch(console.error);
-    // setDocs(["Hello Hi", "How", "Are", "You", "Doing", "Today", "On", "This", "Blessed", "Day"]);
-    setChats(chats.length == 0 ? [{
+
+    setChats(chats.length == 0 ? [{ // If no chats, create a new chat
       id: "temp",
       title: "New Chat",
       content: []
-    }] : chats);
+    }, 
+    mockChats[1],
+  ] : chats);
   }, [user]);
 
-  const appendMessageToChat = (id: string) : string => { // returns message id
+  const appendMessageToChat = (id: string): string => { // returns message id
     console.log("Appending empty message to chat temp");
     const tempChat = chats.find((chat) => chat.id == "temp");
     setChats(chats.map((chat) => { // // add a new empty message to the chat with the id "temp"
@@ -78,13 +83,13 @@ const ChatPage = () => {
 
   const onNewChatClicked = () => {
     console.log("New chat clicked");
-    setChats([{ "content" : [], "id": "temp", "title": "New Chat" }, ...chats])
+    setChats([{ "content": [], "id": "temp", "title": "New Chat" }, ...chats])
   }
 
   return (
     <main className="overflow-hidden">
       {!user && <LoginPage />}
-      {user && <ChatComponent 
+      {user && <ChatComponent
         chats={chats}
         onNewChatClicked={onNewChatClicked}
         onChatSubmitted={(chatId: string) => {

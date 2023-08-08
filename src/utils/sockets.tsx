@@ -18,7 +18,6 @@ async function getWebSocketToken() {
 let socket: Socket;
 
 (async () => {
-
   if(process.env.NODE_ENV === 'development') {
     socket = io(`ws://localhost:3000/`);
   } else {

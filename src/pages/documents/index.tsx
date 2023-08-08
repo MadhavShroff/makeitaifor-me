@@ -200,7 +200,17 @@ const content1: Message[] = [{
   content: md0,
   whoSent: "John Doe",
   whenSent: new Date("2021-09-25T20:00:00.000Z")
-},
+},{
+  id: "1",
+  content: md1,
+  whoSent: "John Doe",
+  whenSent: new Date("2021-09-25T20:00:00.000Z")
+},{
+  id: "1",
+  content: md1,
+  whoSent: "John Doe",
+  whenSent: new Date("2021-09-25T20:00:00.000Z")
+}
 ];
 
 const content3: Message[] = [{
@@ -230,24 +240,24 @@ export const mockChats = [ // metadata of all chats of the user
     title: "New Chat",
     content: content1
   },
-  // {
-  //   id: "345",
-  //   title: "Hello",
-  //   content: content1
-  // },
-  // {
-  //   id: "135",
-  //   title: "Some title",
-  //   content: content2
-  // },
-  // {
-  //   id: "142",
-  //   title: "Hello 2",
-  //   content: content3,
-  // },
-  // {
-  //   id: "153",
-  //   title: "Some title 3",
-  //   content: content4,
-  // },
+  {
+    id: "345",
+    title: "Hello",
+    content: content1
+  },
+  {
+    id: "135",
+    title: "Some title",
+    content: content2
+  },
+  {
+    id: "142",
+    title: "Hello 2",
+    content: content3,
+  },
+  {
+    id: "153",
+    title: "Some title 3",
+    content: content4,
+  },
 ]

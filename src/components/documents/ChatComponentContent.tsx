@@ -71,12 +71,12 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
               <div className='flex flex-col max-w-xl'>
                 <div className='flex flex-row sm:flex-col'>
                   {["What is the Higgs Boson? Explain it to me with math using inline Latex Equations", "Write an article using markdown", "Summarize all key points of this podcast episode"].map((content) => {
-                      return <TryOutBox content={content} appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendMessageToChat={this.props.appendMessageToChat} />;
+                    return <TryOutBox content={content} appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendMessageToChat={this.props.appendMessageToChat} />;
                   })}
                 </div>
                 <div className='flex flex-row sm:flex-col'>
                   {["What is this app good for?", "Summarize all key points of this podcast episode", "Write all the important math formulas in Integration, with Latex inline"].map((content) => {
-                      return <TryOutBox content={content} appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendMessageToChat={this.props.appendMessageToChat} />;
+                    return <TryOutBox content={content} appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendMessageToChat={this.props.appendMessageToChat} />;
                   })}
                 </div>
               </div>
@@ -93,17 +93,17 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
 export default ChatComponentContent;
 
 const ChatComponentInputField = ({ handleFormSubmit, inputValue, handleInputChange }) =>
-  <div className="md:border-t-0 border-white/20 md:border-transparent md:border-transparent md:bg-vert-light-gradient pt-2 md:pl-2 md:w-[calc(100%-.5rem)]">
+  <div className="md:border-t-0 md:border-transparent md:border-transparent pt-2 md:pl-2 md:w-[calc(100%-.5rem)]">
     <form onSubmit={handleFormSubmit} className="stretch mx-2 flex flex-row gap-3 lg:mx-auto lg:max-w-3xl xl:max-w-6xl">
       <div className="relative flex h-full flex-1 items-stretch md:flex-col" role="presentation">
-        <div className="flex flex-col w-full py-[10px] flex-grow md:py-4 md:pl-4 relative border border-black/10 bg-black border-gray-900/50 text-white bg-gray-700 rounded-xl shadow-xs shadow-xs">
+        <div className="flex flex-col w-full py-[10px] flex-grow md:py-4 md:pl-4 relative border border-black/10 bg-black border-gray-900/50 text-white border-white rounded-xl shadow-xs shadow-xs">
           <textarea
             id="prompt-textarea"
             tabIndex={0}
             data-id="root"
             rows={1}
             placeholder="Send a message"
-            className="m-0 w-full h-full border-0 bg-transparent p-0 pr-10 bg-transparent md:pr-12 pl-3 md:pl-0"
+            className="m-0 w-full h-full border-0 bg-transparent p-0 pr-10 bg-transparent md:pr-12 pl-3 md:pl-0 outline-none" 
             style={{ maxHeight: '200px', height: '24px', overflowY: 'hidden' }}
             value={inputValue}
             onChange={handleInputChange}
@@ -121,9 +121,6 @@ const ChatComponentInputField = ({ handleFormSubmit, inputValue, handleInputChan
     <div className="px-3 pb-3 pt-2 text-center text-xs text-orange-500">
       <span>
         This chat Interface may produce inaccurate information about people, places, or facts.
-        <a href="https://help.openai.com/en/articles/6825453-chatgpt-release-notes" target="_blank" rel="noreferrer" className="underline">
-          ChatGPT May 24 Version
-        </a>
       </span>
     </div>
   </div>
@@ -141,15 +138,15 @@ const MessageRow = (props) => {
     // Add more mappings for each HTML tags
   };
   return (
-    <div className="flex flex-row w-full h-fit justify-start border-t-2 text-black">
-      <div className="flex flex-col w-3/12 mt-14">
-        <div className="ml-2 mt-1">
+    <div className="flex flex-col md:flex-row w-full justify-start border-t-2 text-black prose">
+      <div className="flex flex-col items-end md:items-start md:w-3/12 mx-2 ml-14 mt-2">
+        <div className="flex justify-end">
           <div className="w-3 h-3 m-1 bg-blue-500 rounded-full"></div>
-          <div className="text-white mt-1 ml-1 font-bold text-xs">John Doe</div>
-          <div className="text-white ml-1 text-xs">Today at 12:34 AM</div>
+          <div className="text-white mt-1 ml-1 font-bold text-xs text-ellipsis overflow-hidden">John Doed</div>
         </div>
+        <div className="text-white mt-1 ml-1 text-xs">Today at 12:34 AM</div>
       </div>
-      <div className='flex flex-col w-10/12 text-white markdown overflow-x-scroll break-words max-w-full z-0'>
+      <div className="flex flex-col w-full md:w-10/12 px-2 text-white markdown overflow-x-scroll break-words max-w-full z-0 my-2 md:my-0">
         <ReactMarkdown
           children={props.message == null ? '' : props.message}
           remarkPlugins={[remarkMath, remarkGfm]}
@@ -158,16 +155,17 @@ const MessageRow = (props) => {
         />
         {/* <MathJax.Provider input="tex">
          </MathJax.Provider> */}
-        <div>
+        <div className="flex flex-row md:flex-col justify-between md:justify-start">
           <Button text='Rewrite' _key={1} className='w-fit' />
-          <Button text='Reply' _key={1} className='w-fit' />
+          <Button text='Reply' _key={2} className='w-fit md:hidden' />
         </div>
       </div>
-      <div className='flex flex-col w-3/12'>
-        <Button text='Reply' _key={1} className='w-fit' />
+      <div className="flex flex-col w-full md:w-3/12 my-2 md:my-0">
+        <Button text='Reply' _key={3} className='w-fit hidden md:block' />
       </div>
     </div>
   );
+
 }
 
 const TryOutBox = ({ content, appendContentToMessageInChat, appendMessageToChat }) => {
