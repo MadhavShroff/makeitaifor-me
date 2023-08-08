@@ -66,10 +66,6 @@ export const handleFilesUpload = async (files: File[], setMessage) => {
   });
 };
 
-export const performLogout = async () => {
-  window.location.href = cognitoLogoutUrl;
-}
-
 export const fetchDocs = async (user) => {
   if (!user) return;
 

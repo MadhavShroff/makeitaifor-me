@@ -3,12 +3,11 @@ import Button from './Button';
 import Img from 'next/image';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
-import { cognitoHostedUI, cookieName } from '@/utils/constants';
-import { performLogout } from '@/utils/fetches';
+import { cognitoHostedUI, cognitoLogoutUrl, cookieName } from '@/utils/constants';
 
 const Profile = (props) => {
-    const user = props.user || null;
-    // const user = { id: '915b7cd5-08c1-45c2-9709-7585af332ee4', username: 'libif87613@pixiil.com', name: 'Madhav Shroff' }
+    // const user = props.user || null;
+    const user = { id: '915b7cd5-08c1-45c2-9709-7585af332ee4', username: 'libif87613@pixiil.com', name: 'Madhav Shroff' }
 
     const [activeTab, setActiveTab] = useState("Tokens Available");
 
@@ -71,9 +70,7 @@ const Profile = (props) => {
                     </div>
                 </div>
                 <div className='md:flex-row'>
-                    <Button _key={1} onClick={() => {
-                        performLogout();
-                    }} text='Logout' />
+                    <a href={cognitoLogoutUrl}> <Button _key={1} text='Logout' /></a>
                 </div>
             </div>
             <div className="flex flex-col w-full mt-10 border-4 border-white rounded-lg max-w-4xl md:space-x-4 space-y-4 md:space-y-0">
