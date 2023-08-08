@@ -1,19 +1,37 @@
 import React, { FC } from 'react';
 import Img from 'next/image';
+import Link from 'next/link';
 
 interface HeroSectionProps {
   imageUrl?: string;
-  children?: React.ReactNode;
 }
 
 const HeroSection: FC<HeroSectionProps> = ({
   imageUrl = '/logo_nobg.png',
-  children,
 }) => {
   return (
-    <section className="flex flex-col md:flex-row items-center justify-between p-6 md:p-20 overflow-hidden">
-      <div className="text-4xl md:text-6xl font-bold text-center md:text-left mb-4 md:mb-0">
-        {children}
+    <section className="flex flex-col items-center md:flex-row items-center justify-between p-6 md:p-10 overflow-hidden">
+      <div className="flex flex-col text-4xl md:text-6xl md:text-left text-center mb-4 md:mb-0 md: ml-10">
+        <h1>
+          Hey There! <br></br>Glad you could make it.
+        </h1>
+        <br></br>
+        <h2 className="md:text-5xl">
+          This is MakeIt<span className="text-orange-500">Ai</span>For.
+          <span className="text-orange-500">Me</span>
+          <br></br>Let&apos;s Put <span className="text-orange-500"> Ai </span>
+          to work for <span className="text-orange-500">
+            Your Business
+          </span>{' '}
+          <br></br>🦾🤖🦾
+        </h2>
+        <Link href="/chat">
+          <button
+            key="1"
+            className={"px-3 sm:px-4 py-2 mt-4 text-4xl border rounded-full hover:bg-orange-500 whitespace-nowrap font-bold m-1 dark:text-white dark:border-white text-white border-white hover:text-black hover:border-black "} >
+            {"Start for Free →"}
+          </button>
+        </Link>
       </div>
       <Img
         src={imageUrl}

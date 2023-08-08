@@ -8,7 +8,7 @@ import { cognitoHostedUI } from '@/utils/constants';
 function LoginPage() {
     const router = useRouter();
     return (
-        <div className="flex h-[100vh] w-full flex-col items-center justify-center bg-white dark:bg-black text-black dark:text-white">
+        <div className="flex h-[90vh] w-full flex-col items-center justify-center bg-white dark:bg-black text-black dark:text-white">
             <div className="flex flex-col flex-auto justify-center items-center">
                 <Img
                     src={"/logo_nobg.png"}

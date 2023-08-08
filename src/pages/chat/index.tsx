@@ -16,13 +16,14 @@ const ChatPage = () => {
 
   useEffect(() => {
     // DEV ONLY
-    if (process.env.NODE_ENV === "development") { // If in development mode, mock user and chats
-      setUser({ // Mock user
-        id: "91231123-1230u1u-123132",
-        name: "John Doe",
-        username: "john@doe.com"
-      });
-    } else fetchUser(setUser);
+    // if (process.env.NODE_ENV === "development") { // If in development mode, mock user and chats
+    //   setUser({ // Mock user
+    //     id: "91231123-1230u1u-123132",
+    //     name: "John Doe",
+    //     username: "john@doe.com"
+    //   });
+    // } else 
+    fetchUser(setUser);
     }, []);
 
   useEffect(() => {
@@ -88,7 +89,10 @@ const ChatPage = () => {
 
   return (
     <main className="overflow-hidden">
-      {!user && <LoginPage />}
+      {!user && 
+      <main className="bg-black h-[100vh]">
+        <LoginPage />
+      </main>}
       {user && <ChatComponent
         chats={chats}
         onNewChatClicked={onNewChatClicked}
