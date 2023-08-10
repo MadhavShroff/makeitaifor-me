@@ -39,16 +39,37 @@ let socket: Socket;
 })()
 
 export const emitTryButtonClicked = (
-  content: string, 
-  appendMessageToChat: (chatId: string) => string, 
+  content: string,
+  appendMessageToChat: (chatId: string) => string,
   appendContentToMessageInChat: (chatId: string, messageId: string, content: string) => void
 ) => {
-  console.log("tryButtonClicked");
   socket.emit('tryButtonClicked', { content: content });
-  // create new message row
+
+  // Create new message row
   let mid = appendMessageToChat("temp");
   appendContentToMessageInChat("temp", mid, content);
   appendMessageToChat("temp");
+
+  let buffer: { [key: number]: string } = {};
+  let expectedSeq = 0;
+  let bufferString = "";
+
+  // Handle individual words as they come in
+  socket.on('textGeneratedChunk', (response) => {
+    const { data, seq } = response;
+
+    // Store the received chunk in the buffer
+    buffer[seq] = data;
+
+    // Check if the next expected chunk has arrived
+    while (buffer[expectedSeq] !== undefined) {
+      // Append the word to the chat
+      bufferString += buffer[expectedSeq];
+      appendContentToMessageInChat("temp", "temp", bufferString);
+      delete buffer[expectedSeq];
+      expectedSeq++;
+    }
+  });
   socket.on('textGenerated', (response) => {
     appendContentToMessageInChat("temp", "temp", response);
   });

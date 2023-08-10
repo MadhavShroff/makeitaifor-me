@@ -11,12 +11,7 @@ import { Chat, Message, User } from '@/utils/types';
 
 const Documents = () => {
   const [user, setUser] = useState<User | null>(null);
-  // const [user, setUser] = useState({ // Mock user
-  //   id: "91231123-1230u1u-123132",
-  //   name: "John Doe",
-  //   username: "john@doe.com"
-  // });
-  const [docs, setDocs] = useState<string[]>([]); // names of all documents the user has uploaded
+  const [docs, setDocs] = useState<string[]>([]); 
 
   useEffect(() => {
     fetchUser(setUser);
@@ -24,7 +19,6 @@ const Documents = () => {
 
   useEffect(() => {
     if (user) fetchDocs(user).then(setDocs).catch(console.error);
-    // setDocs(["Hello Hi", "How", "Are", "You", "Doing", "Today", "On", "This", "Blessed", "Day"]);
   }, [user]);
 
   const pointerSensorOptions = {
@@ -58,7 +52,6 @@ const Documents = () => {
     // Dragged-to id is over.id. It can be null if the item was not dragged over a droppable area.
     if (event.over) {
       console.log(`Dragged to: ${event.over.id}`);
-
     } else {
       console.log('The item was not dragged over a droppable area');
     }
@@ -100,7 +93,7 @@ const md0 = [
   "The second term represents the potential energy of the Higgs field. It is given by $-\\mu^2 \\phi^\\dagger \\phi$, where $\\mu$ is a constant parameter known as the Higgs mass parameter.",
   "",
   "The third term represents the self-interaction of the Higgs field. It is given by $-\\lambda (\\phi^\\dagger \\phi)^2$, where $\\lambda$ is a positive constant parameter known as the Higgs quartic coupling.", "The equation describes the behavior of the Higgs field in the presence of other particles and fields in the Standard Model. The dynamics of the Higgs field are determined by the principle of least action, which leads to the equations of motion for the field. The Higgs field is a scalar field, which means that it has a single degree of freedom, and it interacts with other particles in the Standard Model through the exchange of gauge bosons."
-];
+].join("\n");
 
 const md1 = [
   "## How to use",
@@ -154,7 +147,7 @@ const md1 = [
   "See [`generate-github-markdown-css`](https://github.com/sindresorhus/generate-github-markdown-css) for how it's generated and ability to generate your own.",
   "## Dev",
   "Run `npm run make` to update the CSS."
-];
+].join("\n");
 
 const md2 = [
   "# Header 1",
@@ -193,7 +186,7 @@ const md2 = [
   "y &= mx + b \\\\",
   "\\end{align*}",
   "$$",
-];
+].join("\n");
 
 const content1: Message[] = [{
   id: "1",
