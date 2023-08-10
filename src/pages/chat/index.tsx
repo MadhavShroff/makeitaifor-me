@@ -40,7 +40,7 @@ const ChatPage = () => {
       if (chat.id == "temp") {
         return {
           ...chat,
-          content: [{
+          messages: [{
             id: "temp",
             content: "",
             whoSent: user?.name ?? "John Doe",
@@ -61,7 +61,7 @@ const ChatPage = () => {
         const thisMes = chat.messages.find(message => message.id === messageId)
         return {
           ...chat,
-          content: [
+          messages: [
             ...(chat.messages == null ? [] : chat.messages.filter((message) => message.id != messageId)),
             {
               id: messageId,
