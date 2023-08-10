@@ -49,8 +49,8 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
     } else if (this.props.chat.messages == null) {
       messages = [];
     } else {
-      this.props.chat.messages.forEach((message: Message) => {
-        messages.push(<MessageRow message={message.content} />);
+      this.props.chat.messages.forEach((message: Message, index: number) => {
+        messages.push(<MessageRow message={message.content} key={index}/>);
       });
     }
 
