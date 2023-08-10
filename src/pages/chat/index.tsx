@@ -55,6 +55,7 @@ const ChatPage = () => {
   }
 
   const appendContentToMessageInChat = (chatId: string, messageId: string, content: string) => {
+    console.log("Appending content to message " + messageId + " in chat ." + content);
     setChats(chats.map((chat) => { // add content to 
       if (chat.id === chatId) {
         const thisMes = chat.messages.find(message => message.id === messageId)
