@@ -68,17 +68,15 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
                 className="object-contain w-[50%] h-[50%] sm:w-full sm:h-full"
               />
               <p>Heres some stuff you can try out</p>
-              <div className='flex flex-col max-w-xl'>
-                <div className='flex flex-row sm:flex-col'>
-                  {["What is the Higgs Boson? Explain it to me with math using inline Latex Equations", "Write an article using markdown", "Summarize all key points of this podcast episode"].map((content) => {
-                    return <TryOutBox content={content} appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendMessageToChat={this.props.appendMessageToChat} />;
-                  })}
-                </div>
-                <div className='flex flex-row sm:flex-col'>
-                  {["What is this app good for?", "Summarize all key points of this podcast episode", "Write all the important math formulas in Integration, with Latex inline"].map((content) => {
-                    return <TryOutBox content={content} appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendMessageToChat={this.props.appendMessageToChat} />;
-                  })}
-                </div>
+              <div className='flex flex-col max-w-4xl'>
+                <TryOutBox content={[
+                  "What exactly is the Higgs Boson?", 
+                  "Write a blog article my about new seafood restaurant", 
+                  "Where is this from:  \"To be, or not to be: that is the question.\"",
+                  "What is this app good for?", 
+                  "Summarize all key points of this podcast episode", 
+                  "Write all the important math formulas in Integration, with Latex inline"
+                ]} appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendMessageToChat={this.props.appendMessageToChat}></TryOutBox>          
               </div>
             </div>
           }
@@ -88,8 +86,6 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
     );
   }
 }
-
-
 export default ChatComponentContent;
 
 const ChatComponentInputField = ({ handleFormSubmit, inputValue, handleInputChange }) => {
@@ -182,10 +178,32 @@ const MessageRow = (props) => {
 }
 
 const TryOutBox = ({ content, appendContentToMessageInChat, appendMessageToChat }) => {
+  // split x into 2 equal sized arrays
+  const half = Math.ceil(content.length / 2);
+  const firstHalf = content.slice(0, half);
+  const secondHalf = content.slice(-half);
   return (
-    <button className="m-2 text-center max-w-prose p-2 hover:bg-orange-500 bg-black border-white border-2 rounded-lg"
-      onClick={() => emitTryButtonClicked(content, appendMessageToChat, appendContentToMessageInChat)}>
-      {content}
-    </button>
+    <>
+      <div className='flex flex-row sm:flex-col sm:mx-2'>
+        {firstHalf.map((buttonText, index) => {
+          return <button 
+            key={index}
+            className="m-2 text-center max-w-prose p-2 hover:bg-orange-500 bg-black border-white border-2 rounded-lg"
+            onClick={() => emitTryButtonClicked(buttonText, appendMessageToChat, appendContentToMessageInChat)}>
+              {buttonText}
+          </button>
+        })}
+      </div>
+      <div className='flex flex-row sm:flex-col sm:mx-2'>
+        {secondHalf.map((buttonText, index) => {
+          return <button 
+            key={index}
+            className="m-2 text-center max-w-prose p-2 hover:bg-orange-500 bg-black border-white border-2 rounded-lg"
+            onClick={() => emitTryButtonClicked(buttonText, appendMessageToChat, appendContentToMessageInChat)}>
+              {buttonText}
+          </button>
+        })}
+      </div>
+    </>
   );
 }

@@ -46,8 +46,8 @@ export const emitTryButtonClicked = (
   socket.emit('tryButtonClicked', { content: content });
 
   // Create new message row
-  let mid = appendMessageToChat("temp");
-  appendContentToMessageInChat("temp", mid, content);
+  appendMessageToChat("question1");
+  appendContentToMessageInChat("temp", "question1", content);
   appendMessageToChat("temp");
 
   let buffer: { [key: number]: string } = {};

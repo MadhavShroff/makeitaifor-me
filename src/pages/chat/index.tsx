@@ -35,45 +35,43 @@ const ChatPage = () => {
 
   const appendMessageToChat = (id: string): string => { // returns message id
     console.log("Appending empty message to chat temp");
-    const tempChat = chats.find((chat) => chat.id == "temp");
-    setChats(chats.map((chat) => { // // add a new empty message to the chat with the id "temp"
-      if (chat.id == "temp") {
-        return {
-          ...chat,
-          messages: [{
-            id: "temp",
-            content: "",
-            whoSent: user?.name ?? "John Doe",
-            whenSent: new Date()
-          }]
-        };
-      } else {
-        return chat;
-      }
-    }));
+    const newChat = chats.find((chat) => chat.id == "temp");
+    if (newChat == undefined) {
+      console.error("Chat with id temp not found");
+      return "";
+    }
+    newChat.messages?.push({
+      id: id,
+      content: "",
+      whoSent: user?.name ?? "John Doe",
+      whenSent: new Date()
+    });
+    setChats([
+      ...chats.filter((chat) => chat.id != "temp"),
+      newChat
+    ]);
     return "temp";
   }
 
   const appendContentToMessageInChat = (chatId: string, messageId: string, content: string) => {
-    console.log("Appending content to message " + messageId + " in chat ." + content);
-    setChats(chats.map((chat) => { // add content to 
-      if (chat.id === chatId) {
-        const thisMes = chat.messages.find(message => message.id === messageId)
-        return {
-          ...chat,
-          messages: [
-            ...(chat.messages == null ? [] : chat.messages.filter((message) => message.id != messageId)),
-            {
-              id: messageId,
-              content: content,
-              whoSent: thisMes?.whoSent ?? "John Doe",
-              whenSent: thisMes?.whenSent ?? new Date()
-            }]
-        };
-      } else {
-        return chat;
-      }
-    }));
+    const newChat = chats.find((chat) => chat.id == chatId);
+    if (newChat == undefined) {
+      console.error("Chat with id " + chatId + " not found");
+      return;
+    }
+    const newMessage = newChat.messages?.find((message) => message.id == messageId);
+    if (newMessage == undefined) {
+      console.error("Message with id " + messageId + " not found"); return;
+    }
+    newMessage.content = content;
+    newChat.messages = [
+      ...newChat.messages?.filter((message) => message.id != messageId),
+      newMessage
+    ];
+    setChats([
+      ...chats.filter((chat) => chat.id != chatId),
+      newChat
+    ]);
   }
 
   const onNewChatClicked = () => {
