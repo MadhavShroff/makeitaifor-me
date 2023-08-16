@@ -25,7 +25,7 @@ const Profile = (props) => {
     );
 
     else return (
-        <section className="flex p-10 bg-black text-black dark:text-white flex-col items-center">
+        <section className="flex p-10 bg-black text-black text-white flex-col items-center">
             <div className='flex flex-col items-center justify-center p-6 shadow-lg bg-black text-white border-4 border-white rounded-lg max-w-4xl'>
                 <div className="flex flex-col md:flex-row">
                     <div id='profilePic' className="flex p-10 items-center justify-center md:w-1/4 md:h-auto md:w-auto relative antialiased">

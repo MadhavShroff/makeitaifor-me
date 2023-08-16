@@ -28,7 +28,7 @@ const HeroSection: FC<HeroSectionProps> = ({
         <Link href="/chat">
           <button
             key="1"
-            className={"px-3 sm:px-4 py-2 mt-4 text-4xl border rounded-full hover:bg-orange-500 whitespace-nowrap font-bold m-1 dark:text-white dark:border-white text-white border-white hover:text-black hover:border-black "} >
+            className={"px-3 sm:px-4 py-2 mt-4 text-4xl border rounded-full hover:bg-orange-500 whitespace-nowrap font-bold m-1 text-white border-white hover:text-black hover:border-black "} >
             {"Start for Free →"}
           </button>
         </Link>

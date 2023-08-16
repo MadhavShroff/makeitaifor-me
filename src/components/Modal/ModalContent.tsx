@@ -84,7 +84,7 @@ const FileDetails: React.FC<FileDetailsProps> = ({ files, removeFile }) => (
         <div className="overflow-hidden w-full">
           <table className="text-center text-sm font-light w-full">
             <thead
-              className="border-b font-medium dark:border-neutral-500 dark:text-neutral-300">
+              className="border-b font-medium border-neutral-500 text-neutral-300">
               <tr>
                 <th scope="col" className=" px-6 py-4">Remove</th>
                 <th scope="col" className=" px-6 py-4 text-left">Name</th>
@@ -92,10 +92,10 @@ const FileDetails: React.FC<FileDetailsProps> = ({ files, removeFile }) => (
                 <th scope="col" className=" px-6 py-4">Size</th>
               </tr>
             </thead>
-            <tbody className='dark:bg-slate-800'>
+            <tbody>
               {files.map((file: any, index: number) => (
                 <tr key={index}>
-                  <td className="whitespace-nowrap border-b border-slate-100 dark:border-slate-700 pt-2 pb-2 text-slate-500 dark:text-slate-400">
+                  <td className="whitespace-nowrap border-b border-slate-700 pt-2 pb-2 text-slate-500">
                     <div onClick={() => removeFile(file.name)} className='flex justify-center items-center hover:border-red-500 hover:border-4 p-2 rounded text-white font-bold text-xl p-0 cursor-pointer'>
                       <Image
                         src="/trash-can.svg"
@@ -105,9 +105,9 @@ const FileDetails: React.FC<FileDetailsProps> = ({ files, removeFile }) => (
                       />
                     </div>
                   </td>
-                  <td className="whitespace-nowrap border-b border-slate-100 dark:border-slate-700 pt-2 pb-2 text-slate-500 dark:text-slate-400 sm:truncate text-left">{file.name}</td>
-                  <td className="whitespace-nowrap border-b border-slate-100 dark:border-slate-700 pt-2 pb-2 text-slate-500 dark:text-slate-400 text-left">{file.type}</td>
-                  <td className="whitespace-nowrap border-b border-slate-100 dark:border-slate-700 pt-2 pb-2 text-slate-500 dark:text-slate-400">{file.size}</td>
+                  <td className="whitespace-nowrap border-b border-slate-700 pt-2 pb-2 text-slate-500 sm:truncate text-left">{file.name}</td>
+                  <td className="whitespace-nowrap border-b border-slate-700 pt-2 pb-2 text-slate-500 text-left">{file.type}</td>
+                  <td className="whitespace-nowrap border-b border-slate-700 pt-2 pb-2 text-slate-500">{file.size}</td>
                 </tr>
               ))}
             </tbody>

@@ -3,7 +3,7 @@ import Button from "./Button";
 
 const IntroSection = () => {
     return (
-        <div className="flex flex-col justify-center items-center border-t-4 border-b-4 border-white pt-24 pb-32 sm:pb-10 sm:pt-10 text-center antialiased text-black dark:text-white">
+        <div className="flex flex-col justify-center items-center border-t-4 border-b-4 border-white pt-24 pb-32 sm:pb-10 sm:pt-10 text-center antialiased text-black text-white">
             <div className="container mx-auto px-4 sm:px-0">
                 <h1 className="text-7xl sm:text-4xl lg:text-7xl font-semibold mb-4">Engineered from start to finesse</h1>
                 <h2 className="text-6xl sm:text-4xl lg:text-6xl font-normal mb-8">
