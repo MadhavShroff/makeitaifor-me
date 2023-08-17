@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Button from "./Button";
 
 const IntroSection = () => {
     return (
@@ -7,10 +6,7 @@ const IntroSection = () => {
             <div className="container mx-auto px-4 sm:px-0">
                 <h1 className="text-7xl sm:text-4xl lg:text-7xl font-semibold mb-4">Engineered from start to finesse</h1>
                 <h2 className="text-6xl sm:text-4xl lg:text-6xl font-normal mb-8">
-                    <Link
-                        href="/"
-                        className="px-2 py-1 sm:py-2 font-bold text-white hover:underline decoration-orange-500 decoration-4"
-                    >
+                    <Link href="/" className="px-2 py-1 sm:py-2 font-bold text-white hover:underline decoration-orange-500 decoration-4">
                         MakeIt<span className="text-orange-500">Ai</span>For.
                         <span className="text-orange-500">Me</span>
                     </Link> is a Suite of AI Tools and Services</h2>
