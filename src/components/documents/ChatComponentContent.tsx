@@ -50,7 +50,7 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
       messages = [];
     } else {
       this.props.chat.messages.forEach((message: Message, index: number) => {
-        messages.push(<MessageRow message={message.content} key={index}/>);
+        messages.push(<MessageRow message={message.content} key={index} />);
       });
     }
 
@@ -65,18 +65,19 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
                 alt="Logo"
                 width={1000}
                 height={1000}
-                className="object-contain w-[50%] h-[50%] sm:w-full sm:h-full"
+                className="object-contain w-[50%] h-[50%] sm:w-[70%] sm:h-full"
               />
               <p>Heres some stuff you can try out</p>
               <div className='flex flex-col max-w-4xl'>
                 <TryOutBox content={[
-                  "What exactly is the Higgs Boson?", 
-                  "Write a blog article my about new seafood restaurant", 
-                  "Where is this from:  \"To be, or not to be: that is the question.\"",
-                  "What is this app good for?", 
-                  "Summarize all key points of this podcast episode", 
-                  "Write all the important math formulas in Integration, with Latex inline"
-                ]} appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendMessageToChat={this.props.appendMessageToChat}></TryOutBox>          
+                  "What is this app good for? 💡",
+                  "Write a blog article about my new seafood restaurant  🦞🍽️",
+                  "Write all the key Equations to remember for Integration  🧮",
+                  "Does Joe Rogan ever talk about Bears? 🎙️🐻",
+                  "Where is this from: \"To be, or not to be: that is the question.\"  📜❓",
+                  "What exactly is the Higgs Boson?  ⚛️"
+                ]
+                } appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendMessageToChat={this.props.appendMessageToChat}></TryOutBox>
               </div>
             </div>
           }
@@ -111,8 +112,8 @@ const ChatComponentInputField = ({ handleFormSubmit, inputValue, handleInputChan
               onChange={handleInput}
               onInput={handleInput}
             ></textarea>
-            <button type="submit" 
-              className={"my-1 mx-1 flex items-center justify-center h-10 w-10 rounded-md transition-colors" + 
+            <button type="submit"
+              className={"my-1 mx-1 flex items-center justify-center h-10 w-10 rounded-md transition-colors" +
                 (inputValue.length == 0 ? " cursor-default" : " border-2 border-orange-500 bg-black cursor-pointer hover:bg-orange-500")
               }>
               <span data-state="closed">
@@ -186,21 +187,21 @@ const TryOutBox = ({ content, appendContentToMessageInChat, appendMessageToChat 
     <>
       <div className='flex flex-row sm:flex-col sm:mx-2'>
         {firstHalf.map((buttonText, index) => {
-          return <button 
+          return <button
             key={index}
             className="m-2 text-center max-w-prose p-2 hover:bg-orange-500 bg-black border-white border-2 rounded-lg"
             onClick={() => emitTryButtonClicked(buttonText, appendMessageToChat, appendContentToMessageInChat)}>
-              {buttonText}
+            {buttonText}
           </button>
         })}
       </div>
       <div className='flex flex-row sm:flex-col sm:mx-2'>
         {secondHalf.map((buttonText, index) => {
-          return <button 
+          return <button
             key={index}
             className="m-2 text-center max-w-prose p-2 hover:bg-orange-500 bg-black border-white border-2 rounded-lg"
             onClick={() => emitTryButtonClicked(buttonText, appendMessageToChat, appendContentToMessageInChat)}>
-              {buttonText}
+            {buttonText}
           </button>
         })}
       </div>

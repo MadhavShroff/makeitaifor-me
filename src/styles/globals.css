@@ -35,6 +35,7 @@ body {
   height: 100dvh;
   width: 100vw;
   position: fixed;
+  overflow: scroll;
 }
 
 body > div:first-child,

@@ -17,8 +17,8 @@ const defaultLinks: LinkProps[] = [
   // { href: '/scheduler', text: 'Scheduler' },
   // { href: '/outreach', text: 'Outreach' },
   // { href: '/writing', text: 'Content Writing' },
-  { href: '/chat', text: 'Chat' },
-  { href: '/documents', text: 'Manage Documents' },
+  { href: '/chat', text: 'Go To Chat →' },
+  { href: '/documents', text: 'Manage Docs' },
   // { href: '/newsletter', text: 'Newsletter' },
 ];
 
@@ -28,19 +28,19 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <nav className={`flex items-center justify-between bg-white px-1 flex-wrap rounded`}>
+    <nav className={`flex items-center justify-start bg-white px-1 flex-wrap rounded`}>
+      <div className='flex gap-1 flex-wrap my-1'>
       <Link
         href="/"
-        className="px-2 py-1 sm:py-2 text-2xl font-bold text-black hover:underline decoration-orange-500">
+        className="px-2 pr-4 pt-1 text-2xl font-bold text-black hover:underline decoration-orange-500">
         MakeIt<span className="text-orange-500">Ai</span>For.
         <span className="text-orange-500">Me</span>
       </Link>
-      <div className='flex gap-1 flex-wrap my-1'>
         {links.map((link, index) => (
           <Link
             key={index}
             href={link.href}
-            className="px-3 sm:px-4 py-1 sm:py-1 text-lg sm:text-xl border rounded-full hover:bg-orange-500 whitespace-nowrap font-bold sm:h-8"
+            className="px-3 sm:px-4 py-1 text-lg sm:text-xl border rounded-full hover:bg-orange-500 whitespace-nowrap font-bold sm:h-8 sm:py-0"
             style={{
               borderColor: 'var(--background-color)',
               color: 'var(--background-color)',
@@ -75,13 +75,13 @@ const Navbar: React.FC<NavbarProps> = (props) => {
           <Link
             key={12}
             href={'/auth'} // replace with your logout link
-            className="px-3 py-1 text-lg sm:text-xl border rounded-full hover:bg-orange-500 whitespace-nowrap text-center font-bold"
+            className="px-3 py-1 text-lg sm:text-xl border rounded-full hover:bg-orange-500 whitespace-nowrap text-center font-bold sm:h-8 sm:py-0"
             style={{
               borderColor: 'var(--background-color)',
               color: 'var(--background-color)',
             }}
           >
-            {'Login'}
+            {'Login / Sign up'}
           </Link>
         )}
       </div>
