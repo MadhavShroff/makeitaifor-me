@@ -19,7 +19,7 @@ const ChatPage = () => {
         username: "john@doe.com"
       });
     } else fetchUser(setUser);
-    }, []);
+  }, []);
 
   useEffect(() => {
     // if (user) fetchChatsMeta(user).then(setChatsMeta).catch(console.error);
@@ -30,7 +30,7 @@ const ChatPage = () => {
       title: "New Chat",
       messages: []
     },
-  ] : chats);
+    ] : chats);
   }, [user]);
 
   const appendMessageToChat = (id: string): string => { // returns message id
@@ -76,24 +76,27 @@ const ChatPage = () => {
 
   const onNewChatClicked = () => {
     console.log("New chat clicked");
-    setChats([{ messages : [], "id": "temp", "title": "New Chat" }, ...chats])
+    setChats([{ messages: [], "id": "temp", "title": "New Chat" }, ...chats])
   }
 
-  return (
-    <main className="overflow-hidden">
-      {!user && 
-      <main className="bg-black h-[100vh]">
-        <LoginPage />
-      </main>}
-      {user && <ChatComponent
-        chats={chats}
-        onNewChatClicked={onNewChatClicked}
-        onChatSubmitted={(chatId: string) => {
-          console.log("Chat submitted " + chatId + " for user " + user?.username);
-        }}
-        appendContentToMessageInChat={appendContentToMessageInChat}
-        appendMessageToChat={appendMessageToChat}
-      />}
+
+  if (user)
+    return (
+      <div className="h-[100svh]">
+        <ChatComponent
+          chats={chats}
+          onNewChatClicked={onNewChatClicked}
+          onChatSubmitted={(chatId: string) => {
+            console.log("Chat submitted " + chatId + " for user " + user?.username);
+          }}
+          appendContentToMessageInChat={appendContentToMessageInChat}
+          appendMessageToChat={appendMessageToChat}
+        />
+      </div>)
+
+  else return (
+    <main className="bg-white dark:bg-black h-[100dvh]">
+      <LoginPage />
     </main>
   )
 }

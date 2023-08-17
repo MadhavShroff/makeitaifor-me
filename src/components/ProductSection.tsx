@@ -21,7 +21,7 @@ const defaults: Product[] = [
       "Create, modify and then interface with document collections.",
       "Supports ingesting and searching through PDFs, Research papers (Yes, including the math), youtube videos, Web articles. More coming up soon.",
     ],
-    image: '/logo_nobg.png',
+    image: '/circleSpecular.svg',
     subheading: 'The Future of information retrieval',
     bg: 'bg-black',
   },
@@ -82,6 +82,7 @@ const ProductDisplay = ({ product }: { product: Product }) => {
           alt={product.title}
           width={500}
           height={500}
+          style={{color: "white"}}
           className="md:w-500 md:h-500"
         />
       </div>

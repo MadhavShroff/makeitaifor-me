@@ -124,7 +124,7 @@ const ChatComponentInputField = ({ handleFormSubmit, inputValue, handleInputChan
           </div>
         </div>
       </form>
-      <div className="px-3 pb-3 pt-2 text-center text-xs text-orange-500">
+      <div className="px-3 pb-3 pt-2 text-center text-xs text-orange-500 sm:text-[10px]">
         <span>
           This chat Interface may produce inaccurate information about people, places, or facts.
         </span>

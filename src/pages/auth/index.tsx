@@ -8,7 +8,7 @@ import { cognitoHostedUI } from '@/utils/constants';
 function LoginPage() {
     const router = useRouter();
     return (
-        <div className="flex h-[90vh] w-full flex-col items-center justify-center bg-white dark:bg-black text-black dark:text-white">
+        <div className="flex h-[100svh] w-full flex-col items-center justify-center bg-white dark:bg-black text-black dark:text-white">
             <div className="flex flex-col flex-auto justify-center items-center">
                 <Img
                     src={"/logo_nobg.png"}
@@ -21,8 +21,8 @@ function LoginPage() {
                 <div>Log in with your account to continue</div>
                 <div className="flex flex-col w-full gap-3 mt-2">
                     {/* <Button _key={1} text='Continue as Guest' color='black' onClick={() => router.push(cognitoHostedUI)}/>  */}
-                    <Button _key={2} text='Login' color='black' onClick={() => router.push(cognitoHostedUI)}/> 
-                    <Button _key={3} text='Sign Up' color='black' onClick={() => router.push(cognitoHostedUI)}/>
+                    <Button _key={2} text='Login' onClick={() => router.push(cognitoHostedUI)}/> 
+                    <Button _key={3} text='Sign Up' onClick={() => router.push(cognitoHostedUI)}/>
                 </div>
             </div>
             <div className="py-3 text-xs">

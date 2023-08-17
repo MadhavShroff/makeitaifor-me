@@ -66,7 +66,7 @@ export const ChatComponentNav = ({ toggleSideNav, showSideNav, onChatClicked, se
     chats: Chat[] | null,
     onNewChatClicked: () => void,
 }) =>
-    <div id="chat-nav" className={"z-10 bg-black absolute " + (showSideNav ? "border-r-2 border-b-2 top-[1px]" : "top-1 left-1")}>
+    <div id="chat-nav" className={"z-10 bg-black absolute " + (showSideNav ? "border-2 top-[1px]" : "top-1 left-1")}>
         <NavButton toggleSideNav={toggleSideNav} showSideNav={showSideNav} />
         {showSideNav &&
             <nav className="flex h-full w-full flex-col p-2" aria-label="Chat history">

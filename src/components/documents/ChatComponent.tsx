@@ -30,7 +30,7 @@ export const ChatComponent = ({
   };
 
   return (
-    <div className="border-4 relative bg-black rounded-lg h-[100vh]">
+    <div className="border-4 sm:border-2 relative bg-black rounded-lg h-[100svh]">
       <ChatComponentNav toggleSideNav={toggleSideNav} showSideNav={showSideNav} onChatClicked={onChatClicked} selectedChat={selectedChat} chats={chats} 
         onNewChatClicked={() => {
           chats.find((chat) => chat.id == "temp") == undefined &&  onNewChatClicked(); // Only create new chat if it doesn't exist

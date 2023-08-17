@@ -11,7 +11,7 @@ const HeroSection: FC<HeroSectionProps> = ({
 }) => {
   return (
     <section className="flex flex-col items-center md:flex-row items-center justify-between p-6 md:p-10 overflow-hidden">
-      <div className="flex flex-col text-4xl md:text-6xl md:text-left text-center mb-4 md:mb-0 md: ml-10">
+      <div className="flex flex-col text-4xl md:text-6xl md:text-left text-center md:ml-10">
         <h1>
           Hey There! <br></br>Glad you could make it.
         </h1>
