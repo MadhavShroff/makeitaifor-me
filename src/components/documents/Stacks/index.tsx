@@ -19,6 +19,21 @@ export const ScrollableStackContainer = (props) => {
     );
 };
 
+export const StacksContainer = (props) => {
+    return (
+        <div className="h-82 flex">
+            <div className="flex overflow-auto no-scrollbar sm:pl-2 px-10 justify-end">
+                {/* <FilesStack fileNames={props.fileNames} /> */}
+                {["Sample: Podcasts", "Sample: Research PDFs & Lectures", "Sample: Tax Documents"].map((title, index) => (
+                    <Stack key={index} title={title} />
+                    // <div className="transform translate-y-20"> {/* Increase translate value if needed */}
+                    // </div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
 export const ScrollableBoxContainer = (props) => {
     const titles = props.titles || [];
     let Boxes: JSX.Element[] = [];

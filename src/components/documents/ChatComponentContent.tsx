@@ -9,6 +9,7 @@ import Img from 'next/image';
 import 'katex/dist/katex.min.css';
 import { emitTryButtonClicked } from '@/utils/sockets';
 import { Chat, Message } from '@/utils/types';
+import { StacksContainer } from './Stacks';
 
 type ChatComponentContentState = { inputValue: string; };
 
@@ -60,12 +61,15 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
           {messages.length != 0 && messages}
           {messages.length == 0 &&
             <div className="flex flex-col items-center h-full justify-center sm:justify-start border-t-2 text-white">
+              <div className='flex flex-col items-start sm:w-[60%] w-[50%]'>
+                <StacksContainer fileNames={["Hello Hi"]} />
+              </div>
               <Img
                 src={"/logo_nobg.png"}
                 alt="Logo"
                 width={1000}
                 height={1000}
-                className="object-contain w-[50%] h-[50%] sm:w-[70%] sm:h-full"
+                className="object-contain w-[50%] h-[50%] sm:w-[60%] sm:h-full"
               />
               <p>Heres some stuff you can try out</p>
               <div className='flex flex-col max-w-4xl'>
