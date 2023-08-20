@@ -4,9 +4,10 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon180.png" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="mask-icon" href="/icons/icon.svg" color="#5bbad5" />
+        <link rel="icon" href="/favicon.ico" />
         <link
           rel="icon"
           type="image/png"
