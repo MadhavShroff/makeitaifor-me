@@ -8,25 +8,6 @@ export default function Document() {
         <link rel="manifest" href="/manifest.json" />
         <link rel="mask-icon" href="/icons/icon.svg" color="#5bbad5" />
         <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/icons/favicon-16.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/icons/favicon-32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="48x48"
-          href="/icons/favicon-48.png"
-        />
-
         <link rel="preconnect" href="https://fonts.googleapis.com" />
 
         <link
