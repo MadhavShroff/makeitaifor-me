@@ -19,6 +19,7 @@ export default function Document() {
         <meta name="twitter:description" content="Empowering your business with cutting-edge AI solutions. Join us on the journey to automation and efficiency." />
         <meta name="twitter:image" content="https://www.makeitaifor.me/icons/icon512.png" />
         <meta name="description" content="Empowering your business with cutting-edge AI solutions. Join us on the journey to automation and efficiency." />
+        <meta property="fb:app_id" content="621297000134551" />
         <link
           rel="preconnect"
           href="https://fonts.gstatic.com"
