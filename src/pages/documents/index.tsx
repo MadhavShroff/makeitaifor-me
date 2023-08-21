@@ -99,7 +99,7 @@ const Documents = () => {
           <ScrollableStackContainer fileNames={fileNamesArr} fileOrStackClicked={fileOrStackClicked} fileSelected={fileSelected} />
           <Preview fileSelected={fileSelected} />
         </div>}
-        {!user == null &&
+        {user == null &&
           <LoginPage />
         }
         <Footer />
