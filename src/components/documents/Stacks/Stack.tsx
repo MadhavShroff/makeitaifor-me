@@ -4,7 +4,7 @@ import Droppable from "../Droppable";
 export const Stack = (props) => {
     return (
         <Droppable id={props.title}>
-            <div className="group pl-12 sm:pl-12 pt-8">
+            <div className="group pl-12 sm:pl-12">
                 <div className="relative w-72 h-60 sm:w-40 sm:h-32">
                     <div className="w-full sm:h-24 sm:w-44 h-40 bg-blue-400 transform transition-all absolute sm:-top-2 -top-4 sm:left-2 left-4 rounded-lg group-hover:skew-x-12 group-hover:-skew-y-12 opacity-10 delay-[180ms]">
                     </div>

@@ -60,17 +60,15 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
         <div className='w-full overflow-auto h-full'>
           {messages.length != 0 && messages}
           {messages.length == 0 &&
-            <div className="flex flex-col items-center h-full justify-center sm:justify-start border-t-2 text-white">
+            <div className="flex flex-col items-center max-h-full justify-start sm:justify-start border-t-2 text-white">
+              <StacksContainer fileNames={["Hello Hi"]} />
               <Img
                 src={"/logo_nobg.png"}
                 alt="Logo"
-                width={1000}
-                height={1000}
-                className="object-contain w-[60%] h-[40%] sm:w-[60%] sm:h-full"
+                width={250}
+                height={250}
+                className="object-contain m-10"
               />
-              <div className='flex flex-col max-w-6xl sm:max-w-full items-start overflow-x-scroll h-full'>
-                <StacksContainer fileNames={["Hello Hi"]} />
-              </div>
               <p>Heres some stuff you can try out</p>
               <div className='flex flex-col max-w-4xl'>
                 <TryOutBox content={[
@@ -80,8 +78,7 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
                   "Does Joe Rogan ever talk about Bears? 🎙️🐻",
                   "Where is this from: \"To be, or not to be: that is the question.\"  📜❓",
                   "What exactly is the Higgs Boson?  ⚛️"
-                ]
-                } appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendMessageToChat={this.props.appendMessageToChat}></TryOutBox>
+                ]} appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendMessageToChat={this.props.appendMessageToChat}></TryOutBox>
               </div>
             </div>
           }
@@ -193,7 +190,7 @@ const TryOutBox = ({ content, appendContentToMessageInChat, appendMessageToChat 
         {firstHalf.map((buttonText, index) => {
           return <button
             key={index}
-            className="m-2 text-center max-w-prose p-2 hover:bg-orange-500 bg-black border-white border-2 rounded-lg"
+            className="m-2 text-center max-w-prose text-sm p-2 hover:bg-orange-500 bg-black border-white border-2 rounded-lg"
             onClick={() => emitTryButtonClicked(buttonText, appendMessageToChat, appendContentToMessageInChat)}>
             {buttonText}
           </button>
@@ -203,7 +200,7 @@ const TryOutBox = ({ content, appendContentToMessageInChat, appendMessageToChat 
         {secondHalf.map((buttonText, index) => {
           return <button
             key={index}
-            className="m-2 text-center max-w-prose p-2 hover:bg-orange-500 bg-black border-white border-2 rounded-lg"
+            className="m-2 text-center max-w-prose text-sm p-2 hover:bg-orange-500 bg-black border-white border-2 rounded-lg"
             onClick={() => emitTryButtonClicked(buttonText, appendMessageToChat, appendContentToMessageInChat)}>
             {buttonText}
           </button>
