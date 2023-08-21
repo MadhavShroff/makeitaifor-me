@@ -61,16 +61,16 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
           {messages.length != 0 && messages}
           {messages.length == 0 &&
             <div className="flex flex-col items-center h-full justify-center sm:justify-start border-t-2 text-white">
-              <div className='flex flex-col items-start sm:w-[60%] w-[50%]'>
-                <StacksContainer fileNames={["Hello Hi"]} />
-              </div>
               <Img
                 src={"/logo_nobg.png"}
                 alt="Logo"
                 width={1000}
                 height={1000}
-                className="object-contain w-[50%] h-[50%] sm:w-[60%] sm:h-full"
+                className="object-contain w-[60%] h-[40%] sm:w-[60%] sm:h-full"
               />
+              <div className='flex flex-col max-w-6xl sm:max-w-full items-start overflow-x-scroll h-full'>
+                <StacksContainer fileNames={["Hello Hi"]} />
+              </div>
               <p>Heres some stuff you can try out</p>
               <div className='flex flex-col max-w-4xl'>
                 <TryOutBox content={[

@@ -12,13 +12,14 @@ const ChatPage = () => {
 
   useEffect(() => {
     // DEV ONLY
-    if (process.env.NODE_ENV === "development") { // If in development mode, mock user and chats
-      setUser({ // Mock user
-        id: "91231123-1230u1u-123132",
-        name: "John Doe",
-        username: "john@doe.com"
-      });
-    } else fetchUser(setUser);
+    // if (process.env.NODE_ENV === "development") { // If in development mode, mock user and chats
+    //   setUser({ // Mock user
+    //     id: "91231123-1230u1u-123132",
+    //     name: "John Doe",
+    //     username: "john@doe.com"
+    //   });
+    // } else 
+    fetchUser(setUser);
   }, []);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { Chat } from "./types";
+import { Chat, FileData, S3MetaData } from "./types";
 import { cognitoLogoutUrl } from "./constants";
 
 // fetches.tsx
@@ -66,23 +66,18 @@ export const handleFilesUpload = async (files: File[], setMessage) => {
   });
 };
 
-export const fetchDocs = async (user) => {
-  if (!user) return;
+export const fetchFilesMetaData = async (userId: string): Promise<S3MetaData[]> => {
+  if (!userId) return [];
 
-  const res = await fetch('https://api.makeitaifor.me/fileupload/list-files', { method: 'GET', credentials: 'include',});
+  const res = await fetch('https://api.makeitaifor.me/fileupload/list-files/' + userId, { method: 'GET', credentials: 'include', });
+  // const res = await fetch('http://localhost:3000/fileupload/list-files/' + userId, { method: 'GET', credentials: 'include', });
   if (!res.ok) { throw new Error('Not authorized'); }
-  
-  const data = await res.json();
-  if(!data) return;
 
-  const filtered = data.files.map((doc) => {
-    const fileName = doc.Key.split('/')[1];
-    const w = fileName.split('.')[0];
-    if(w.length > 70) return w.substring(0, 70) + '...' + fileName.split('.')[1]; // shorten the file name if it is too long
-    else return fileName;
-  });
-  
-  return filtered;
+  const data = await res.json();
+  if (!data || !data.files) return [];
+
+  console.log("fetchFilesMetaData data: ", data);
+  return data.files;
 };
 
 export const fetchChats = async (user) => {
@@ -107,4 +102,23 @@ export const fetchChatContent = async (user, chatId) : Promise<Chat | null> => {
   if(!data) return null;
   
   return data;
+};
+
+export const fetchDocumentContent = async (user, fileId): Promise<FileData | null> => {
+  if (!user) return null;
+
+  const res = await fetch('https://api.makeitaifor.me/chats/getDocumentContent', { 
+    method: 'POST', 
+    credentials: 'include', 
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ fileId: fileId })
+  });
+  if (!res.ok) { throw new Error('Not authorized'); }
+
+  const data = await res.json();
+  if (!data) return null;
+
+  return data; // Assuming that the response data has the correct structure for FileData
 };

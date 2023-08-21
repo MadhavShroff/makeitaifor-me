@@ -18,11 +18,14 @@ function useViewportWidth() {
 }
 
 
-export const FilesStack: FC<{ fileNames: string[] }> = ({ fileNames }: { fileNames: string[] }) => {
+export const FilesStack: FC<{ fileNames: string[], fileOrStackClicked: (id: string | null) => void, fileSelected: string | null }> = ({ fileNames, fileOrStackClicked, fileSelected = null }: { fileNames: string[], fileOrStackClicked: (id: string|null) => void, fileSelected: string|null }) => {
 
-    const [filesShown, setFilesShown] = useState(false);
+    const filesShown = fileSelected !== null;
 
     const width = useViewportWidth();
+
+    console.log(filesShown);
+    console.log(fileSelected);
 
     //Here you can decide what values you want to assign based on the viewport's width.
     let componentWidth = 20;
@@ -47,12 +50,6 @@ export const FilesStack: FC<{ fileNames: string[] }> = ({ fileNames }: { fileNam
         rightOffset = 18.5;
     }
 
-    const clicked = () => {
-        console.log("clicked");
-        setFilesShown(!filesShown);
-        console.log(filesShown);
-    }
-
     const trim = (fileName: string): string => {
         // if a file name is too long, trim its middle and replace it with '...'
         if (fileName.length > 80) return fileName.slice(0, trimmedLength / 2) + "..." + fileName.slice(fileName.length - trimmedLength / 2);
@@ -73,33 +70,43 @@ export const FilesStack: FC<{ fileNames: string[] }> = ({ fileNames }: { fileNam
         ];
     });
 
+    if(filesMap.length === 0) return (<></>);
+
     return (
         <div className="group pl-12 pt-7">
             <div className={`relative h-60 sm:h-32 transition-all duration-1000 ease-in-out`}
                 style={{
                     width: `${filesShown ? componentWidth * (filesMap.length) - 2.5 : rightOffset}rem`, // 20rem is the default width, 80rem is the width when files are shown
                 }}>
-                <div className={`w-80 h-40 flex flex-col justify-between p-1 pl-2`} onClick={() => clicked()}>
+                <div className={`w-80 h-40 flex flex-col justify-between p-1 pl-2`}>
                     <div className="w-full">
                         <div className="relative w-72 h-40 sm:w-full">
                             {filesMap.map(([_0, _1, fileName]: [number, number, string], index) => {
                                 return (
-                                    <div className={`group w-72 sm:h-24 sm:w-44 h-40 transform transition-all duration-700 absolute rounded-lg bg-white ease-in-out `
-                                        + (filesShown ? `sm:top-10 top-20` : `sm:top-${_0} top-${_1}`)
-                                    }
-                                        style={{
-                                            left: `${filesShown ? ((componentWidth * (filesMap.length - 1)) - (componentWidth * (index))) - leftOffset : (-_1 / (width < 768 ? 8 : 4) - 0.5)}rem`,
-                                        }}
-                                    >
-                                        <div className="w-full h-full flex flex-col justify-between text-black text-justify items-end border-2 border-black absolute rounded-lg break-all text-ellipsis sm:leading-4 overflow-hidden sm:text-sm text-xl p-1">
-                                            <img
-                                                src={`https://source.boringavatars.com/marble/50/HelloHi?colors=EF233C,FED4E7,313638,003E1F`}
-                                                alt="Profile Picture"
-                                                className="rounded-full h-[30%]"
-                                            />
-                                            {fileName}
+                                    <button onClick={() => {
+                                        fileSelected === fileName ? fileOrStackClicked(null) : fileOrStackClicked(fileName);
+                                    }} className=''>
+                                        <div className={`group w-72 sm:h-24 sm:w-44 h-40 transform transition-all duration-700 absolute rounded-lg hover:bg-orange-500 ease-in-out `
+                                            + (filesShown ? `sm:top-10 top-20` : `sm:top-${_0} top-${_1}`)
+                                            + (fileSelected === fileName ? ` bg-orange-500` : ` bg-white`)
+                                        }
+                                            style={{
+                                                left: `${filesShown ? ((componentWidth * (filesMap.length - 1)) - (componentWidth * (index))) - leftOffset : (-_1 / (width < 768 ? 8 : 4) - 0.5)}rem`,
+                                            }}
+                                        >
+                                            <div className={
+                                                "w-full h-full flex flex-col justify-between text-black text-justify items-end transform transition-all ease-in-out hover:border-4 hover:border-white hover:text-3xl absolute rounded-lg break-all text-ellipsis sm:leading-4 overflow-hidden p-1"
+                                                + (fileSelected === fileName ? ` border-4 border-white text-3xl sm:text:2xl` : ` border-2 border-black text-xl sm:text-sm`)
+                                            }>
+                                                <img
+                                                    src={`https://source.boringavatars.com/marble/50/HelloHi?colors=EF233C,FED4E7,313638,003E1F`}
+                                                    alt="Profile Picture"
+                                                    className="rounded-full h-[30%]"
+                                                />
+                                                {fileName}
+                                            </div>
                                         </div>
-                                    </div>
+                                    </button>
                                 );
                             })}
                             {/* <div className="w-full sm:h-24 sm:w-44 h-40 bg-white flex flex-col p-2 justify-between text-black text-end items-end border-2 border-black transform transition-all absolute sm:top-10 top-20 sm:-left-10 -left-20 rounded-lg group-hover:skew-x-12 group-hover:-skew-y-12 delay-[0ms]">

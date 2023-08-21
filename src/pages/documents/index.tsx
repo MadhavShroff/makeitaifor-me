@@ -3,22 +3,43 @@ import { DndContext, DragMoveEvent, DragOverEvent, DragStartEvent } from '@dnd-k
 import { KeyboardSensor, PointerSensor } from '@dnd-kit/core';
 import { useSensor, useSensors } from '@dnd-kit/core';
 import Navbar from '@/components/Navbar';
-import { fetchDocs, fetchUser, fetchChatContent, fetchChats } from '@/utils/fetches';
+import { fetchFilesMetaData, fetchUser, fetchDocumentContent, fetchChats } from '@/utils/fetches';
 import { ScrollableStackContainer, ScrollableBoxContainer } from '@/components/documents/Stacks';
 import Footer from '@/components/Footer';
 import LoginPage from '../auth';
-import { Chat, Message, User } from '@/utils/types';
+import { Chat, Message, User, FileData, S3MetaData } from '@/utils/types';
+import { Preview } from '@/components/Preview';
 
 const Documents = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [docs, setDocs] = useState<string[]>([]); 
-
+  const [fileNamesArr, setFileNamesArr] = useState<string[]>([]);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [fileSelected, setFileSelected] = useState<string | null>(null);
+  const [filesData, setFilesData] = useState<FileData[]>([]);
   useEffect(() => {
     fetchUser(setUser);
+    // setUser({ // Mock user
+    //   id: "915b7cd5-08c1-45c2-9709-7585af332ee4",
+    //   name: "John Doe",
+    //   username: "john@doe.com"
+    // });
   }, []);
 
   useEffect(() => {
-    if (user) fetchDocs(user).then(setDocs).catch(console.error);
+    if (user) fetchFilesMetaData(user.id).then((metas) => {
+      setFilesData(metas.map((meta: S3MetaData) => {
+        return {
+          meta: meta,
+          parsedContent: null
+        }
+      }));
+      console.log("files meta: ", metas);
+      setFileNamesArr(metas.sort((a, b) => new Date(a.LastModified).getTime() - new Date(b.LastModified).getTime()).map((meta: S3MetaData) => {
+        const fileName = meta.Key.split('/')[1];
+        return fileName.length > 70 ? fileName.substring(0, 70) + '...' + fileName.split('.')[1] : fileName;
+      }));
+    }).catch(console.error);
+    // setFileNamesArr(["Hello", "World"])
   }, [user]);
 
   const pointerSensorOptions = {
@@ -57,14 +78,28 @@ const Documents = () => {
     }
   }
 
+  const fileOrStackClicked = (id: string) => {
+    setFileSelected(id);
+    // console.log('File or stack clicked :' + id);
+    // if (filesData.find((file) => file.fileId == id)) {
+    //   setPreview(filesData.find((file) => file.fileId == id)?.fileContent ?? null);
+    // } else {
+    //   fetchDocumentContent(id, (fileData: FileData) => {
+    //     setFilesData([...filesData, fileData]);
+    //     setPreview(fileData.fileContent);
+    //   });
+    // }
+  }
+
   return (
     <main className={'flex flex-col overflow-hidden'}>
       <DndContext sensors={sensors} onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
         <Navbar user={user} />
         {user && <div className='h-[96vh]'>
-          <ScrollableStackContainer fileNames={docs} />
+          <ScrollableStackContainer fileNames={fileNamesArr} fileOrStackClicked={fileOrStackClicked} fileSelected={fileSelected} />
+          <Preview fileSelected={fileSelected} />
         </div>}
-        {user == null &&
+        {!user == null &&
           <LoginPage />
         }
         <Footer />
@@ -193,12 +228,12 @@ const content1: Message[] = [{
   content: md0,
   whoSent: "John Doe",
   whenSent: new Date("2021-09-25T20:00:00.000Z")
-},{
+}, {
   id: "1",
   content: md1,
   whoSent: "John Doe",
   whenSent: new Date("2021-09-25T20:00:00.000Z")
-},{
+}, {
   id: "1",
   content: md1,
   whoSent: "John Doe",
