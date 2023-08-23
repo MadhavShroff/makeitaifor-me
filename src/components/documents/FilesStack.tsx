@@ -18,14 +18,11 @@ function useViewportWidth() {
 }
 
 
-export const FilesStack: FC<{ fileNames: string[], fileOrStackClicked: (id: string | null) => void, fileSelected: string | null }> = ({ fileNames, fileOrStackClicked, fileSelected = null }: { fileNames: string[], fileOrStackClicked: (id: string|null) => void, fileSelected: string|null }) => {
+export const FilesStack: FC<{ fileNames: {name: string, id: string}[], fileOrStackClicked: (id: string | null) => void, fileSelected: string | null }> = ({ fileNames, fileOrStackClicked, fileSelected = null }: { fileNames: {name: string, id: string}[], fileOrStackClicked: (id: string|null) => void, fileSelected: string|null }) => {
 
     const filesShown = fileSelected !== null;
 
     const width = useViewportWidth();
-
-    console.log(filesShown);
-    console.log(fileSelected);
 
     //Here you can decide what values you want to assign based on the viewport's width.
     let componentWidth = 20;
@@ -59,14 +56,17 @@ export const FilesStack: FC<{ fileNames: string[], fileOrStackClicked: (id: stri
     let i0 = 0;
     let i1 = 0;
     let backCount = fileNames.length - 6;
-    const filesMap: [number, number, string][] = fileNames.map((fileName, index) => {
+
+    const filesMap: [number, number, string, string][] = fileNames.map((ob, index) => {
+        const id = ob.id;
         if (backCount-- > 0) {
-            return [0, 0, fileName]
+            return [0, 0, ob.name, id]
         }
         return [
             i0++ * 2,
             i1++ * 4,
-            trim(fileName)
+            trim(ob.name),
+            id
         ];
     });
 
@@ -81,14 +81,14 @@ export const FilesStack: FC<{ fileNames: string[], fileOrStackClicked: (id: stri
                 <div className={`w-80 h-40 flex flex-col justify-between p-1 pl-2`}>
                     <div className="w-full">
                         <div className="relative w-72 h-40 sm:w-full">
-                            {filesMap.map(([_0, _1, fileName]: [number, number, string], index) => {
+                            {filesMap.map(([_0, _1, fileName, id]: [number, number, string, string], index) => {
                                 return (
                                     <button onClick={() => {
-                                        fileSelected === fileName ? fileOrStackClicked(null) : fileOrStackClicked(fileName);
-                                    }} className=''>
+                                        fileSelected === id ? fileOrStackClicked(null) : fileOrStackClicked(id);
+                                    }} className='' key={index}>
                                         <div className={`group w-72 sm:h-24 sm:w-44 h-40 transform transition-all duration-700 absolute rounded-lg hover:bg-orange-500 ease-in-out `
                                             + (filesShown ? `sm:top-10 top-20` : `sm:top-${_0} top-${_1}`)
-                                            + (fileSelected === fileName ? ` bg-orange-500` : ` bg-white`)
+                                            + (fileSelected === id ? ` bg-orange-500` : ` bg-white`)
                                         }
                                             style={{
                                                 left: `${filesShown ? ((componentWidth * (filesMap.length - 1)) - (componentWidth * (index))) - leftOffset : (-_1 / (width < 768 ? 8 : 4) - 0.5)}rem`,
@@ -96,7 +96,7 @@ export const FilesStack: FC<{ fileNames: string[], fileOrStackClicked: (id: stri
                                         >
                                             <div className={
                                                 "w-full h-full flex flex-col justify-between text-black text-justify items-end transform transition-all ease-in-out hover:border-4 hover:border-white hover:text-3xl absolute rounded-lg break-all text-ellipsis sm:leading-4 overflow-hidden p-1"
-                                                + (fileSelected === fileName ? ` border-4 border-white text-3xl sm:text:2xl` : ` border-2 border-black text-xl sm:text-sm`)
+                                                + (fileSelected === id ? ` border-4 border-white text-3xl sm:text:2xl` : ` border-2 border-black text-xl sm:text-sm`)
                                             }>
                                                 <img
                                                     src={`https://source.boringavatars.com/marble/50/HelloHi?colors=EF233C,FED4E7,313638,003E1F`}

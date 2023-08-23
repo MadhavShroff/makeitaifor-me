@@ -12,17 +12,17 @@ import { Preview } from '@/components/Preview';
 
 const Documents = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [fileNamesArr, setFileNamesArr] = useState<string[]>([]);
+  const [fileNamesArr, setFileNamesArr] = useState<{name: string, id: string}[]>([]);
   const [preview, setPreview] = useState<string | null>(null);
   const [fileSelected, setFileSelected] = useState<string | null>(null);
   const [filesData, setFilesData] = useState<FileData[]>([]);
   useEffect(() => {
-    fetchUser(setUser);
-    // setUser({ // Mock user
-    //   id: "915b7cd5-08c1-45c2-9709-7585af332ee4",
-    //   name: "John Doe",
-    //   username: "john@doe.com"
-    // });
+    // fetchUser(setUser);
+    setUser({ // Mock user
+      id: "915b7cd5-08c1-45c2-9709-7585af332ee4",
+      name: "John Doe",
+      username: "john@doe.com"
+    });
   }, []);
 
   useEffect(() => {
@@ -33,10 +33,13 @@ const Documents = () => {
           parsedContent: null
         }
       }));
-      console.log("files meta: ", metas);
       setFileNamesArr(metas.sort((a, b) => new Date(a.LastModified).getTime() - new Date(b.LastModified).getTime()).map((meta: S3MetaData) => {
         const fileName = meta.Key.split('/')[1];
-        return fileName.length > 70 ? fileName.substring(0, 70) + '...' + fileName.split('.')[1] : fileName;
+        const fileId = meta.ETag;
+        return {
+          name: fileName.length > 70 ? fileName.substring(0, 70) + '...' + fileName.split('.')[1] : fileName,
+          id: fileId
+        }
       }));
     }).catch(console.error);
     // setFileNamesArr(["Hello", "World"])
@@ -79,7 +82,28 @@ const Documents = () => {
   }
 
   const fileOrStackClicked = (id: string) => {
+    console.log('File or stack clicked :' + id);
+    const fileData = filesData.find((file) => file.meta.ETag == id);
+    if(fileData && fileData.parsedContent) {
+      setPreview(fileData.parsedContent);
+    } else {
+      fetchDocumentContent(user?.id, id, (fileContent: string) => {
+        const newFilesData = filesData.map((file) => {
+          if(file.meta.ETag == id) {
+            return {
+              meta: file.meta,
+              parsedContent: fileContent
+            };
+          } else {
+            return file;
+          }
+        });
+        setFilesData(newFilesData);
+        setPreview(fileContent);
+      });
+    }
     setFileSelected(id);
+
     // console.log('File or stack clicked :' + id);
     // if (filesData.find((file) => file.fileId == id)) {
     //   setPreview(filesData.find((file) => file.fileId == id)?.fileContent ?? null);
@@ -90,16 +114,69 @@ const Documents = () => {
     //   });
     // }
   }
+  "https://api.makeitaifor.me/chats/getDocumentContent?userId=915b7cd5-08c1-45c2-9709-7585af332ee4&fileId=%222bbf893a65f03a7f374b44de118c7aac%22"
+
 
   return (
     <main className={'flex flex-col overflow-hidden'}>
       <DndContext sensors={sensors} onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
         <Navbar user={user} />
-        {user && <div className='h-[96vh]'>
+        {<div className='h-[96vh]'>
           <ScrollableStackContainer fileNames={fileNamesArr} fileOrStackClicked={fileOrStackClicked} fileSelected={fileSelected} />
-          <Preview fileSelected={fileSelected} />
+          <Preview filesData={[{
+            meta: {
+              Key: '',
+              LastModified: new Date(),
+              ETag: '',
+              ChecksumAlgorithm: [],
+              Size: 0,
+              StorageClass: '',
+              Owner: {},
+              RestoreStatus: {}
+            },
+            parsedContent: md0
+          },
+          {
+            meta: {
+              Key: '',
+              LastModified: new Date(),
+              ETag: '',
+              ChecksumAlgorithm: [],
+              Size: 0,
+              StorageClass: '',
+              Owner: {},
+              RestoreStatus: {}
+            },
+            parsedContent: md1
+          },
+          {
+            meta: {
+              Key: '',
+              LastModified: new Date(),
+              ETag: '',
+              ChecksumAlgorithm: [],
+              Size: 0,
+              StorageClass: '',
+              Owner: {},
+              RestoreStatus: {}
+            },
+            parsedContent: md0
+          },
+          {
+            meta: {
+              Key: '',
+              LastModified: new Date(),
+              ETag: '',
+              ChecksumAlgorithm: [],
+              Size: 0,
+              StorageClass: '',
+              Owner: {},
+              RestoreStatus: {}
+            },
+            parsedContent: md1
+          }]} />
         </div>}
-        {user == null &&
+        {false &&
           <LoginPage />
         }
         <Footer />

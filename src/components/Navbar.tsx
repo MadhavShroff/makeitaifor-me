@@ -53,7 +53,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
           <Link
             key={11}
             href={'/profile'}
-            className="flex items-center pr-1 pt-1 pb-1 pl-3 text-lg sm:text-xl border rounded-full hover:bg-orange-500 whitespace-nowrap font-bold mx-1 sm:h-8 sm:py-0"
+            className="flex items-center pr-1 pt-1 pb-1 pl-3 text-lg sm:text-xl border rounded-full hover:bg-orange-500 hover:text-white whitespace-nowrap font-bold mx-1 sm:h-8 sm:py-0"
             style={{
               borderColor: 'var(--background-color)',
               color: 'var(--background-color)',
@@ -75,11 +75,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
           <Link
             key={12}
             href={'/auth'} // replace with your logout link
-            className="px-3 py-1 text-lg sm:text-xl border rounded-full hover:bg-orange-500 whitespace-nowrap text-center font-bold sm:h-8 sm:py-0"
-            style={{
-              borderColor: 'var(--background-color)',
-              color: 'var(--background-color)',
-            }}
+            className="px-3 py-1 text-lg sm:text-xl border border-[var(--background-color)] text-[var(--background-color)] rounded-full hover:bg-orange-500 hover:text-white whitespace-nowrap text-center font-bold sm:h-8 sm:py-0"
           >
             {'Login / Sign up'}
           </Link>

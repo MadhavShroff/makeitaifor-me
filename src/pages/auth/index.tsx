@@ -21,8 +21,24 @@ function LoginPage() {
                 <div>Log in with your account to continue</div>
                 <div className="flex flex-col w-full gap-3 mt-2">
                     {/* <Button _key={1} text='Continue as Guest' color='black' onClick={() => router.push(cognitoHostedUI)}/>  */}
-                    <Button _key={2} text='Login' onClick={() => router.push(cognitoHostedUI)}/> 
-                    <Button _key={3} text='Sign Up' onClick={() => router.push(cognitoHostedUI)}/>
+                    <button
+                        key={2}
+                        onClick={() => router.push(cognitoHostedUI)}
+                        className={
+                            "px-3 sm:px-4 py-1 text-lg border rounded-full hover:bg-orange-500 whitespace-nowrap font-bold m-1 text-black border-black hover:text-white border-black dark:text-white dark:border-white hover:text-black hover:border-black"
+                        }
+                    >
+                        {"Login"}
+                    </button>
+                    <button
+                        key={2}
+                        onClick={() => router.push(cognitoHostedUI)}
+                        className={
+                            "px-3 sm:px-4 py-1 text-lg border rounded-full hover:bg-orange-500 whitespace-nowrap font-bold m-1 text-black border-black hover:text-white border-black dark:text-white dark:border-white hover:text-black hover:border-black"
+                        }
+                    >
+                        {"Sign Up"}
+                    </button>
                 </div>
             </div>
             <div className="py-3 text-xs">

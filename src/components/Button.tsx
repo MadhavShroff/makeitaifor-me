@@ -23,7 +23,7 @@ const Button: React.FC<ButtonProps> = ({ _key, href, text, onClick, color, activ
             className={
                 "px-3 sm:px-4 py-1 text-lg border rounded-full hover:bg-orange-500 whitespace-nowrap font-bold m-1 " +  (active ? 'bg-orange-500' : '')
                 + (className ? ' ' + className : '') + 
-                (color === 'black' ? 'text-black border-black hover:text-white' : 'border-black text-black dark:text-white dark:border-white hover:text-black hover:border-black')
+                (color === 'black' ? 'text-black border-black hover:text-white' : 'border-black text-white dark:text-white dark:border-white hover:text-black hover:border-black')
             }
         >
             {text}

@@ -70,7 +70,6 @@ export const fetchFilesMetaData = async (userId: string): Promise<S3MetaData[]> 
   if (!userId) return [];
 
   const res = await fetch('https://api.makeitaifor.me/fileupload/list-files/' + userId, { method: 'GET', credentials: 'include', });
-  // const res = await fetch('http://localhost:3000/fileupload/list-files/' + userId, { method: 'GET', credentials: 'include', });
   if (!res.ok) { throw new Error('Not authorized'); }
 
   const data = await res.json();
@@ -104,21 +103,19 @@ export const fetchChatContent = async (user, chatId) : Promise<Chat | null> => {
   return data;
 };
 
-export const fetchDocumentContent = async (user, fileId): Promise<FileData | null> => {
-  if (!user) return null;
+export const fetchDocumentContent = async (user, fileId, callback): Promise<void> => {
+  if (!user) return;
 
-  const res = await fetch('https://api.makeitaifor.me/chats/getDocumentContent', { 
-    method: 'POST', 
+  const res = await fetch(`https://api.makeitaifor.me/chats/getDocumentContent?userId=${user}&fileId=${fileId}`, { 
+    method: 'GET', 
     credentials: 'include', 
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ fileId: fileId })
   });
+  console.log(res);
   if (!res.ok) { throw new Error('Not authorized'); }
 
   const data = await res.json();
-  if (!data) return null;
+  if (!data) return;
 
-  return data; // Assuming that the response data has the correct structure for FileData
+  callback(data);
 };
+

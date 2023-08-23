@@ -27,7 +27,7 @@ export const Stack = (props) => {
                         {props.title}
                     </div>
                 </div>
-                <Button _key={0} text={"Start Chat"} className="mt-4 group-hover:visible invisible ml-0 align-start" />
+                <Button _key={0} text={"Start Chat"} className="mt-4 group-hover:visible invisible ml-0 align-start text-white" />
             </div>
         </Droppable>
     );

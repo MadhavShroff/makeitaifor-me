@@ -14,7 +14,7 @@ export const UploadFileBox: FC<UploadFileBoxProps> = ({ setShowModal }) => {
             <div className="relative w-72 h-40 sm:w-full">
               {[[0, 0], [2, 4], [4, 8], [6, 12], [8, 16]].map(([_0, _1], index) => {
                 return (
-                  <div className={`group w-full sm:h-24 sm:w-44 h-40 transform transition-all absolute sm:top-${_0} top-${_1} sm:-left-${_0} -left-${_1} rounded-lg bg-[--background-color]`}>
+                  <div key={index} className={`group w-full sm:h-24 sm:w-44 h-40 transform transition-all absolute sm:top-${_0} top-${_1} sm:-left-${_0} -left-${_1} rounded-lg bg-[--background-color]`}>
                     <div className="w-full h-full flex flex-col justify-center text-white items-center sm:border-2 border-4 border-dotted border-white absolute rounded-lg text-3xl p-2"></div>
                   </div>
                 );

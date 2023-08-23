@@ -81,7 +81,7 @@ const ChatPage = () => {
   }
 
 
-  if (user)
+  // if (user)
     return (
       <div className="h-[100svh]">
         <ChatComponent
@@ -95,11 +95,11 @@ const ChatPage = () => {
         />
       </div>)
 
-  else return (
-    <main className="bg-white dark:bg-black h-[100dvh]">
-      <LoginPage />
-    </main>
-  )
+  // else return (
+  //   <main className="bg-white dark:bg-black h-[100dvh]">
+  //     <LoginPage />
+  //   </main>
+  // )
 }
 
 export default ChatPage;

@@ -5,14 +5,14 @@ import { FilesStack } from "../FilesStack";
 
 export const ScrollableStackContainer = (props) => {
     return (
-        <div className="flex overflow-auto no-scrollbar sm:pl-2 pl-6">
+        <div className="flex overflow-auto no-scrollbar sm:pl-2 pl-6 overscroll-x-contain">
             <div className="">
             </div>
             <FileUploadComponent />
             <FilesStack fileNames={props.fileNames} fileOrStackClicked={props.fileOrStackClicked} fileSelected={props.fileSelected} />
             {["Sample: Podcasts", "Sample: Research PDFs & Lectures", "Sample: Tax Documents"].map((title, index) => (
-                <div className=" pt-8">
-                    <Stack key={index} title={title} fileOrStackClicked={props.fileOrStackClicked} />
+                <div className=" pt-8" key={index}>
+                    <Stack title={title} fileOrStackClicked={props.fileOrStackClicked} />
                 </div>
                 // <div className="transform translate-y-20"> {/* Increase translate value if needed */}
                 // </div>
@@ -39,8 +39,6 @@ export const StacksContainer = (props) => {
         </div>
     );
 };
-
-
 
 
 export const ScrollableBoxContainer = (props) => {
