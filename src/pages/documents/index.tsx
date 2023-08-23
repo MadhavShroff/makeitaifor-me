@@ -17,12 +17,12 @@ const Documents = () => {
   const [fileSelected, setFileSelected] = useState<string | null>(null);
   const [filesData, setFilesData] = useState<FileData[]>([]);
   useEffect(() => {
-    // fetchUser(setUser);
-    setUser({ // Mock user
-      id: "915b7cd5-08c1-45c2-9709-7585af332ee4",
-      name: "John Doe",
-      username: "john@doe.com"
-    });
+    fetchUser(setUser);
+    // setUser({ // Mock user
+    //   id: "915b7cd5-08c1-45c2-9709-7585af332ee4",
+    //   name: "John Doe",
+    //   username: "john@doe.com"
+    // });
   }, []);
 
   useEffect(() => {
