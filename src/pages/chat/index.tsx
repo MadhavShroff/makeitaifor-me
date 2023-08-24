@@ -2,6 +2,7 @@ import { ChatComponent } from "@/components/documents/ChatComponent"
 import React, { useEffect, useState } from "react";
 import { Chat } from "@/utils/types";
 import { fetchUser } from "@/utils/fetches";
+import { connectToSocket } from "@/utils/sockets";
 import { User, Message } from "@/utils/types";
 import LoginPage from "../auth";
 
@@ -9,6 +10,9 @@ const ChatPage = () => {
   const [user, setUser] = useState<User | null>(null);
   const [chats, setChats] = useState<Chat[]>([]);
 
+  useEffect(() => {
+    connectToSocket().then(() => console.log("Connected to socket")).catch(console.error);
+  }, [connectToSocket]);
 
   useEffect(() => {
     // DEV ONLY

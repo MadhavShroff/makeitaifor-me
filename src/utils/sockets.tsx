@@ -36,24 +36,23 @@ async function getWebSocketToken() {
 
 let socket: Socket;
 
-// (async () => {
+export const connectToSocket = async () : Promise<void> => {
+  console
+  const token = await getWebSocketToken();
+  socket = io(`wss://api.makeitaifor.me?token=${token}`);
 
-//   console
-//   const token = await getWebSocketToken();
-//   socket = io(`wss://api.makeitaifor.me?token=${token}`);
+  socket.on('connect', () => {
+    console.log('Connected to WebSocket');
+  })
 
-//   socket.on('connect', () => {
-//     console.log('Connected to WebSocket');
-//   })
+  socket.on('error', (error) => {
+    console.error('Error:', error);
+  });
 
-//   socket.on('error', (error) => {
-//     console.error('Error:', error);
-//   });
-
-//   socket.on('message', (message) => {
-//     console.log('Received message from server: ', message);
-//   });
-// })()
+  socket.on('message', (message) => {
+    console.log('Received message from server: ', message);
+  });
+};
 
 
 export const emitTryButtonClicked = (
