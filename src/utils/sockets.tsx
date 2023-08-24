@@ -31,21 +31,16 @@ async function getWebSocketToken() {
   }
 
   const data = await response.json();
-  return { token: data.token, guest: "false" };
+  return data.token;
 }
 
 let socket: Socket;
 
 (async () => {
-  // Uncomment the following lines if you need to handle different environments
-  // if (process.env.NODE_ENV === 'development') {
-  //   socket = io(`ws://localhost:3000/`);
-  // } else {
-  // }
-
+  
   console
-  const res = await getWebSocketToken();
-  socket = io(`wss://api.makeitaifor.me?token=${res.token}&guest=${res.guest}`);
+  const token = await getWebSocketToken();
+  socket = io(`wss://api.makeitaifor.me?token=${token}`);
 
   socket.on('connect', () => {
     console.log('Connected to WebSocket');
