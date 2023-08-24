@@ -10,7 +10,7 @@ interface LinkProps {
 interface NavbarProps {
   links?: LinkProps[];
   title?: string;
-  user: null | { id: string, username: string, name: string };
+  user: null | { id?: string, username?: string, name?: string, role?: string };
 }
 
 const defaultLinks: LinkProps[] = [
@@ -62,7 +62,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             onMouseLeave={() => setIsHovered(false)}
           >
             <span className="pr-2">
-              {isHovered ? "View Profile" : 'Hi ' + props.user.name.split(" ")[0] + '!'}
+              {isHovered ? "View Profile" : 'Hi ' + (props.user.name === undefined ? props.user.role : props.user.name.split(" ")[0]) + '!'}
             </span>
             <div className="h-7 w-7 rounded-full object-cover border-black border-2">
               <img
