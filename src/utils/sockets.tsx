@@ -10,6 +10,7 @@ async function getGuestAccess() {
   if (!response.ok) {
     console.error('Failed to get guest access');
     console.error(response);
+    await new Promise((resolve) => setTimeout(resolve, 10000));
     throw new Error('Failed to get guest access');
   }
   // Since the guest token is set as a cookie, no need to return anything
@@ -26,7 +27,6 @@ async function getWebSocketToken() {
   if (!response.ok) {
     console.error('Failed to get WebSocket token. Continuing as Guest');
     await getGuestAccess(); // Get guest access and set the cookie
-    await new Promise((resolve) => setTimeout(resolve, 5000));
     return await getWebSocketToken(); // Try to get the WebSocket token again
   }
 
