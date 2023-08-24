@@ -77,7 +77,7 @@ export const Preview = (props: PreviewProps) => {
 
 const FilePreview = (props: FilePreviewProps) => (
   <>
-    <div className="flex flex-row max-w-[48rem] min-w-[48rem] mt-10 mx-5 justify-between">
+    <div className="flex flex-row mt-10 mx-5 justify-between" style={{ minWidth: 'min(48rem, 80vw)', maxWidth: 'max(48rem, 80vw)' }}>
       <button className="text-white text-lg flex hover:border-orange-500 hover:border-2 border-2 border-black rounded-full items-center invisible">
         Text
       </button>
@@ -85,7 +85,7 @@ const FilePreview = (props: FilePreviewProps) => (
         ✏️ Edit
       </button>}
     </div>
-    <div className="border-4 sm:border-2 relative bg-black rounded-lg h-[90%] flex flex-col max-w-[48rem] min-w-[48rem] items-center text-left mx-5 overflow-y-auto overscroll-auto">
+    <div className="border-4 sm:border-2 relative bg-black rounded-lg h-[90%] flex flex-col items-start text-left mx-5 overflow-y-auto overscroll-auto" style={{ minWidth: 'min(48rem, 80vw)', maxWidth: 'max(48rem, 80vw)' }}>
       <div className="flex justify-between flex-row w-full px-5">
         {props.file !== undefined && <h1 className="text-4xl text-left mt-5">File Name 1</h1>}
         <h1 className="text-4xl text-right mt-5 hidden">.</h1>
@@ -98,13 +98,14 @@ const FilePreview = (props: FilePreviewProps) => (
             <Page key={index} content={page} pgNum={index + 1} />
           ))}
       {props.file === undefined && (
-        <button className="h-full w-full flex justify-center items-center text-6xl max-w-[80%] hover:text-orange-500">
+        <button className="h-full w-full flex justify-center items-center text-6xl sm:text-2xl max-w-full p-2 hover:text-orange-500 break-words">
           + Add a new file to this collection?
         </button>
       )}
     </div>
   </>
 );
+
 
 interface FilePreviewProps {
   file: FileData | undefined;
@@ -117,11 +118,12 @@ interface PageProps {
 }
 
 const Page = (props: PageProps) => (
-  <div className="border-4 sm:border-2 relative bg-white text-black rounded-lg h-full max-w-[45rem] min-w-[45rem] m-5 flex flex-col p-1">
+  <div className="relative bg-white text-black rounded-lg h-full mx-5 my-1 flex flex-col" style={{ minWidth: 'min(45rem, 80vw)', maxWidth: 'min(45rem, 80vw)' }}>
     <ReactMarkdown
       children={props.content == null ? "" : props.content}
       remarkPlugins={[remarkMath, remarkGfm]}
       rehypePlugins={[rehypeKatex]}
+      className="overflow-y-auto break-words m-1"
     />
     <div className="border-t border-black h-4 flex justify-between text-[10px] items-center px-2">
       <p className="text-left"></p>
