@@ -12,11 +12,14 @@ async function getGuestAccess() {
     console.error(response);
     await new Promise((resolve) => setTimeout(resolve, 10000));
     throw new Error('Failed to get guest access');
+  } else {
+    // once cookie is set, try to get the WebSocket token again with the cookie
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+    return await getWebSocketToken("guest");
   }
-  // Since the guest token is set as a cookie, no need to return anything
 }
 
-async function getWebSocketToken() {
+async function getWebSocketToken(who: string) {
   console.log('Getting WebSocket token');
   const response = await fetch('https://api.makeitaifor.me/auth/ws-token', {
     method: 'GET',
@@ -24,10 +27,10 @@ async function getWebSocketToken() {
     headers: { 'Content-Type': 'application/json' },
   });
 
-  if (!response.ok) {
+  if (!response.ok && who === "guest") {
     console.error('Failed to get WebSocket token. Continuing as Guest');
-    await getGuestAccess(); // Get guest access and set the cookie
-    return await getWebSocketToken(); // Try to get the WebSocket token again
+    return await getGuestAccess(); // Get guest access and set the cookie
+    // Try to get the WebSocket token again
   }
 
   const data = await response.json();
@@ -36,9 +39,8 @@ async function getWebSocketToken() {
 
 let socket: Socket;
 
-export const connectToSocket = async () : Promise<void> => {
-  console
-  const token = await getWebSocketToken();
+export const connectToSocket = async (): Promise<void> => {
+  const token = await getWebSocketToken("authenticated user");
   socket = io(`wss://api.makeitaifor.me?token=${token}`);
 
   socket.on('connect', () => {
