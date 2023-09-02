@@ -1,6 +1,5 @@
 import { io, Socket } from "socket.io-client";
 import { whichEnv, Environments } from "./whichEnv";
-import { getGuestAccess } from "./fetches";
 
 let socket: Socket;
 

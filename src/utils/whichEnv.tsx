@@ -4,11 +4,12 @@ export enum Environments {
 }
 
 export const whichEnv = () => {
-    const env = process.env.NODE_ENV;
-    if (env === 'development') {
-        return Environments.Development;
-    } else if (env === 'production') {
+    const env = process.env.APP_ENV;
+    console.log('Environment: ', env);
+    if (env === 'production') {
         return Environments.Production;
+    } else if (env === 'development') {
+        return Environments.Development;
     } else {
         throw new Error('Unknown environment');
     }
