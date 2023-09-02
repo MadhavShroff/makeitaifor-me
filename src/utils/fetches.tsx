@@ -1,5 +1,6 @@
 import { Chat, FileData, S3MetaData } from "./types";
 import { cognitoLogoutUrl } from "./constants";
+import { Environments, whichEnv } from "./whichEnv";
 
 // fetches.tsx
 export const fetchUser = (setUser) => {
@@ -118,4 +119,18 @@ export const fetchDocumentContent = async (user, fileId, callback): Promise<void
 
   callback(data);
 };
+
+export const getGuestAccess = async() => {
+  console.log('Getting guest access');
+  const response = await fetch(
+    whichEnv() === Environments.Production ?
+    'https://api.makeitaifor.me/auth/guest'
+    : 'http://localhost:3000/auth/guest'
+    , {
+    method: 'GET',
+    credentials: 'include', // This will include the cookies in the request
+  });
+
+  return response;
+}
 

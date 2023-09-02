@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import { cognitoHostedUI } from '@/utils/constants';
+import { getGuestAccess } from '@/utils/fetches';
 
 interface LinkProps {
   href: string;
@@ -30,12 +32,12 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   return (
     <nav className={`flex items-center justify-start bg-white px-1 flex-wrap rounded`}>
       <div className='flex gap-1 flex-wrap my-1'>
-      <Link
-        href="/"
-        className="px-2 pr-4 pt-1 text-2xl font-bold text-black hover:underline decoration-orange-500">
-        MakeIt<span className="text-orange-500">Ai</span>For.
-        <span className="text-orange-500">Me</span>
-      </Link>
+        <Link
+          href="/"
+          className="px-2 pr-4 pt-1 text-2xl font-bold text-black hover:underline decoration-orange-500">
+          MakeIt<span className="text-orange-500">Ai</span>For.
+          <span className="text-orange-500">Me</span>
+        </Link>
         {links.map((link, index) => (
           <Link
             key={index}
@@ -62,7 +64,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             onMouseLeave={() => setIsHovered(false)}
           >
             <span className="pr-2">
-            {isHovered ? "View Profile" : 'Hi ' + props.user.name.split(" ")[0] + '!'}
+              {isHovered ? "View Profile" : 'Hi ' + props.user.name.split(" ")[0] + '!'}
             </span>
             <div className="h-7 w-7 rounded-full object-cover border-black border-2">
               <img
@@ -72,13 +74,25 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             </div>
           </Link>
         ) : (
+          <>
           <Link
             key={12}
-            href={'/auth'} // replace with your logout link
+            href={cognitoHostedUI}
             className="px-3 py-1 text-lg sm:text-xl border border-[var(--background-color)] text-[var(--background-color)] rounded-full hover:bg-orange-500 hover:text-white whitespace-nowrap text-center font-bold sm:h-8 sm:py-0"
           >
-            {'Login / Sign up'}
+            {'Login'}
           </Link>
+          <Link
+          key={12}
+          href={'#'}
+          onClick={() => {
+            getGuestAccess();
+          }}
+          className="px-3 py-1 text-lg sm:text-xl border border-[var(--background-color)] text-[var(--background-color)] rounded-full hover:bg-orange-500 hover:text-white whitespace-nowrap text-center font-bold sm:h-8 sm:py-0"
+        >
+          {'Continue as Guest'}
+        </Link>
+          </>
         )}
       </div>
     </nav>

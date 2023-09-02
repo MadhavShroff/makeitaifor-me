@@ -1,47 +1,32 @@
 import { io, Socket } from "socket.io-client";
+import { whichEnv, Environments } from "./whichEnv";
+import { getGuestAccess } from "./fetches";
 
-async function getGuestAccess() {
-  console.log('Getting guest access');
-  const response = await fetch('https://api.makeitaifor.me/auth/guest', {
-    method: 'GET',
-    credentials: 'include', // This will include the cookies in the request
-  });
+let socket: Socket;
 
-  if (!response.ok) {
-    console.error('Failed to get guest access');
-    console.error(response);
-    await new Promise((resolve) => setTimeout(resolve, 10000));
-    throw new Error('Failed to get guest access');
-  } else {
-    // once cookie is set, try to get the WebSocket token again with the cookie
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-    return await getWebSocketToken("guest");
-  }
-}
-
-async function getWebSocketToken(who: string) {
+async function getWebSocketToken() {
   console.log('Getting WebSocket token');
-  const response = await fetch('https://api.makeitaifor.me/auth/ws-token', {
+  const response = await fetch(
+    whichEnv() === Environments.Production ?
+    'https://api.makeitaifor.me/auth/ws-token'
+    : 'http://localhost:3000/auth/ws-token'
+    , {
     method: 'GET',
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
   });
 
-  if (!response.ok && who === "guest") {
-    console.error('Failed to get WebSocket token. Continuing as Guest');
-    return await getGuestAccess(); // Get guest access and set the cookie
-    // Try to get the WebSocket token again
-  }
-
   const data = await response.json();
+  console.log(data);
   return data.token;
 }
 
-let socket: Socket;
-
 export const connectToSocket = async (): Promise<void> => {
-  const token = await getWebSocketToken("authenticated user");
-  socket = io(`wss://api.makeitaifor.me?token=${token}`);
+  const token = await getWebSocketToken();
+  socket = io(
+    whichEnv() === Environments.Production ?
+     `wss://api.makeitaifor.me?token=${token}`
+     : `ws://localhost:3000?token=${token}`);
 
   socket.on('connect', () => {
     console.log('Connected to WebSocket');
@@ -62,6 +47,7 @@ export const emitTryButtonClicked = (
   appendMessageToChat: (chatId: string) => string,
   appendContentToMessageInChat: (chatId: string, messageId: string, content: string) => void
 ) => {
+  console.log('Emitting tryButtonClicked');
   socket.emit('tryButtonClicked', { content: content });
 
   // Create new message row
