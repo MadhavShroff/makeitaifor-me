@@ -4,6 +4,9 @@ export enum Environments {
 }
 
 export const whichEnv = (env?: string) : Environments => {
+    if (!env) {
+        env = process.env.NODE_ENV || 'producuction';
+    }
     console.log('Environment: ', env);
     if (env === 'production') {
         return Environments.Production;
