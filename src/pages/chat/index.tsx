@@ -5,6 +5,7 @@ import { fetchUser } from "@/utils/fetches";
 import { connectToSocket } from "@/utils/sockets";
 import { User, Message } from "@/utils/types";
 import LoginPage from "../auth";
+import { Environments, whichEnv } from "@/utils/whichEnv";
 
 const ChatPage = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -16,14 +17,21 @@ const ChatPage = () => {
 
   useEffect(() => {
     // DEV ONLY
-    // if (process.env.NODE_ENV === "development") { // If in development mode, mock user and chats
-    //   setUser({ // Mock user
-    //     id: "91231123-1230u1u-123132",
-    //     name: "John Doe",
-    //     username: "john@doe.com"
-    //   });
-    // } else 
-    fetchUser(setUser);
+    switch(whichEnv()) {
+      case Environments.Development:
+        setUser({ // Mock user in dev
+          id: "91231123-1230u1u-123132",
+          name: "John Doe",
+          username: "john@doe.com",
+          role: "guest"
+        });
+        break;
+      case Environments.Production:
+        fetchUser(setUser);;
+        break;
+      default:
+        console.error("Unknown environment");
+    }
   }, []);
 
   useEffect(() => {
