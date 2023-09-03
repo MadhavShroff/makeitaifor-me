@@ -17,7 +17,7 @@ const ChatPage = () => {
 
   useEffect(() => {
     // DEV ONLY
-    switch(whichEnv()) {
+    switch(whichEnv(process.env.APP_ENV)) {
       case Environments.Development:
         setUser({ // Mock user in dev
           id: "91231123-1230u1u-123132",

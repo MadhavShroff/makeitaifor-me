@@ -3,8 +3,7 @@ export enum Environments {
     Production
 }
 
-export const whichEnv = () : Environments => {
-    const env = process.env.APP_ENV;
+export const whichEnv = (env?: string) : Environments => {
     console.log('Environment: ', env);
     if (env === 'production') {
         return Environments.Production;

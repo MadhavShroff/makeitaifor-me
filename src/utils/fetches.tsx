@@ -123,7 +123,7 @@ export const fetchDocumentContent = async (user, fileId, callback): Promise<void
 export const getGuestAccess = async() => {
   console.log('Getting guest access');
   const response = await fetch(
-    whichEnv() === Environments.Production ?
+    whichEnv(process.env.APP_ENV) === Environments.Production ?
     'https://api.makeitaifor.me/auth/guest'
     : 'http://localhost:3000/auth/guest'
     , {

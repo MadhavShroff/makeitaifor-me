@@ -6,7 +6,7 @@ let socket: Socket;
 async function getWebSocketToken() {
   console.log('Getting WebSocket token');
   const response = await fetch(
-    whichEnv() === Environments.Production ?
+    whichEnv(process.env.APP_ENV) === Environments.Production ?
     'https://api.makeitaifor.me/auth/ws-token'
     : 'http://localhost:3000/auth/ws-token'
     , {
@@ -23,7 +23,7 @@ async function getWebSocketToken() {
 export const connectToSocket = async (): Promise<void> => {
   const token = await getWebSocketToken();
   socket = io(
-    whichEnv() === Environments.Production ?
+    whichEnv(process.env.APP_ENV) === Environments.Production ?
      `wss://api.makeitaifor.me?token=${token}`
      : `ws://localhost:3000?token=${token}`);
 
