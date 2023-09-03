@@ -130,7 +130,8 @@ export const getGuestAccess = async() => {
     method: 'GET',
     credentials: 'include', // This will include the cookies in the request
   });
-
+  window.location.reload();
+  console.log(response);
   return response;
 }
 
