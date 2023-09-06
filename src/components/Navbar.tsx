@@ -66,7 +66,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             <span className="pr-2">
               {isHovered ? "View Profile" : 'Hi ' + props.user.name.split(" ")[0] + '!'}
             </span>
-            <div className="h-7 w-7 rounded-full object-cover border-black border-2">
+            <div className="h-7 w-7 rounded-full object-cover">
               <img
                 src={`https://source.boringavatars.com/marble/100/${props.user.id}?colors=EF233C,FED4E7,313638,003E1F`}
                 alt="Profile Picture"

@@ -5,14 +5,17 @@ import Script from "next/script";
 import "../styles/globals.css";
 import "../styles/FileUpload.css";
 import "../styles/markdown.css";
+import Link from "next/link";
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600&display=swap"
-        rel="stylesheet"
-      ></link>
+      <Link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin=""/>
+      <Link href="https://fonts.googleapis.com/css2?family=Sora:wght@100&display=swap" 
+        rel="stylesheet">
+      </Link>
+      <Link rel="stylesheet" href="bower_components/css-ripple-effect/dist/ripple.min.css"></Link>
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-Z9ZPFWBFD4"
         strategy="afterInteractive"

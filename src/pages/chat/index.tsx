@@ -2,7 +2,7 @@ import { ChatComponent } from "@/components/documents/ChatComponent"
 import React, { useEffect, useState } from "react";
 import { Chat } from "@/utils/types";
 import { fetchUser } from "@/utils/fetches";
-import { connectToSocket } from "@/utils/sockets";
+import { connectToSocket, emitChatSubmitted, emitCreateNewChat } from "@/utils/sockets";
 import { User, Message } from "@/utils/types";
 import LoginPage from "../auth";
 import { Environments, whichEnv } from "@/utils/whichEnv";
@@ -12,7 +12,7 @@ const ChatPage = () => {
   const [chats, setChats] = useState<Chat[]>([]);
 
   useEffect(() => {
-    connectToSocket().then(() => console.log("Connected to socket")).catch(console.error);
+    connectToSocket().catch(console.error);
   }, [connectToSocket]);
 
   useEffect(() => {
@@ -66,6 +66,26 @@ const ChatPage = () => {
     return "temp";
   }
 
+  // create empty message with messageId in chat with chatId
+  const appendEmptyMessageToChatWithId = (chatId: string, messageId: string): void => { 
+    console.log("Appending empty message to chat temp");
+    const newChat = chats.find((chat) => chat.id == chatId);
+    if (newChat == undefined) {
+      console.error("Chat with id temp not found");
+      return;
+    }
+    newChat.messages?.push({
+      id: messageId,
+      content: "",
+      whoSent: user?.name ?? "John Doe",
+      whenSent: new Date()
+    });
+    setChats([
+      ...chats.filter((chat) => chat.id != "temp"),
+      newChat
+    ]);
+  }
+
   const appendContentToMessageInChat = (chatId: string, messageId: string, content: string) => {
     const newChat = chats.find((chat) => chat.id == chatId);
     if (newChat == undefined) {
@@ -88,8 +108,12 @@ const ChatPage = () => {
   }
 
   const onNewChatClicked = () => {
-    console.log("New chat clicked");
-    setChats([{ messages: [], "id": "temp", "title": "New Chat" }, ...chats])
+    console.log("New chat button clicked");
+    emitCreateNewChat(() => {
+      console.log("New chat created on server");
+      setChats([{ messages: [], "id": "temp", "title": "New Chat" }, ...chats]);
+    });
+    // setChats([{ messages: [], "id": "temp", "title": "New Chat" }, ...chats]);
   }
 
 
@@ -99,8 +123,14 @@ const ChatPage = () => {
         <ChatComponent
           chats={chats}
           onNewChatClicked={onNewChatClicked}
-          onChatSubmitted={(chatId: string) => {
-            console.log("Chat submitted " + chatId + " for user " + user?.username);
+          onChatSubmitted={(chatId: string, content) => {
+            console.log("Chat submitted " + chatId + " for user " + user?.id + "With content " + content);
+            emitChatSubmitted(chatId, content, appendContentToMessageInChat, (newMessage: Message) => {
+              console.log("Chat saved on server");
+              appendMessageToChat("question2")
+              appendContentToMessageInChat(chatId, "question2", content);
+              appendEmptyMessageToChatWithId(chatId, newMessage.id);
+            });
           }}
           appendContentToMessageInChat={appendContentToMessageInChat}
           appendMessageToChat={appendMessageToChat}

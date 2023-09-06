@@ -40,6 +40,8 @@
     "remark-math": "^5.1.1",
     "socket.io-client": "^4.7.1",
     "tailwindcss": "^3.3.2",
+    "tw-elements": "^1.0.0-rc.1",
+    "tw-elements-react": "^1.0.0-alpha1",
     "typescript": "5.0.4"
   },
   "devDependencies": {

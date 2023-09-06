@@ -13,7 +13,7 @@ export const ChatComponent = ({
 } : {
   chats: Chat[],
   onNewChatClicked: () => void,
-  onChatSubmitted: (chatId: string) => void,
+  onChatSubmitted: (chatId: string, content: string) => void,
   appendMessageToChat : (chatId: string) => string,
   appendContentToMessageInChat : (chatId: string, messageId: string, content: string) => void
 }) => {
@@ -33,6 +33,7 @@ export const ChatComponent = ({
     <div className="border-4 sm:border-2 relative bg-black rounded-lg h-[100svh]">
       <ChatComponentNav toggleSideNav={toggleSideNav} showSideNav={showSideNav} onChatClicked={onChatClicked} selectedChat={selectedChat} chats={chats} 
         onNewChatClicked={() => {
+          console.log("chats:", chats);
           chats.find((chat) => chat.id == "temp") == undefined &&  onNewChatClicked(); // Only create new chat if it doesn't exist
           setSelectedChat("temp");
         }}/>

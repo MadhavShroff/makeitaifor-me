@@ -15,7 +15,7 @@ type ChatComponentContentState = { inputValue: string; };
 
 type ChatComponentContentProps = {
   chat: Chat | undefined;
-  onChatSubmitted: (chatId: string) => void;
+  onChatSubmitted: (chatId: string, content: string) => void;
   appendMessageToChat: (chatId: string) => string;
   appendContentToMessageInChat: (chatId: string, messageId: string, content: string) => void;
 };
@@ -36,8 +36,7 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
   }
 
   handleFormSubmit(e: React.FormEvent) {
-    console.log("Form submitted");
-    this.props.onChatSubmitted(this.props.chat?.id ?? '');
+    this.props.onChatSubmitted(this.props.chat?.id ?? '', this.state.inputValue);
     e.preventDefault();
   }
 
@@ -118,8 +117,8 @@ const ChatComponentInputField = ({ handleFormSubmit, inputValue, handleInputChan
                 (inputValue.length == 0 ? " cursor-default" : " border-2 border-orange-500 bg-black cursor-pointer hover:bg-orange-500")
               }>
               <span data-state="closed">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" className="h-4 w-4 m-1 md:m-0" stroke-width="2">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" className="h-4 w-4 m-1 md:m-0" stroke-width="2"><path d="M.5 1.163A1 1 0 0 1 1.97.28l12.868 6.837a1 1 0 0 1 0 1.766L1.969 15.72A1 1 0 0 1 .5 14.836V10.33a1 1 0 0 1 .816-.983L8.5 8 1.316 6.653A1 1 0 0 1 .5 5.67V1.163Z" fill="currentColor"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" className="h-4 w-4 m-1 md:m-0" strokeWidth="2">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="none" className="h-4 w-4 m-1 md:m-0" strokeWidth="2"><path d="M.5 1.163A1 1 0 0 1 1.97.28l12.868 6.837a1 1 0 0 1 0 1.766L1.969 15.72A1 1 0 0 1 .5 14.836V10.33a1 1 0 0 1 .816-.983L8.5 8 1.316 6.653A1 1 0 0 1 .5 5.67V1.163Z" fill="currentColor"></path></svg>
                 </svg>
               </span>
             </button>
