@@ -39,7 +39,7 @@ const ChatPage = () => {
     // if (user) fetchChatsMeta(user).then(setChatsMeta).catch(console.error);
     // if (user && chatsMeta && chatsMeta[0] && chatsMeta[0].id) fetchChatContent(user, chatsMeta[0].id).then(setChatContent).catch(console.error);
     if(user) fetchChatsMetadata().then((user: User) => {
-      console.log("Fetched chats metadata");
+      console.log("Fetched chats metadata", user);
       setChats([...user.chats]);
     }).catch(console.error);
 

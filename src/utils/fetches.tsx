@@ -88,7 +88,7 @@ export const fetchChatsMetadata = async () : Promise<User> => {
     whichEnv(process.env.APP_ENV) === Environments.Production ?
     'https://api.makeitaifor.me/chats/getChatsMetadata'
     : 'http://localhost:3000/chats/getChatsMetadata'
-    , { method: 'GET', credentials: 'include',});
+    , { method: 'GET', credentials: 'include'});
   if (!res.ok) { throw new Error('Not authorized'); }
   return await res.json();
 };
