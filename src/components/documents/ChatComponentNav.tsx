@@ -62,7 +62,7 @@ export const ChatComponentNav = ({ toggleSideNav, showSideNav, onChatClicked, se
     toggleSideNav: () => void,
     showSideNav: boolean,
     onChatClicked: (index: number) => void,
-    selectedChat: string,
+    selectedChat: string | undefined,
     chats: Chat[] | null,
     onNewChatClicked: () => void,
 }) =>

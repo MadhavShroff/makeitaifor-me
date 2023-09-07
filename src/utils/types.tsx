@@ -1,13 +1,24 @@
+export type MessageVersion = {
+    _id: string;
+    text: string;
+    type: 'user' | 'ai';
+    isActive: boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    __v: number;
+}
+
 export type Message = {
-    id: string;
-    content: string;
-    whoSent: string; // user name or "bot"
-    whenSent: Date; // timestamp
+    _id: string;
+    versions: MessageVersion[];
+    previousVersion: string | null;
 }
 
 export type Chat = {
     _id: string;
     title: string;
+    createdAt: Date;
+    updatedAt: Date;
     messages: Message[]; // array of strings of markdown with math and images, where each \ is escaped. 
     __v: number;
 }

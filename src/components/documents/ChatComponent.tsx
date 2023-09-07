@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MDXProvider } from "@mdx-js/react";
 import { ChatComponentNav } from "./ChatComponentNav";
 import ChatComponentContent from "./ChatComponentContent";
-import { Chat } from "@/utils/types";
+import { Chat, Message } from "@/utils/types";
 
 export const ChatComponent = ({
   chats: chats,
@@ -14,11 +14,11 @@ export const ChatComponent = ({
   chats: Chat[],
   onNewChatClicked: () => void,
   onChatSubmitted: (chatId: string, content: string) => void,
-  appendMessageToChat : (chatId: string) => string,
+  appendMessageToChat : (chatId: string, message: Message) => void,
   appendContentToMessageInChat : (chatId: string, messageId: string, content: string) => void
 }) => {
   const [showSideNav, setShowSideNav] = useState(false);
-  const [selectedChat, setSelectedChat] = useState<string>("temp"); // Chat.id
+  const [selectedChat, setSelectedChat] = useState<string | undefined>(chats.find((chat) => chat.messages.length == 0)?._id); // Chat.id
 
   const toggleSideNav = () => {
     setShowSideNav(!showSideNav);
@@ -34,8 +34,8 @@ export const ChatComponent = ({
       <ChatComponentNav toggleSideNav={toggleSideNav} showSideNav={showSideNav} onChatClicked={onChatClicked} selectedChat={selectedChat} chats={chats} 
         onNewChatClicked={() => {
           console.log("chats:", chats);
-          chats.find((chat) => chat._id == "temp") == undefined &&  onNewChatClicked(); // Only create new chat if it doesn't exist
-          setSelectedChat("temp");
+          chats.find((chat) => chat.messages.length == 0) == undefined &&  onNewChatClicked(); // Only create new chat if it doesn't exist
+          setSelectedChat(chats.find((chat) => chat.messages.length == 0)?._id ?? "");
         }}/>
       <ChatComponentContent chat={chats.find((chat) => {
         return selectedChat == chat._id

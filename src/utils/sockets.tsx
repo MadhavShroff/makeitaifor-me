@@ -42,65 +42,36 @@ export const connectToSocket = async (): Promise<void> => {
 };
 
 
-export const emitTryButtonClicked = (
+export const emitChatSubmitted = (
   content: string,
-  appendMessageToChat: (chatId: string) => string,
+  chatId: string,
+  appendMessageToChat: (chatId: string, message: Message) => void,
   appendContentToMessageInChat: (chatId: string, messageId: string, content: string) => void
 ) => {
-  console.log('Emitting tryButtonClicked');
-  socket.emit('tryButtonClicked', { content: content });
-
-  // Create new message row
-  appendMessageToChat("question1");
-  appendContentToMessageInChat("temp", "question1", content);
-  appendMessageToChat("temp");
-
-  let buffer: { [key: number]: string } = {};
-  let expectedSeq = 0;
-  let bufferString = "";
-
-  // Handle individual words as they come in
-  socket.on('textGeneratedChunk', (response) => {
-    const { data, seq } = response;
-
-    // Store the received chunk in the buffer
-    buffer[seq] = data;
-
-    // Check if the next expected chunk has arrived
-    while (buffer[expectedSeq] !== undefined) {
-      // Append the word to the chat
-      bufferString += buffer[expectedSeq];
-      appendContentToMessageInChat("temp", "temp", bufferString);
-      delete buffer[expectedSeq];
-      expectedSeq++;
-    }
+  console.log('Emitting chatSubmitted: ' + chatId);
+  socket.emit('messageSubmitted', { content: content, chatId: chatId });
+  let queryText;
+  socket.on('addedQueryToChat-' + chatId, async (response) => {
+    response =  JSON.parse(response);
+    console.log('Received response at addedQueryToChat: ', response);
+    queryText = response.message.versions[0].text;
+    await appendMessageToChat(chatId, response.message);
   });
-  socket.on('textGenerated', (response) => {
-    appendContentToMessageInChat("temp", "temp", response);
-  });
-};
+  socket.on("addedResponseToChat-" + chatId, async (response) => {
+    response =  JSON.parse(response);
+    console.log('Received response at addedResponseToChat: ', response);
+    const responseMessageId = response.message._id;
+    
+    await appendMessageToChat(chatId, response.message);
 
-export const emitCreateNewChat = (callback) => {
-  console.log('Emitting createNewChat');
-  socket.emit('startEmptyChat');
-  socket.on('emptyChatStarted', (response) => {
-    console.log('Received newChatCreated response: ', response);
-    callback();
-  });
-}
+    socket.emit('generateText', { query: queryText, ext: chatId });
 
-export const emitChatSubmitted = (chatId: string, content : string, appendContentToMessageInChat, callback) => {
-  console.log('Emitting chatSubmitted');
-  socket.emit('chatSubmitted', { chatId: chatId, content: content });
-  socket.on('savedChatSubmitted', (newMessage: Message) => {
-    console.log('Received chatSubmitted response: ', newMessage);
-    callback(newMessage);
     let buffer: { [key: number]: string } = {};
     let expectedSeq = 0;
     let bufferString = "";
 
     // Handle individual words as they come in
-    socket.on('textGeneratedChunk', (response) => {
+    socket.on('textGeneratedChunk-' + chatId, (response) => {
       const { data, seq } = response;
 
       // Store the received chunk in the buffer
@@ -110,13 +81,14 @@ export const emitChatSubmitted = (chatId: string, content : string, appendConten
       while (buffer[expectedSeq] !== undefined) {
         // Append the word to the chat
         bufferString += buffer[expectedSeq];
-        appendContentToMessageInChat(chatId, newMessage.id, bufferString);
+        appendContentToMessageInChat(chatId, responseMessageId, bufferString);
         delete buffer[expectedSeq];
         expectedSeq++;
       }
     });
-    socket.on('textGenerated', (response) => {
-      appendContentToMessageInChat(chatId, newMessage.id, bufferString);
+
+    socket.on('textGenerated-' + chatId, (response) => {
+      appendContentToMessageInChat(chatId, responseMessageId, response);
     });
   });
-}
+};

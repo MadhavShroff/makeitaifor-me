@@ -34,9 +34,6 @@ export default function Document() {
       <body className="h-screen">
         <Main />
         <NextScript />
-        <Script
-          type="text/javascript"
-          src="../node_modules/tw-elements/dist/js/tw-elements.umd.min.js"></Script>
       </body>
     </Html>
   );

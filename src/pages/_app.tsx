@@ -15,7 +15,6 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Link href="https://fonts.googleapis.com/css2?family=Sora:wght@100&display=swap" 
         rel="stylesheet">
       </Link>
-      <Link rel="stylesheet" href="bower_components/css-ripple-effect/dist/ripple.min.css"></Link>
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-Z9ZPFWBFD4"
         strategy="afterInteractive"

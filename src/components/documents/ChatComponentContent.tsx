@@ -7,7 +7,7 @@ import rehypeKatex from 'rehype-katex';
 import Img from 'next/image';
 // import MathJax from 'react-mathjax';
 import 'katex/dist/katex.min.css';
-import { emitTryButtonClicked } from '@/utils/sockets';
+import { emitChatSubmitted } from '@/utils/sockets';
 import { Chat, Message } from '@/utils/types';
 import { StacksContainer } from './Stacks';
 
@@ -16,7 +16,7 @@ type ChatComponentContentState = { inputValue: string; };
 type ChatComponentContentProps = {
   chat: Chat | undefined;
   onChatSubmitted: (chatId: string, content: string) => void;
-  appendMessageToChat: (chatId: string) => string;
+  appendMessageToChat: (chatId: string, message: Message) => void;
   appendContentToMessageInChat: (chatId: string, messageId: string, content: string) => void;
 };
 
@@ -42,7 +42,6 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
 
   render() {
     let messages: JSX.Element[] = [];
-    // console.log(this.props.chat);
 
     if (this.props.chat == undefined) {
       messages = [];
@@ -50,7 +49,7 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
       messages = [];
     } else {
       this.props.chat.messages.forEach((message: Message, index: number) => {
-        messages.push(<MessageRow message={message.content} key={index} />);
+        messages.push(<MessageRow message={message.versions.find(version => version.isActive)?.text} key={index} />);
       });
     }
 
@@ -77,7 +76,7 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
                   "Does Joe Rogan ever talk about Bears? 🎙️🐻",
                   "Where is this from: \"To be, or not to be: that is the question.\"  📜❓",
                   "What exactly is the Higgs Boson?  ⚛️"
-                ]} appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendMessageToChat={this.props.appendMessageToChat}></TryOutBox>
+                ]} appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendMessageToChat={this.props.appendMessageToChat} chatId={this.props.chat?._id}></TryOutBox>
               </div>
             </div>
           }
@@ -178,7 +177,7 @@ const MessageRow = (props) => {
 
 }
 
-const TryOutBox = ({ content, appendContentToMessageInChat, appendMessageToChat }) => {
+const TryOutBox = ({ content, appendContentToMessageInChat, appendMessageToChat, chatId }) => {
   // split x into 2 equal sized arrays
   const half = Math.ceil(content.length / 2);
   const firstHalf = content.slice(0, half);
@@ -190,7 +189,7 @@ const TryOutBox = ({ content, appendContentToMessageInChat, appendMessageToChat 
           return <button
             key={index}
             className="m-2 text-center max-w-prose text-sm p-2 hover:bg-orange-500 bg-black border-white border-2 rounded-lg"
-            onClick={() => emitTryButtonClicked(buttonText, appendMessageToChat, appendContentToMessageInChat)}>
+            onClick={() => emitChatSubmitted(buttonText, chatId, appendMessageToChat, appendContentToMessageInChat)}>
             {buttonText}
           </button>
         })}
@@ -200,7 +199,7 @@ const TryOutBox = ({ content, appendContentToMessageInChat, appendMessageToChat 
           return <button
             key={index}
             className="m-2 text-center max-w-prose text-sm p-2 hover:bg-orange-500 bg-black border-white border-2 rounded-lg"
-            onClick={() => emitTryButtonClicked(buttonText, appendMessageToChat, appendContentToMessageInChat)}>
+            onClick={() => emitChatSubmitted(buttonText, chatId, appendMessageToChat, appendContentToMessageInChat)}>
             {buttonText}
           </button>
         })}

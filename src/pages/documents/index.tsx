@@ -12,7 +12,7 @@ import { Preview } from '@/components/Preview';
 
 const Documents = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [fileNamesArr, setFileNamesArr] = useState<{name: string, id: string}[]>([]);
+  const [fileNamesArr, setFileNamesArr] = useState<{ name: string, id: string }[]>([]);
   const [preview, setPreview] = useState<string | null>(null);
   const [fileSelected, setFileSelected] = useState<string | null>(null);
   const [filesData, setFilesData] = useState<FileData[]>([]);
@@ -84,12 +84,12 @@ const Documents = () => {
   const fileOrStackClicked = (id: string) => {
     console.log('File or stack clicked :' + id);
     const fileData = filesData.find((file) => file.meta.ETag == id);
-    if(fileData && fileData.parsedContent) {
+    if (fileData && fileData.parsedContent) {
       setPreview(fileData.parsedContent);
     } else {
       fetchDocumentContent(user?.userId, id, (fileContent: string) => {
         const newFilesData = filesData.map((file) => {
-          if(file.meta.ETag == id) {
+          if (file.meta.ETag == id) {
             return {
               meta: file.meta,
               parsedContent: fileContent
@@ -300,69 +300,100 @@ const md2 = [
   "$$",
 ].join("\n");
 
-const content1: Message[] = [{
-  id: "1",
-  content: md0,
-  whoSent: "John Doe",
-  whenSent: new Date("2021-09-25T20:00:00.000Z")
-}, {
-  id: "1",
-  content: md1,
-  whoSent: "John Doe",
-  whenSent: new Date("2021-09-25T20:00:00.000Z")
-}, {
-  id: "1",
-  content: md1,
-  whoSent: "John Doe",
-  whenSent: new Date("2021-09-25T20:00:00.000Z")
-}
+const messages1: Message[] = [
+  {
+    versions: [{
+      _id: "1",
+      text: md0,
+      type: 'user',
+      isActive: true,
+      createdAt: new Date("2021-09-25T20:00:00.000Z"),
+      updatedAt: new Date("2021-09-25T20:00:00.000Z"),
+      __v: 0
+    }],
+    previousVersion: null,
+    _id: "1",
+  },{
+    versions: [{
+      _id: "1",
+      text: md1,
+      type: 'user',
+      isActive: true,
+      createdAt: new Date("2021-09-25T20:00:00.000Z"),
+      updatedAt: new Date("2021-09-25T20:00:00.000Z"),
+      __v: 0
+    }],
+    previousVersion: null,
+    _id: "1",
+  },{
+    versions: [{
+      _id: "1",
+      text: md2,
+      type: 'user',
+      isActive: true,
+      createdAt: new Date("2021-09-25T20:00:00.000Z"),
+      updatedAt: new Date("2021-09-25T20:00:00.000Z"),
+      __v: 0
+    }],
+    previousVersion: null,
+    _id: "1",
+  }
 ];
 
-const content3: Message[] = [{
-  id: "1",
-  content: md1,
-  whoSent: "John Doe",
-  whenSent: new Date("2021-09-25T20:00:00.000Z")
-}];
+const messages2: Message[] = [
+  {
+    versions: [{
+      _id: "1",
+      text: md2,
+      type: 'user',
+      isActive: true,
+      createdAt: new Date("2021-09-25T20:00:00.000Z"),
+      updatedAt: new Date("2021-09-25T20:00:00.000Z"),
+      __v: 0
+    }],
+    previousVersion: null,
+    _id: "1",
+  },{
+    versions: [{
+      _id: "1",
+      text: md0,
+      type: 'user',
+      isActive: true,
+      createdAt: new Date("2021-09-25T20:00:00.000Z"),
+      updatedAt: new Date("2021-09-25T20:00:00.000Z"),
+      __v: 0
+    }],
+    previousVersion: null,
+    _id: "1",
+  },{
+    versions: [{
+      _id: "1",
+      text: md1,
+      type: 'user',
+      isActive: true,
+      createdAt: new Date("2021-09-25T20:00:00.000Z"),
+      updatedAt: new Date("2021-09-25T20:00:00.000Z"),
+      __v: 0
+    }],
+    previousVersion: null,
+    _id: "1",
+  }
+];
 
-const content2: Message[] = [{
-  id: "234",
-  content: md2,
-  whoSent: "John Doe",
-  whenSent: new Date("2021-09-25T20:02:00.000Z")
-}];
-
-const content4: Message[] = [{
-  id: "234",
-  content: md0,
-  whoSent: "John Doe",
-  whenSent: new Date("2021-09-25T20:02:00.000Z")
-}];
-
-export const mockChats = [ // metadata of all chats of the user
+export const mockChats: Chat[] = [ // metadata of all chats of the user
   {
-    id: "temp",
-    title: "New Chat",
-    content: content1
+    _id: "64f9ebc42d44c40b86f57",
+    title: "Math Demo",
+    messages: messages1,
+    createdAt: new Date("2021-09-25T20:00:00.000Z"),
+    updatedAt: new Date("2021-09-25T20:00:00.000Z"),
+    __v: 0
+  }, {
+    _id: "64f9ebc42d44c40b86f60",
+    title: "Markdown Demo",
+    messages: messages2,
+    createdAt: new Date("2021-09-25T20:00:00.000Z"),
+    updatedAt: new Date("2021-09-25T20:00:00.000Z"),
+    __v: 0
   },
-  {
-    id: "345",
-    title: "Hello",
-    content: content1
-  },
-  {
-    id: "135",
-    title: "Some title",
-    content: content2
-  },
-  {
-    id: "142",
-    title: "Hello 2",
-    content: content3,
-  },
-  {
-    id: "153",
-    title: "Some title 3",
-    content: content4,
-  },
-]
+];

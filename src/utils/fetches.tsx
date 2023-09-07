@@ -97,7 +97,9 @@ export const fetchChatsMetadata = async (): Promise<User> => {
           "_id": "64f9eb690c42d44c40b86f57",
           "messages": [],
           "title": "New Chat",
-          "__v": 0
+          "__v": 0,
+          createdAt: new Date("2023-09-07T15:25:29.283Z"),
+          updatedAt: new Date("2023-09-07T15:25:29.283Z"),
         }
       ],
       "role": "guest",
