@@ -20,11 +20,13 @@ const ChatPage = () => {
     switch(whichEnv(process.env.APP_ENV)) {
       case Environments.Development:
         setUser({ // Mock user in dev
-          id: "91231123-1230u1u-123132",
+          userId: "91231123-1230u1u-123132",
           name: "John Doe",
           username: "john@doe.com",
           role: "guest",
-          chats: []
+          chats: [],
+          _id: "guest",
+          __v: 0
         });
         break;
       case Environments.Production:
@@ -50,6 +52,8 @@ const ChatPage = () => {
     },
     ] : chats);
   }, [user]);
+
+  console.log("State.chats: ", chats);
 
   const appendMessageToChat = (id: string): string => { // returns message id
     console.log("Appending empty message to chat temp");

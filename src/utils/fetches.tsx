@@ -3,19 +3,19 @@ import { cognitoLogoutUrl } from "./constants";
 import { Environments, whichEnv } from "./whichEnv";
 
 // fetches.tsx
-export const fetchUser = (setUser) : Promise<void> => {
-  return fetch('https://api.makeitaifor.me/auth/cognito/me', { method: 'GET', credentials: 'include',})
-  .then((res) => {
-    if (!res.ok) { throw new Error('Not authorized'); }
-    return res.json();
-  })
-  .then((data) => {
-    console.log("fetchUser data: ", data);
-    setUser(data);
-  })
-  .catch((error) => {
-    setUser(null);
-  });
+export const fetchUser = (setUser): Promise<void> => {
+  return fetch('https://api.makeitaifor.me/auth/cognito/me', { method: 'GET', credentials: 'include', })
+    .then((res) => {
+      if (!res.ok) { throw new Error('Not authorized'); }
+      return res.json();
+    })
+    .then((data) => {
+      console.log("fetchUser data: ", data);
+      setUser(data);
+    })
+    .catch((error) => {
+      setUser(null);
+    });
 };
 
 export const handleFilesUpload = async (files: File[], setMessage) => {
@@ -30,7 +30,7 @@ export const handleFilesUpload = async (files: File[], setMessage) => {
     // Call backend to get the pre-signed URL
     const response = await fetch(
       `https://api.makeitaifor.me/fileupload/generate-presigned-url?filename=${file.name}&mimetype=${file.type}`,
-      { method: 'GET', credentials: 'include',}
+      { method: 'GET', credentials: 'include', }
     );
 
     if (!response.ok) {
@@ -83,34 +83,52 @@ export const fetchFilesMetaData = async (userId: string): Promise<S3MetaData[]> 
 
 // returns a list of metadata of chats associated with the userId, 
 // does not fetch the messges within the chats, ie fetches a shallow copy of User.chats
-export const fetchChatsMetadata = async () : Promise<User> => {
-  const res = await fetch(
-    whichEnv(process.env.APP_ENV) === Environments.Production ?
-    'https://api.makeitaifor.me/chats/getChatsMetadata'
-    : 'http://localhost:3000/chats/getChatsMetadata'
-    , { method: 'GET', credentials: 'include'});
+export const fetchChatsMetadata = async (): Promise<User> => {
+  if (whichEnv(process.env.APP_ENV) === Environments.Development) {
+    return {
+      "_id": "64f9eb690c42d44c40b86f59",
+      "provider": "cognito",
+      "userId": "0f5d739e-7539-499c-9117-2b986c17b247",
+      "email": "ciramey479@searpen.com",
+      "username": "foo2",
+      "name": "foo2 Bar2ooqiq Oibqefib",
+      "chats": [
+        {
+          "_id": "64f9eb690c42d44c40b86f57",
+          "messages": [],
+          "title": "New Chat",
+          "__v": 0
+        }
+      ],
+      "role": "guest",
+      "created_at": new Date("2023-09-07T15:25:29.283Z"),
+      "updated_at": new Date("2023-09-07T15:25:29.283Z"),
+      "__v": 0
+    };
+  }
+  const res = await fetch('https://api.makeitaifor.me/chats/getChatsMetadata', { method: 'GET', credentials: 'include' });
   if (!res.ok) { throw new Error('Not authorized'); }
   return await res.json();
 };
 
-export const fetchChatContent = async (user, chatId) : Promise<Chat | null> => {
+export const fetchChatContent = async (user, chatId): Promise<Chat | null> => {
   if (!user) return null;
 
-  const res = await fetch('https://api.makeitaifor.me/chats/getChatContent', { method: 'GET', credentials: 'include', body: JSON.stringify({ chatId: chatId })});
+  const res = await fetch('https://api.makeitaifor.me/chats/getChatContent', { method: 'GET', credentials: 'include', body: JSON.stringify({ chatId: chatId }) });
   if (!res.ok) { throw new Error('Not authorized'); }
-  
+
   const data = await res.json();
-  if(!data) return null;
-  
+  if (!data) return null;
+
   return data;
 };
 
 export const fetchDocumentContent = async (user, fileId, callback): Promise<void> => {
   if (!user) return;
 
-  const res = await fetch(`https://api.makeitaifor.me/chats/getDocumentContent?userId=${user}&fileId=${fileId}`, { 
-    method: 'GET', 
-    credentials: 'include', 
+  const res = await fetch(`https://api.makeitaifor.me/chats/getDocumentContent?userId=${user}&fileId=${fileId}`, {
+    method: 'GET',
+    credentials: 'include',
   });
   console.log(res);
   if (!res.ok) { throw new Error('Not authorized'); }
@@ -121,16 +139,16 @@ export const fetchDocumentContent = async (user, fileId, callback): Promise<void
   callback(data);
 };
 
-export const getGuestAccess = async() => {
+export const getGuestAccess = async () => {
   console.log('Getting guest access');
   const response = await fetch(
     whichEnv(process.env.APP_ENV) === Environments.Production ?
-    'https://api.makeitaifor.me/auth/guest'
-    : 'http://localhost:3000/auth/guest'
+      'https://api.makeitaifor.me/auth/guest'
+      : 'http://localhost:3000/auth/guest'
     , {
-    method: 'GET',
-    credentials: 'include', // This will include the cookies in the request
-  });
+      method: 'GET',
+      credentials: 'include', // This will include the cookies in the request
+    });
   window.location.reload();
   console.log(response);
   return response;

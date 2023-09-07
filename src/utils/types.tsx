@@ -6,14 +6,16 @@ export type Message = {
 }
 
 export type Chat = {
-    id: string;
+    _id: string;
     title: string;
     messages: Message[]; // array of strings of markdown with math and images, where each \ is escaped. 
+    __v: number;
 }
 
 export type User = {
     provider?: string;
-    id: string;
+    _id: string;
+    userId: string;
     email?: string;
     username: string;
     name: string;
@@ -21,6 +23,7 @@ export type User = {
     updated_at?: Date;
     role?: string;
     chats: Chat[] | []; // array of chat ids or shallow copy of chats
+    __v: number;
 };
 
 export type FileData = {
