@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { cognitoHostedUI } from '@/utils/constants';
 import { getGuestAccess } from '@/utils/fetches';
+import { User } from '@/utils/types';
 
 interface LinkProps {
   href: string;
@@ -12,7 +13,7 @@ interface LinkProps {
 interface NavbarProps {
   links?: LinkProps[];
   title?: string;
-  user: null | { id: string, username: string, name: string, role: string };
+  user: null | User;
 }
 
 const defaultLinks: LinkProps[] = [

@@ -84,7 +84,11 @@ export const fetchFilesMetaData = async (userId: string): Promise<S3MetaData[]> 
 // returns a list of metadata of chats associated with the userId, 
 // does not fetch the messges within the chats, ie fetches a shallow copy of User.chats
 export const fetchChatsMetadata = async () : Promise<User> => {
-  const res = await fetch('http://localhost:3000/chats/getChatsMetadata', { method: 'GET', credentials: 'include',});
+  const res = await fetch(
+    whichEnv(process.env.APP_ENV) === Environments.Production ?
+    'https://api.makeitaifor.me/chats/getChatsMetadata'
+    : 'http://localhost:3000/chats/getChatsMetadata'
+    , { method: 'GET', credentials: 'include',});
   if (!res.ok) { throw new Error('Not authorized'); }
   return await res.json();
 };

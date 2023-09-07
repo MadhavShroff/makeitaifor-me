@@ -3,7 +3,7 @@ import { DndContext, DragMoveEvent, DragOverEvent, DragStartEvent } from '@dnd-k
 import { KeyboardSensor, PointerSensor } from '@dnd-kit/core';
 import { useSensor, useSensors } from '@dnd-kit/core';
 import Navbar from '@/components/Navbar';
-import { fetchFilesMetaData, fetchUser, fetchDocumentContent, fetchChats } from '@/utils/fetches';
+import { fetchFilesMetaData, fetchUser, fetchDocumentContent } from '@/utils/fetches';
 import { ScrollableStackContainer, ScrollableBoxContainer } from '@/components/documents/Stacks';
 import Footer from '@/components/Footer';
 import LoginPage from '../auth';
