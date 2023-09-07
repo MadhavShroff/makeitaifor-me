@@ -44,20 +44,13 @@ const ChatPage = () => {
       console.log("Fetched chats metadata", user);
       setChats([...user.chats]);
     }).catch(console.error);
-
-    setChats(chats.length == 0 ? [{ // If no chats, create a new chat
-      id: "temp",
-      title: "New Chat",
-      messages: []
-    },
-    ] : chats);
   }, [user]);
 
   console.log("State.chats: ", chats);
 
   const appendMessageToChat = (id: string): string => { // returns message id
     console.log("Appending empty message to chat temp");
-    const newChat = chats.find((chat) => chat.id == "temp");
+    const newChat = chats.find((chat) => chat._id == "temp");
     if (newChat == undefined) {
       console.error("Chat with id temp not found");
       return "";
@@ -69,7 +62,7 @@ const ChatPage = () => {
       whenSent: new Date()
     });
     setChats([
-      ...chats.filter((chat) => chat.id != "temp"),
+      ...chats.filter((chat) => chat._id != "temp"),
       newChat
     ]);
     return "temp";
@@ -78,7 +71,7 @@ const ChatPage = () => {
   // create empty message with messageId in chat with chatId
   const appendEmptyMessageToChatWithId = (chatId: string, messageId: string): void => { 
     console.log("Appending empty message to chat temp");
-    const newChat = chats.find((chat) => chat.id == chatId);
+    const newChat = chats.find((chat) => chat._id == chatId);
     if (newChat == undefined) {
       console.error("Chat with id temp not found");
       return;
@@ -90,13 +83,13 @@ const ChatPage = () => {
       whenSent: new Date()
     });
     setChats([
-      ...chats.filter((chat) => chat.id != "temp"),
+      ...chats.filter((chat) => chat._id != "temp"),
       newChat
     ]);
   }
 
   const appendContentToMessageInChat = (chatId: string, messageId: string, content: string) => {
-    const newChat = chats.find((chat) => chat.id == chatId);
+    const newChat = chats.find((chat) => chat._id == chatId);
     if (newChat == undefined) {
       console.error("Chat with id " + chatId + " not found");
       return;
@@ -111,7 +104,7 @@ const ChatPage = () => {
       newMessage
     ];
     setChats([
-      ...chats.filter((chat) => chat.id != chatId),
+      ...chats.filter((chat) => chat._id != chatId),
       newChat
     ]);
   }
@@ -120,7 +113,7 @@ const ChatPage = () => {
     console.log("New chat button clicked");
     emitCreateNewChat(() => {
       console.log("New chat created on server");
-      setChats([{ messages: [], "id": "temp", "title": "New Chat" }, ...chats]);
+      setChats([{ messages: [], "_id": "temp", "title": "New Chat", __v: 0}, ...chats]);
     });
     // setChats([{ messages: [], "id": "temp", "title": "New Chat" }, ...chats]);
   }
@@ -133,7 +126,7 @@ const ChatPage = () => {
           chats={chats}
           onNewChatClicked={onNewChatClicked}
           onChatSubmitted={(chatId: string, content) => {
-            console.log("Chat submitted " + chatId + " for user " + user?.id + "With content " + content);
+            console.log("Chat submitted " + chatId + " for user " + user?.userId + "With content " + content);
             emitChatSubmitted(chatId, content, appendContentToMessageInChat, (newMessage: Message) => {
               console.log("Chat saved on server");
               appendMessageToChat("question2")

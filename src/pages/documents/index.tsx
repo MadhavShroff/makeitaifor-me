@@ -26,7 +26,7 @@ const Documents = () => {
   }, []);
 
   useEffect(() => {
-    if (user) fetchFilesMetaData(user.id).then((metas) => {
+    if (user) fetchFilesMetaData(user.userId).then((metas) => {
       setFilesData(metas.map((meta: S3MetaData) => {
         return {
           meta: meta,
@@ -87,7 +87,7 @@ const Documents = () => {
     if(fileData && fileData.parsedContent) {
       setPreview(fileData.parsedContent);
     } else {
-      fetchDocumentContent(user?.id, id, (fileContent: string) => {
+      fetchDocumentContent(user?.userId, id, (fileContent: string) => {
         const newFilesData = filesData.map((file) => {
           if(file.meta.ETag == id) {
             return {

@@ -25,7 +25,7 @@ export const ChatComponent = ({
   };
 
   const onChatClicked = (index) => {
-    setSelectedChat(chats[index].id);
+    setSelectedChat(chats[index]._id);
     console.log("Chat clicked " + index);
   };
 
@@ -34,11 +34,11 @@ export const ChatComponent = ({
       <ChatComponentNav toggleSideNav={toggleSideNav} showSideNav={showSideNav} onChatClicked={onChatClicked} selectedChat={selectedChat} chats={chats} 
         onNewChatClicked={() => {
           console.log("chats:", chats);
-          chats.find((chat) => chat.id == "temp") == undefined &&  onNewChatClicked(); // Only create new chat if it doesn't exist
+          chats.find((chat) => chat._id == "temp") == undefined &&  onNewChatClicked(); // Only create new chat if it doesn't exist
           setSelectedChat("temp");
         }}/>
       <ChatComponentContent chat={chats.find((chat) => {
-        return selectedChat == chat.id
+        return selectedChat == chat._id
       }) ?? chats[0]} 
         onChatSubmitted={onChatSubmitted}
         appendMessageToChat={appendMessageToChat}
