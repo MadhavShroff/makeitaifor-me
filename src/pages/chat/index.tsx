@@ -1,7 +1,7 @@
 import { ChatComponent } from "@/components/documents/ChatComponent"
 import React, { useEffect, useState } from "react";
 import { Chat } from "@/utils/types";
-import { fetchUser } from "@/utils/fetches";
+import { fetchChatsMetadata, fetchUser } from "@/utils/fetches";
 import { connectToSocket, emitChatSubmitted, emitCreateNewChat } from "@/utils/sockets";
 import { User, Message } from "@/utils/types";
 import LoginPage from "../auth";
@@ -23,11 +23,12 @@ const ChatPage = () => {
           id: "91231123-1230u1u-123132",
           name: "John Doe",
           username: "john@doe.com",
-          role: "guest"
+          role: "guest",
+          chats: []
         });
         break;
       case Environments.Production:
-        fetchUser(setUser);;
+        fetchUser(setUser);
         break;
       default:
         console.error("Unknown environment");
@@ -37,6 +38,10 @@ const ChatPage = () => {
   useEffect(() => {
     // if (user) fetchChatsMeta(user).then(setChatsMeta).catch(console.error);
     // if (user && chatsMeta && chatsMeta[0] && chatsMeta[0].id) fetchChatContent(user, chatsMeta[0].id).then(setChatContent).catch(console.error);
+    if(user) fetchChatsMetadata().then((user: User) => {
+      console.log("Fetched chats metadata");
+      setChats([...user.chats]);
+    }).catch(console.error);
 
     setChats(chats.length == 0 ? [{ // If no chats, create a new chat
       id: "temp",

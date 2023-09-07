@@ -12,10 +12,15 @@ export type Chat = {
 }
 
 export type User = {
+    provider?: string;
     id: string;
-    name: string;
+    email?: string;
     username: string;
-    role: string;
+    name: string;
+    created_at?: Date;
+    updated_at?: Date;
+    role?: string;
+    chats: Chat[] | []; // array of chat ids or shallow copy of chats
 };
 
 export type FileData = {

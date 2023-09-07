@@ -1,9 +1,9 @@
-import { Chat, FileData, S3MetaData } from "./types";
+import { Chat, FileData, S3MetaData, User } from "./types";
 import { cognitoLogoutUrl } from "./constants";
 import { Environments, whichEnv } from "./whichEnv";
 
 // fetches.tsx
-export const fetchUser = (setUser) => {
+export const fetchUser = (setUser) : Promise<void> => {
   return fetch('https://api.makeitaifor.me/auth/cognito/me', { method: 'GET', credentials: 'include',})
   .then((res) => {
     if (!res.ok) { throw new Error('Not authorized'); }
@@ -80,16 +80,13 @@ export const fetchFilesMetaData = async (userId: string): Promise<S3MetaData[]> 
   return data.files;
 };
 
-export const fetchChats = async (user) => {
-  if (!user) return;
 
-  const res = await fetch('https://api.makeitaifor.me/chats/getChatMeta', { method: 'GET', credentials: 'include',});
+// returns a list of metadata of chats associated with the userId, 
+// does not fetch the messges within the chats, ie fetches a shallow copy of User.chats
+export const fetchChatsMetadata = async () : Promise<User> => {
+  const res = await fetch('http://localhost:3000/chats/getChatsMetadata', { method: 'GET', credentials: 'include',});
   if (!res.ok) { throw new Error('Not authorized'); }
-  
-  const data = await res.json();
-  if(!data) return;
-
-  return data;
+  return await res.json();
 };
 
 export const fetchChatContent = async (user, chatId) : Promise<Chat | null> => {
