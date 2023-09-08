@@ -109,7 +109,7 @@ export const fetchChatsMetadata = async (): Promise<User> => {
     };
   }
   const res = await fetch('https://api.makeitaifor.me/chats/getChatsMetadata', { method: 'GET', credentials: 'include' });
-  if (!res.ok) { throw new Error('Not authorized'); }
+  if (!res.ok) { console.log("fetchChatsMetadata res: ", res); throw new Error('Not authorized'); }
   return await res.json();
 };
 
