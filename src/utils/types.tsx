@@ -25,13 +25,13 @@ export type Chat = {
 
 export type User = {
     provider?: string;
-    _id: string;
-    userId: string;
+    _id: string; // mongo object id
+    userId: string; // cognito user id
     email?: string;
     username: string;
     name: string;
-    created_at?: Date;
-    updated_at?: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
     role?: string;
     chats: Chat[] | []; // array of chat ids or shallow copy of chats
     __v: number;

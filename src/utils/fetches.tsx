@@ -83,7 +83,7 @@ export const fetchFilesMetaData = async (userId: string): Promise<S3MetaData[]> 
 
 // returns a list of metadata of chats associated with the userId, 
 // does not fetch the messges within the chats, ie fetches a shallow copy of User.chats
-export const fetchChatsMetadata = async (): Promise<User> => {
+export const fetchChatsMetadata = async (userId: string): Promise<User> => {
   if (whichEnv(process.env.APP_ENV) === Environments.Development) {
     return {
       "_id": "64f9eb690c42d44c40b86f59",
@@ -103,14 +103,15 @@ export const fetchChatsMetadata = async (): Promise<User> => {
         }
       ],
       "role": "guest",
-      "created_at": new Date("2023-09-07T15:25:29.283Z"),
-      "updated_at": new Date("2023-09-07T15:25:29.283Z"),
+      "createdAt": new Date("2023-09-07T15:25:29.283Z"),
+      "updatedAt": new Date("2023-09-07T15:25:29.283Z"),
       "__v": 0
     };
+  } else {
+    const res = await fetch('https://api.makeitaifor.me/chats/getChatsMetadata/' + userId, { method: 'GET', credentials: 'include' });
+    if (!res.ok) { console.log("fetchChatsMetadata res: ", res); throw new Error('Not authorized'); }
+    return await res.json();
   }
-  const res = await fetch('https://api.makeitaifor.me/chats/getChatsMetadata', { method: 'GET', credentials: 'include' });
-  if (!res.ok) { console.log("fetchChatsMetadata res: ", res); throw new Error('Not authorized'); }
-  return await res.json();
 };
 
 export const fetchChatContent = async (user, chatId): Promise<Chat | null> => {
