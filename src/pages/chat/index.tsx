@@ -45,7 +45,7 @@ const ChatPage = () => {
       if (user.role == "guest") {
         setChats([
           {
-            "_id": "guestChat",
+            "_id": "123",
             "messages": [],
             "title": "New Chat",
             "__v": 0,
@@ -55,6 +55,7 @@ const ChatPage = () => {
         ]);
       } else {
         fetchChatsMetadata(user.userId).then((user: User) => {
+          console.log("Fetched chats metadata for user", user);
           setChats([...user.chats]);
         }).catch(console.error);
       }
