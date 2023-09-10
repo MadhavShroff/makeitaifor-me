@@ -40,10 +40,13 @@ const ChatPage = () => {
   useEffect(() => {
     // if (user) fetchChatsMeta(user).then(setChatsMeta).catch(console.error);
     // if (user && chatsMeta && chatsMeta[0] && chatsMeta[0].id) fetchChatContent(user, chatsMeta[0].id).then(setChatContent).catch(console.error);
-    if(user) fetchChatsMetadata().then((user: User) => {
+    if(user){
+      console.log("Fetching chats metadata for user", user);
+      fetchChatsMetadata(user.userId).then((user: User) => {
       // console.log("Fetched chats metadata", user);
-      setChats([...user.chats]);
-    }).catch(console.error);
+        setChats([...user.chats]);
+      }).catch(console.error);
+    }
   }, [user]);
 
   const appendMessageToChat = async (chatId: string, message: Message) => { // returns message id

@@ -84,6 +84,7 @@ export const fetchFilesMetaData = async (userId: string): Promise<S3MetaData[]> 
 // returns a list of metadata of chats associated with the userId, 
 // does not fetch the messges within the chats, ie fetches a shallow copy of User.chats
 export const fetchChatsMetadata = async (userId: string): Promise<User> => {
+  console.log("fetchChatsMetadata userId: ", userId);
   if (whichEnv(process.env.APP_ENV) === Environments.Development) {
     return {
       "_id": "64f9eb690c42d44c40b86f59",
