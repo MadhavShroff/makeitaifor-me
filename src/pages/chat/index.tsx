@@ -17,7 +17,7 @@ const ChatPage = () => {
 
   useEffect(() => {
     // DEV ONLY
-    switch(whichEnv(process.env.APP_ENV)) {
+    switch (whichEnv(process.env.APP_ENV)) {
       case Environments.Development:
         setUser({ // Mock user in dev
           userId: "91231123-1230u1u-123132",
@@ -40,12 +40,24 @@ const ChatPage = () => {
   useEffect(() => {
     // if (user) fetchChatsMeta(user).then(setChatsMeta).catch(console.error);
     // if (user && chatsMeta && chatsMeta[0] && chatsMeta[0].id) fetchChatContent(user, chatsMeta[0].id).then(setChatContent).catch(console.error);
-    if(user){
+    if (user) {
       console.log("Fetching chats metadata for user", user);
-      fetchChatsMetadata(user.userId).then((user: User) => {
-      // console.log("Fetched chats metadata", user);
-        setChats([...user.chats]);
-      }).catch(console.error);
+      if (user.role == "guest") {
+        setChats([
+          {
+            "_id": "guestChat",
+            "messages": [],
+            "title": "New Chat",
+            "__v": 0,
+            createdAt: new Date("2023-09-07T15:25:29.283Z"),
+            updatedAt: new Date("2023-09-07T15:25:29.283Z"),
+          }
+        ]);
+      } else {
+        fetchChatsMetadata(user.userId).then((user: User) => {
+          setChats([...user.chats]);
+        }).catch(console.error);
+      }
     }
   }, [user]);
 
@@ -94,19 +106,19 @@ const ChatPage = () => {
 
 
   // if (user)
-    return (
-      <div className="h-[100svh]">
-        <ChatComponent
-          chats={chats}
-          onNewChatClicked={onNewChatClicked}
-          onChatSubmitted={(chatId: string, content) => {
-            console.log("Chat submitted " + chatId + " for user " + user?.userId + "With content " + content);
-            emitChatSubmitted(content, chatId, appendMessageToChat, appendContentToMessageInChat);
-          }}
-          appendContentToMessageInChat={appendContentToMessageInChat}
-          appendMessageToChat={appendMessageToChat}
-        />
-      </div>)
+  return (
+    <div className="h-[100svh]">
+      <ChatComponent
+        chats={chats}
+        onNewChatClicked={onNewChatClicked}
+        onChatSubmitted={(chatId: string, content) => {
+          console.log("Chat submitted " + chatId + " for user " + user?.userId + "With content " + content);
+          emitChatSubmitted(content, chatId, appendMessageToChat, appendContentToMessageInChat);
+        }}
+        appendContentToMessageInChat={appendContentToMessageInChat}
+        appendMessageToChat={appendMessageToChat}
+      />
+    </div>)
 
   // else return (
   //   <main className="bg-white dark:bg-black h-[100dvh]">
