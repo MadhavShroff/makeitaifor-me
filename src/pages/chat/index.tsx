@@ -1,6 +1,6 @@
 import { ChatComponent } from "@/components/documents/ChatComponent"
 import React, { useEffect, useState } from "react";
-import { Chat, MessageVersion, isMessage} from "@/utils/types";
+import { Chat, MessageVersion, isMessage } from "@/utils/types";
 import { fetchChatsMetadata, fetchUser } from "@/utils/fetches";
 import { connectToSocket, emitChatSubmitted } from "@/utils/sockets";
 import { User, Message } from "@/utils/types";
@@ -76,33 +76,41 @@ const ChatPage = () => {
   }
 
   const appendContentToMessageInChat = (chatId: string, messageId: string, content: string) => {
-    const newChat = chats.find((chat) => chat._id == chatId);
-    if (newChat == undefined) {
-      console.error("Chat with id " + chatId + " not found");
-      return;
+    const chat = chats.find(c => c._id === chatId);
+
+    if (!chat) {
+      console.error(`Chat with id ${chatId} not found`); return;
     }
-    if(newChat.messages.length > 0 && isMessage(newChat.messages[0])) {
-      const newMessage : Message | undefined = (newChat.messages as Message[])?.find((message) => (message as Message)._id == messageId);
-      if (newMessage == undefined) {
-        console.error("Message with id " + messageId + " not found"); return;
-      } else {
-        (newMessage.versions[0] as MessageVersion).text = content;
-        newChat.messages = [
-          ...(newChat.messages as Message[])?.filter((message) => message._id != messageId),
-          newMessage
-        ];
-        setChats([
-          ...chats.filter((chat) => chat._id != chatId),
-          newChat
-        ]);
+
+    if (chat.messages.length === 0)
+      throw new Error("Chat has no messages.");
+
+    // Check if messages are of type Message
+    if (isMessage(chat.messages[0])) {
+      const message = (chat.messages as Message[]).find(m => m._id === messageId);
+     
+      if (!message) {
+        console.error(`Message with id ${messageId} not found`); return;
       }
-    } else if(newChat.messages.length > 0 && newChat.messages[0] instanceof String) {
-      // TODO: implement
+      (message.versions[0] as MessageVersion).text = content;
+      chat.messages = [
+        ...(chat.messages as Message[]).filter(m => m._id !== messageId),
+        message
+      ];
+      setChats([
+        ...chats.filter(c => c._id !== chatId),
+        chat
+      ]);
+
+    } else if (typeof chat.messages[0] === 'string') {
+      console.log('Chat messages are of type string', chat.messages)
+      return;
     } else {
-      console.log(newChat.messages)
+      console.log(chat.messages);
       throw new Error("Chat messages are not of type MessageVersion or Message");
     }
   }
+
 
   const onNewChatClicked = () => {
     // console.log("New chat button clicked");
