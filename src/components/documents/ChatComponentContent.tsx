@@ -8,7 +8,7 @@ import Img from 'next/image';
 // import MathJax from 'react-mathjax';
 import 'katex/dist/katex.min.css';
 import { emitChatSubmitted } from '@/utils/sockets';
-import { Chat, Message, isMessage } from '@/utils/types';
+import { Chat, Message, isMessage, isMessageVersionArray } from '@/utils/types';
 import { StacksContainer } from './Stacks';
 import { MessageVersion, isMessageVersion } from '@/utils/types';
 
@@ -45,22 +45,31 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
     let messages: JSX.Element[] = [];
     console.log(this.props.chat);
 
-    if (this.props.chat == undefined) {
-      messages = [];
-    } else if (this.props.chat.messages == null) {
+    if (!this.props.chat || !this.props.chat.messages) {
       messages = [];
     } else {
-      if (this.props.chat.messages.length > 0 && this.props.chat.messages[0] instanceof String) {
-        messages = [];
-        // this.props.chat.messages contains strings of messageIds
-      } else if (isMessage(this.props.chat.messages.length > 0 && this.props.chat.messages[0])) {
-        this.props.chat.messages.forEach((message: Message | string, index: number) => {
-          if (!isMessage(message)) throw new Error("Message is not a MessageVersion");
-          else {
-            messages.push(<MessageRow message={((message as Message).versions.find(version => (version as MessageVersion).isActive) as MessageVersion).text} key={index} />);
+      this.props.chat.messages.forEach((message: Message | string, index: number) => {
+        if (typeof message === 'string') {
+          // Handle the case where message is a string
+          return; // Skip to the next iteration
+        }
+
+        if (isMessage(message)) {
+          if (isMessageVersionArray(message.versions)) {
+            const activeVersion = message.versions.find(version => version.isActive);
+            if (activeVersion) {
+              messages.push(<MessageRow message={activeVersion.text} key={index} />);
+            }
+          } else {
+            // Handle the case where versions array contains strings
           }
-        });
-      }
+        } else if (typeof message === 'string') {
+          // Handle the case where message is a string
+        } else {
+          throw new Error("Message is not a MessageVersion");
+        }
+
+      });
     }
 
     return (

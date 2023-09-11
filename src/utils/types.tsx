@@ -11,7 +11,7 @@ export type MessageVersion = {
 
 export type Message = {
     _id: string;
-    versions: MessageVersion[] | String[];
+    versions: MessageVersion[] | string[];
     previousVersion: string | null;
 }
 
@@ -184,6 +184,10 @@ export function isMessage(obj: any): obj is Message {
     }
 
     return true;
+}
+
+export const isMessageVersionArray = (versions: any[]) : versions is MessageVersion[] => {
+    return versions.length > 0 && typeof versions[0] !== 'string';
 }
 
 

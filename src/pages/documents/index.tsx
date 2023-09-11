@@ -309,7 +309,8 @@ const messages1: Message[] = [
       isActive: true,
       createdAt: new Date("2021-09-25T20:00:00.000Z"),
       updatedAt: new Date("2021-09-25T20:00:00.000Z"),
-      __v: 0
+      __v: 0,
+      versionNumber: 1
     }],
     previousVersion: null,
     _id: "1",
@@ -321,7 +322,8 @@ const messages1: Message[] = [
       isActive: true,
       createdAt: new Date("2021-09-25T20:00:00.000Z"),
       updatedAt: new Date("2021-09-25T20:00:00.000Z"),
-      __v: 0
+      __v: 0,
+      versionNumber: 1
     }],
     previousVersion: null,
     _id: "1",
@@ -333,7 +335,8 @@ const messages1: Message[] = [
       isActive: true,
       createdAt: new Date("2021-09-25T20:00:00.000Z"),
       updatedAt: new Date("2021-09-25T20:00:00.000Z"),
-      __v: 0
+      __v: 0,
+      versionNumber: 1
     }],
     previousVersion: null,
     _id: "1",
@@ -349,7 +352,8 @@ const messages2: Message[] = [
       isActive: true,
       createdAt: new Date("2021-09-25T20:00:00.000Z"),
       updatedAt: new Date("2021-09-25T20:00:00.000Z"),
-      __v: 0
+      __v: 0,
+      versionNumber: 1
     }],
     previousVersion: null,
     _id: "1",
@@ -361,7 +365,8 @@ const messages2: Message[] = [
       isActive: true,
       createdAt: new Date("2021-09-25T20:00:00.000Z"),
       updatedAt: new Date("2021-09-25T20:00:00.000Z"),
-      __v: 0
+      __v: 0,
+      versionNumber: 1
     }],
     previousVersion: null,
     _id: "1",
@@ -373,7 +378,8 @@ const messages2: Message[] = [
       isActive: true,
       createdAt: new Date("2021-09-25T20:00:00.000Z"),
       updatedAt: new Date("2021-09-25T20:00:00.000Z"),
-      __v: 0
+      __v: 0,
+      versionNumber: 1
     }],
     previousVersion: null,
     _id: "1",
