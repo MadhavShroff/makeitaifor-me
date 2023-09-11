@@ -1,6 +1,6 @@
 import { ChatComponent } from "@/components/documents/ChatComponent"
 import React, { useEffect, useState } from "react";
-import { Chat } from "@/utils/types";
+import { Chat, MessageVersion, isMessage} from "@/utils/types";
 import { fetchChatsMetadata, fetchUser } from "@/utils/fetches";
 import { connectToSocket, emitChatSubmitted } from "@/utils/sockets";
 import { User, Message } from "@/utils/types";
@@ -67,7 +67,7 @@ const ChatPage = () => {
     if (newChat == undefined) {
       console.error("Chat with id not found", chatId);
     } else {
-      newChat.messages.push(message);
+      (newChat.messages as Message[]).push(message);
       setChats([
         ...chats.filter((chat) => chat._id != chatId),
         newChat
@@ -81,19 +81,27 @@ const ChatPage = () => {
       console.error("Chat with id " + chatId + " not found");
       return;
     }
-    const newMessage = newChat.messages?.find((message) => message._id == messageId);
-    if (newMessage == undefined) {
-      console.error("Message with id " + messageId + " not found"); return;
+    if(newChat.messages.length > 0 && isMessage(newChat.messages[0])) {
+      const newMessage : Message | undefined = (newChat.messages as Message[])?.find((message) => (message as Message)._id == messageId);
+      if (newMessage == undefined) {
+        console.error("Message with id " + messageId + " not found"); return;
+      } else {
+        (newMessage.versions[0] as MessageVersion).text = content;
+        newChat.messages = [
+          ...(newChat.messages as Message[])?.filter((message) => message._id != messageId),
+          newMessage
+        ];
+        setChats([
+          ...chats.filter((chat) => chat._id != chatId),
+          newChat
+        ]);
+      }
+    } else if(newChat.messages.length > 0 && newChat.messages[0] instanceof String) {
+      // TODO: implement
+    } else {
+      console.log(newChat.messages)
+      throw new Error("Chat messages are not of type MessageVersion or Message");
     }
-    newMessage.versions[0].text = content;
-    newChat.messages = [
-      ...newChat.messages?.filter((message) => message._id != messageId),
-      newMessage
-    ];
-    setChats([
-      ...chats.filter((chat) => chat._id != chatId),
-      newChat
-    ]);
   }
 
   const onNewChatClicked = () => {
