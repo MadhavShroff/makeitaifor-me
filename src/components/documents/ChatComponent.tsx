@@ -20,7 +20,7 @@ export const ChatComponent = ({
   appendContentToMessageInChat : (chatId: string, messageId: string, content: string) => void
 }) => {
   const [showSideNav, setShowSideNav] = useState(false);
-  const [selectedChat, setSelectedChat] = useState<string | undefined>(chats[0]._id); // Chat.id
+  const [selectedChat, setSelectedChat] = useState<string | undefined>(chats[0]?._id); // Chat.id
 
   const toggleSideNav = () => {
     setShowSideNav(!showSideNav);

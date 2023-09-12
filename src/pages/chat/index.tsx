@@ -38,8 +38,6 @@ const ChatPage = () => {
   }, []);
 
   useEffect(() => {
-    // if (user) fetchChatsMeta(user).then(setChatsMeta).catch(console.error);
-    // if (user && chatsMeta && chatsMeta[0] && chatsMeta[0].id) fetchChatContent(user, chatsMeta[0].id).then(setChatContent).catch(console.error);
     if (user) {
       console.log("Fetching chats metadata for user", user);
       if (user.role == "guest") {
@@ -85,7 +83,6 @@ const ChatPage = () => {
     if (chat.messages.length === 0)
       throw new Error("Chat has no messages.");
 
-    // Check if messages are of type Message
     if (isMessage(chat.messages[0])) {
       const message = (chat.messages as Message[]).find(m => m._id === messageId);
      
@@ -125,8 +122,6 @@ const ChatPage = () => {
     }).catch(console.error);
   }
 
-
-  // if (user)
   return (
     <div className="h-[100svh]">
       <ChatComponent
