@@ -181,7 +181,7 @@ export const getGuestAccess = async () => {
 
 function getCsrfToken() {
   const cookies = document.cookie.split(';');
-  
+  console.log("cookies: ", cookies);
   for(let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i].trim();
       const [name, value] = cookie.split('=');
