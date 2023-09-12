@@ -56,11 +56,7 @@ const ChatPage = () => {
       } else {
         fetchChatsMetadata(user.userId).then((user: User) => {
           console.log("Fetched chats metadata for user", user);
-          fetchMessagesData(user.chats[0].messages).then((messages: Message[]) => {
-            console.log("Fetched messages data for user", messages);
-            user.chats[0].messages = messages;
-            setChats([...user.chats]);
-          }).catch(console.error);
+          onChatClicked(0);
         }).catch(console.error);
       }
     }
@@ -118,14 +114,15 @@ const ChatPage = () => {
 
   const onNewChatClicked = () => {
     createNewChat().then(setChats).catch(console.error);
+  }
 
-
-    // console.log("New chat button clicked");
-    // emitCreateNewChat(() => {
-    //   console.log("New chat created on server");
-    //   setChats([{ messages: [], "_id": "temp", "title": "New Chat", __v: 0}, ...chats]);
-    // });
-    // setChats([{ messages: [], "id": "temp", "title": "New Chat" }, ...chats]);
+  const onChatClicked = (index) => {
+    if(user == null) return;
+    fetchMessagesData(user.chats[index].messages).then((messages: Message[]) => {
+      console.log("Fetched messages data for user", messages);
+      user.chats[index].messages = messages;
+      setChats([...user.chats]);
+    }).catch(console.error);
   }
 
 
@@ -139,6 +136,7 @@ const ChatPage = () => {
           console.log("Chat submitted " + chatId + " for user " + user?.userId + "With content " + content);
           emitChatSubmitted(content, chatId, appendMessageToChat, appendContentToMessageInChat);
         }}
+        onChatClicked={onChatClicked}
         appendContentToMessageInChat={appendContentToMessageInChat}
         appendMessageToChat={appendMessageToChat}
       />
