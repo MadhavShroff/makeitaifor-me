@@ -1,6 +1,7 @@
 import { Chat, FileData, Message, S3MetaData, User } from "./types";
 import { cognitoLogoutUrl } from "./constants";
 import { Environments, whichEnv } from "./whichEnv";
+import { getCookieParser } from "next/dist/server/api-utils";
 
 // fetches.tsx
 export const fetchUser = (setUser): Promise<void> => {
@@ -115,15 +116,34 @@ export const fetchChatsMetadata = async (userId: string): Promise<User> => {
 };
 
 export const fetchMessagesData = async (messages: string[] | Message[]): Promise<Message[]> => {
-  let messageIds = messages.map((message) => {
-    if (typeof message === 'string') return message;
-    else return message._id;
-  })
+  let messageIds = messages.map(message => 
+    typeof message === 'string' ? message : message._id
+  );
+
   if (whichEnv(process.env.APP_ENV) === Environments.Development) {
-    return []
+    return [];
   } else {
-    const res = await fetch('https://api.makeitaifor.me/chats/getMessagesData/', { method: 'POST', credentials: 'include', body: JSON.stringify({ messageIds: messageIds }) });
-    if (!res.ok) { console.log("fetchChatsMetadata res: ", res); throw new Error('Not authorized'); }
+    const headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+    const csrfToken = getCsrfToken();
+    if (csrfToken) {
+      headers.append('csrf-token', csrfToken);
+    }
+
+    const res = await fetch('https://api.makeitaifor.me/chats/getMessagesData/', { 
+      method: 'POST', 
+      credentials: 'include', 
+      body: JSON.stringify({ messageIds: messageIds }),
+      headers: headers
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json(); // assuming the server returns JSON error information
+      console.log("fetchChatsMetadata res: ", res);
+      throw new Error(errorData.message || 'Not authorized');
+    }
+
     return await res.json();
   }
 };
@@ -159,3 +179,17 @@ export const getGuestAccess = async () => {
   return response;
 }
 
+function getCsrfToken() {
+  const cookies = document.cookie.split(';');
+  
+  for(let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      const [name, value] = cookie.split('=');
+      
+      if (name === '_csrf') {
+          return decodeURIComponent(value);
+      }
+  }
+  
+  return undefined;  // or undefined, depending on your preference
+}
