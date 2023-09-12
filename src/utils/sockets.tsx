@@ -48,7 +48,8 @@ export const emitChatSubmitted = (
   appendMessageToChat: (chatId: string, message: Message) => void,
   appendContentToMessageInChat: (chatId: string, messageId: string, content: string) => void
 ) => {
-  console.log('Emitting chatSubmitted: ' + chatId);
+  console.log('Emitting messageSubmitted: ' + chatId);
+  console.log('Emitting messageSubmitted: ' + content);
   socket.emit('messageSubmitted', { content: content, chatId: chatId });
   let queryText;
   socket.on('addedQueryToChat-' + chatId, async (response) => {
