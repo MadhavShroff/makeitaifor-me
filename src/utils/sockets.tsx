@@ -62,10 +62,11 @@ export const emitChatSubmitted = (
     response =  JSON.parse(response);
     console.log('Received response at addedResponseToChat: ', response);
     const responseMessageId = response.message._id;
+    const versionId = response.message.versions[0]._id;
     
     await appendMessageToChat(chatId, response.message);
 
-    socket.emit('generateText', { query: queryText, ext: chatId });
+    socket.emit('generateText', { query: queryText, ext: chatId, versionId: versionId});
 
     let buffer: { [key: number]: string } = {};
     let expectedSeq = 0;
