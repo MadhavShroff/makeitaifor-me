@@ -123,19 +123,10 @@ export const fetchMessagesData = async (messages: string[] | Message[]): Promise
   if (whichEnv(process.env.APP_ENV) === Environments.Development) {
     return [];
   } else {
-    const headers = new Headers({
-      'Content-Type': 'application/json'
-    });
-    const csrfToken = await getCsrfToken();
-    if (csrfToken) {
-      headers.append('csrf-token', csrfToken);
-    }
-
     const res = await fetch('https://api.makeitaifor.me/chats/getMessagesData/', { 
       method: 'POST', 
       credentials: 'include', 
-      body: JSON.stringify({ messageIds: messageIds }),
-      headers: headers
+      body: JSON.stringify({ messageIds: messageIds}),
     });
 
     if (!res.ok) {
@@ -177,21 +168,4 @@ export const getGuestAccess = async () => {
   window.location.reload();
   console.log(response);
   return response;
-}
-
-async function getCsrfToken() {
-  // delay execution until after client-side hydration
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  const cookies = document.cookie.split(';');
-  console.log("cookies: ", cookies);
-  for(let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      const [name, value] = cookie.split('=');
-      
-      if (name === '_csrf') {
-          return decodeURIComponent(value);
-      }
-  }
-  
-  return undefined;  // or undefined, depending on your preference
 }
