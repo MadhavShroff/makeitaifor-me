@@ -48,9 +48,10 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
     if (!this.props.chat || !this.props.chat.messages) {
       messages = [];
     } else {
+      let messageIds: string[] = [];
       this.props.chat.messages.forEach((message: Message | string, index: number) => {
         if (typeof message === 'string') {
-          // Handle the case where message is a string
+          messageIds.push(message);
           return; // Skip to the next iteration
         }
 
@@ -68,7 +69,6 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
         } else {
           throw new Error("Message is not a MessageVersion");
         }
-
       });
     }
 

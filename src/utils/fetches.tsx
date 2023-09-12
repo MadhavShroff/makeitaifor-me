@@ -1,4 +1,4 @@
-import { Chat, FileData, S3MetaData, User } from "./types";
+import { Chat, FileData, Message, S3MetaData, User } from "./types";
 import { cognitoLogoutUrl } from "./constants";
 import { Environments, whichEnv } from "./whichEnv";
 
@@ -84,7 +84,6 @@ export const fetchFilesMetaData = async (userId: string): Promise<S3MetaData[]> 
 // returns a list of metadata of chats associated with the userId, 
 // does not fetch the messges within the chats, ie fetches a shallow copy of User.chats
 export const fetchChatsMetadata = async (userId: string): Promise<User> => {
-  console.log("fetchChatsMetadata userId: ", userId);
   if (whichEnv(process.env.APP_ENV) === Environments.Development) {
     return {
       "_id": "64f9eb690c42d44c40b86f59",
@@ -115,16 +114,18 @@ export const fetchChatsMetadata = async (userId: string): Promise<User> => {
   }
 };
 
-export const fetchChatContent = async (user, chatId): Promise<Chat | null> => {
-  if (!user) return null;
-
-  const res = await fetch('https://api.makeitaifor.me/chats/getChatContent', { method: 'GET', credentials: 'include', body: JSON.stringify({ chatId: chatId }) });
-  if (!res.ok) { throw new Error('Not authorized'); }
-
-  const data = await res.json();
-  if (!data) return null;
-
-  return data;
+export const fetchMessagesData = async (messages: string[] | Message[]): Promise<Message[]> => {
+  let messageIds = messages.map((message) => {
+    if (typeof message === 'string') return message;
+    else return message._id;
+  })
+  if (whichEnv(process.env.APP_ENV) === Environments.Development) {
+    return []
+  } else {
+    const res = await fetch('https://api.makeitaifor.me/chats/getMessagesData/', { method: 'POST', credentials: 'include', body: JSON.stringify({ messageIds: messageIds }) });
+    if (!res.ok) { console.log("fetchChatsMetadata res: ", res); throw new Error('Not authorized'); }
+    return await res.json();
+  }
 };
 
 export const fetchDocumentContent = async (user, fileId, callback): Promise<void> => {

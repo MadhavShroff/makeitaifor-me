@@ -1,7 +1,7 @@
 import { ChatComponent } from "@/components/documents/ChatComponent"
 import React, { useEffect, useState } from "react";
 import { Chat, MessageVersion, isMessage } from "@/utils/types";
-import { fetchChatsMetadata, fetchUser } from "@/utils/fetches";
+import { fetchChatsMetadata, fetchMessagesData, fetchUser } from "@/utils/fetches";
 import { connectToSocket, emitChatSubmitted } from "@/utils/sockets";
 import { User, Message } from "@/utils/types";
 import LoginPage from "../auth";
@@ -56,7 +56,11 @@ const ChatPage = () => {
       } else {
         fetchChatsMetadata(user.userId).then((user: User) => {
           console.log("Fetched chats metadata for user", user);
-          setChats([...user.chats]);
+          fetchMessagesData(user.chats[0].messages).then((messages: Message[]) => {
+            console.log("Fetched messages data for user", user);
+            user.chats[0].messages = messages;
+            setChats([...user.chats]);
+          }).catch(console.error);
         }).catch(console.error);
       }
     }
