@@ -126,7 +126,7 @@ export const fetchMessagesData = async (messages: string[] | Message[]): Promise
     const headers = new Headers({
       'Content-Type': 'application/json'
     });
-    const csrfToken = getCsrfToken();
+    const csrfToken = await getCsrfToken();
     if (csrfToken) {
       headers.append('csrf-token', csrfToken);
     }
@@ -179,7 +179,9 @@ export const getGuestAccess = async () => {
   return response;
 }
 
-function getCsrfToken() {
+async function getCsrfToken() {
+  // delay execution until after client-side hydration
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   const cookies = document.cookie.split(';');
   console.log("cookies: ", cookies);
   for(let i = 0; i < cookies.length; i++) {
