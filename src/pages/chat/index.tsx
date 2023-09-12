@@ -1,7 +1,7 @@
 import { ChatComponent } from "@/components/documents/ChatComponent"
 import React, { useEffect, useState } from "react";
 import { Chat, MessageVersion, isMessage } from "@/utils/types";
-import { fetchChatsMetadata, fetchMessagesData, fetchUser } from "@/utils/fetches";
+import { createNewChat, fetchChatsMetadata, fetchMessagesData, fetchUser } from "@/utils/fetches";
 import { connectToSocket, emitChatSubmitted } from "@/utils/sockets";
 import { User, Message } from "@/utils/types";
 import LoginPage from "../auth";
@@ -117,6 +117,9 @@ const ChatPage = () => {
 
 
   const onNewChatClicked = () => {
+    createNewChat().then(setChats).catch(console.error);
+
+
     // console.log("New chat button clicked");
     // emitCreateNewChat(() => {
     //   console.log("New chat created on server");

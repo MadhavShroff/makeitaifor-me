@@ -116,24 +116,24 @@ export const fetchChatsMetadata = async (userId: string): Promise<User> => {
 };
 
 export const fetchMessagesData = async (messages: string[] | Message[]): Promise<Message[]> => {
-  let messageIds = messages.map(message => 
+  let messageIds = messages.map(message =>
     typeof message === 'string' ? message : message._id
   );
 
   if (whichEnv(process.env.APP_ENV) === Environments.Development) {
     return [];
   } else {
-    const res = await fetch('https://api.makeitaifor.me/chats/getMessagesData/', { 
-      method: 'POST', 
-      credentials: 'include', 
-      body: JSON.stringify({ messageIds: messageIds}),
+    const res = await fetch('https://api.makeitaifor.me/chats/getMessagesData/', {
+      method: 'POST',
+      credentials: 'include',
+      body: JSON.stringify({ messageIds: messageIds }),
       headers: {
         'Content-Type': 'application/json'
       }
     });
 
     if (!res.ok) {
-      const errorData = await res.json(); // assuming the server returns JSON error information
+      const errorData = await res.json(); 
       console.log("fetchChatsMetadata res: ", res);
       throw new Error(errorData.message || 'Not authorized');
     }
@@ -166,9 +166,25 @@ export const getGuestAccess = async () => {
       : 'http://localhost:3000/auth/guest'
     , {
       method: 'GET',
-      credentials: 'include', // This will include the cookies in the request
+      credentials: 'include', 
     });
   window.location.reload();
   console.log(response);
   return response;
+}
+
+// returns the updates chats[] with the new chat included
+export const createNewChat = async (): Promise<Chat[]> => {
+  const res = await fetch('https://api.makeitaifor.me/chats/createNewChat/', {
+    method: 'POST',
+    credentials: 'include'
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json(); 
+    console.log("createNewChat res: ", res);
+    throw new Error(errorData.message || 'Not authorized');
+  }
+
+  return await res.json();
 }
