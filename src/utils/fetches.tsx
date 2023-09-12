@@ -127,6 +127,9 @@ export const fetchMessagesData = async (messages: string[] | Message[]): Promise
       method: 'POST', 
       credentials: 'include', 
       body: JSON.stringify({ messageIds: messageIds}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
     });
 
     if (!res.ok) {
