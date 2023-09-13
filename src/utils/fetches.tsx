@@ -1,4 +1,4 @@
-import { Chat, FileData, Message, S3MetaData, User } from "./types";
+import { Chat, FileData, Message, S3MetaData, User, areMessages, isMessage } from "./types";
 import { cognitoLogoutUrl } from "./constants";
 import { Environments, whichEnv } from "./whichEnv";
 import { getCookieParser } from "next/dist/server/api-utils";
@@ -116,10 +116,18 @@ export const fetchChatsMetadata = async (userId: string): Promise<User> => {
 };
 
 export const fetchMessagesData = async (messages: string[] | Message[]): Promise<Message[]> => {
-  if(!messages) return [];
-  let messageIds = messages.map(message =>
-    typeof message === 'string' ? message : null
+  if(!messages || messages.length == 0) return [];
+
+  if(areMessages(messages)) return messages as Message[];
+
+  let messageIds = messages.filter(message =>
+    typeof message === 'string'
   );
+
+  if(messageIds.length !== messages.length) {
+    throw new Error("fetchMessagesData: messages is not a list of strings or messages");
+  }
+
   console.log("fetchMessagesData for messageIds: ", messageIds);
 
   if (whichEnv(process.env.APP_ENV) === Environments.Development) {

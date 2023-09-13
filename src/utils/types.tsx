@@ -186,6 +186,22 @@ export function isMessage(obj: any): obj is Message {
     return true;
 }
 
+export function areMessages(objs: any[]): objs is Message[] {
+    if (!objs) {
+        console.log("areMessages Failure: objs is undefined or null");
+        return false;
+    }
+
+    for (let obj of objs) {
+        if (!isMessage(obj)) {
+            console.log("areMessages Failure: One of the objs is not of type Message.");
+            return false;
+        }
+    }
+
+    return true;
+}
+
 export const isMessageVersionArray = (versions: any[]) : versions is MessageVersion[] => {
     return versions.length > 0 && typeof versions[0] !== 'string';
 }
