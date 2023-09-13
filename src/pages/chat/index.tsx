@@ -114,30 +114,25 @@ const ChatPage = () => {
   }
 
   /**
-   * Precondition: if user is not null, then user.chats.length >=1
-   * Fetches messages data for ObjectIds in user.chats[index].messages if not already fetched, then updates state. 
-   * @param index index of user.chats[] to fetch messages for if not already fetched
+   * Precondition: if user is not null, then chats.length >=1
+   * Fetches messages data for ObjectIds in chats[index].messages if not already fetched, then updates state. 
+   * @param index index of chats[] to fetch messages for if not already fetched
    * @returns void
    */
   const onChatClicked = async (index: number) => {
     console.log("On chat clicked", index, user?.chats);
-    if (!user || !user.chats || index < 0 || index >= user.chats.length) return;
-    const messages: Message[] = await fetchMessagesData(user.chats[index].messages);
+    if (!user || !chats || index < 0 || index >= chats.length) return;
+    const messages: Message[] = await fetchMessagesData(chats[index].messages);
     console.log("Fetched messages data for user", messages);
-    const updatedUser: User = {
-      ...user,
-      chats: user.chats.map((chat, idx) => {
-        if (idx === index) {
-          return {
-            ...chat,
-            messages: messages,
-          };
-        }
-        return chat;
-      }),
-    };
-    setUser(updatedUser);
-    setChats(updatedUser.chats);
+    setChats(chats.map((chat, idx) => {
+      if (idx === index) {
+        return {
+          ...chat,
+          messages: messages,
+        };
+      }
+      return chat;
+    }));
   }
   
 
