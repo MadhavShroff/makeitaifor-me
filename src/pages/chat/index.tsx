@@ -54,7 +54,11 @@ const ChatPage = () => {
       } else {
         fetchChatsMetadata(user.userId).then((user: User) => {
           console.log("Fetched chats metadata for user", user);
-          onChatClicked(0);
+          fetchMessagesData(user.chats[index].messages).then((messages: Message[]) => {
+            console.log("Fetched messages data for user", messages);
+            user.chats[index].messages = messages;
+            setChats([...user.chats]);
+          }).catch(console.error);
         }).catch(console.error);
       }
     }
@@ -114,7 +118,7 @@ const ChatPage = () => {
   }
 
   const onChatClicked = (index) => {
-    if(user == null) return;
+    if(user == null || user.chats == null || typeof user.chats[0] === 'string') return;
     fetchMessagesData(user.chats[index].messages).then((messages: Message[]) => {
       console.log("Fetched messages data for user", messages);
       user.chats[index].messages = messages;
