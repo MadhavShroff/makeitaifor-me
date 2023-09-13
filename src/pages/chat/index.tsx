@@ -137,7 +137,7 @@ const ChatPage = () => {
   
 
   return (
-    <div className="h-[100svh]">
+    <div className="h-[100svh] overscroll-contain">
       <ChatComponent
         chats={chats}
         onNewChatClicked={onNewChatClicked}
