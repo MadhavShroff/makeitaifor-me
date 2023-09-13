@@ -109,47 +109,47 @@ export interface RestoreStatus {
 
 export function isMessageVersion(obj: any): obj is MessageVersion {
     if (!obj) {
-        console.log("isMessageVersion Failure: obj is undefined or null");
+        // console.log("isMessageVersion Failure: obj is undefined or null");
         return false;
     }
 
     if (!(typeof obj._id === 'string' || typeof obj._id === 'number')) {
-        console.log(`isMessageVersion Failure: _id is of type ${typeof obj._id}. Expected type: string or number.`);
+        // console.log(`isMessageVersion Failure: _id is of type ${typeof obj._id}. Expected type: string or number.`);
         return false;
     }
 
     if (typeof obj.text !== 'string') {
-        console.log(`isMessageVersion Failure: text is of type ${typeof obj.text}. Expected type: string.`);
+        // console.log(`isMessageVersion Failure: text is of type ${typeof obj.text}. Expected type: string.`);
         return false;
     }
 
     if (!(obj.type === 'user' || obj.type === 'ai')) {
-        console.log(`isMessageVersion Failure: type has value ${obj.type}. Expected value: 'user' or 'ai'.`);
+        // console.log(`isMessageVersion Failure: type has value ${obj.type}. Expected value: 'user' or 'ai'.`);
         return false;
     }
 
     if (typeof obj.isActive !== 'boolean') {
-        console.log(`isMessageVersion Failure: isActive is of type ${typeof obj.isActive}. Expected type: boolean.`);
+        // console.log(`isMessageVersion Failure: isActive is of type ${typeof obj.isActive}. Expected type: boolean.`);
         return false;
     }
 
     if (typeof obj.versionNumber !== 'number') {
-        console.log(`isMessageVersion Failure: versionNumber is of type ${typeof obj.versionNumber}. Expected type: number.`);
+        // console.log(`isMessageVersion Failure: versionNumber is of type ${typeof obj.versionNumber}. Expected type: number.`);
         return false;
     }
 
     if (!((obj.createdAt instanceof Date) || (typeof obj.createdAt === 'string'))) {
-        console.log(`isMessageVersion Failure: createdAt is of type ${typeof obj.createdAt}. Expected type: Date or string.`);
+        // console.log(`isMessageVersion Failure: createdAt is of type ${typeof obj.createdAt}. Expected type: Date or string.`);
         return false;
     }
 
     if (!((obj.updatedAt instanceof Date) || (typeof obj.updatedAt === 'string'))) {
-        console.log(`isMessageVersion Failure: updatedAt is of type ${typeof obj.updatedAt}. Expected type: Date or string.`);
+        // console.log(`isMessageVersion Failure: updatedAt is of type ${typeof obj.updatedAt}. Expected type: Date or string.`);
         return false;
     }
 
     if (typeof obj.__v !== 'number') {
-        console.log(`isMessageVersion Failure: __v is of type ${typeof obj.__v}. Expected type: number.`);
+        // console.log(`isMessageVersion Failure: __v is of type ${typeof obj.__v}. Expected type: number.`);
         return false;
     }
 
@@ -159,17 +159,17 @@ export function isMessageVersion(obj: any): obj is MessageVersion {
 
 export function isMessage(obj: any): obj is Message {
     if (!obj) {
-        console.log("isMessage Failure: obj is undefined or null");
+        // console.log("isMessage Failure: obj is undefined or null");
         return false;
     }
 
     if (typeof obj._id !== 'string') {
-        console.log(`isMessage Failure: _id is of type ${typeof obj._id}. Expected type: string.`);
+        // console.log(`isMessage Failure: _id is of type ${typeof obj._id}. Expected type: string.`);
         return false;
     }
 
     if (!(Array.isArray(obj.versions))) {
-        console.log(`isMessage Failure: versions is of type ${typeof obj.versions}. Expected type: array.`);
+        // console.log(`isMessage Failure: versions is of type ${typeof obj.versions}. Expected type: array.`);
         return false;
     }
 
@@ -178,7 +178,7 @@ export function isMessage(obj: any): obj is Message {
             continue;
         }
         if (!isMessageVersion(version)) {
-            console.log("isMessage Failure: One of the versions is not of type MessageVersion.");
+            // console.log("isMessage Failure: One of the versions is not of type MessageVersion.");
             return false;
         }
     }

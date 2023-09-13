@@ -11,9 +11,6 @@ const ChatPage = () => {
   const [user, setUser] = useState<User | null>(null);
   const [chats, setChats] = useState<Chat[]>([]);
 
-  console.log("ChatPage user", user);
-  console.log("ChatPage chats", chats);
-
   useEffect(() => {
     connectToSocket().catch(console.error);
   }, [connectToSocket]);
