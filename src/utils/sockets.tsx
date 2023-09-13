@@ -57,14 +57,15 @@ export const emitChatSubmitted = (
     console.log('Received response at addedQueryToChat: ', response);
     queryText = response.message.versions[0].text;
     await appendMessageToChat(chatId, response.message);
+    socket.off('addedQueryToChat-' + chatId);
   });
-  socket.on("addedResponseToChat-" + chatId, async (response) => {
+  socket.on('addedResponseToChat-' + chatId, async (response) => {
     response =  JSON.parse(response);
     console.log('Received response at addedResponseToChat: ', response);
+    await appendMessageToChat(chatId, response.message);
+    socket.off('addedResponseToChat-' + chatId);
     const responseMessageId = response.message._id;
     const versionId = response.message.versions[0]._id;
-    
-    await appendMessageToChat(chatId, response.message);
 
     socket.emit('generateText', { query: queryText, ext: chatId, versionId: versionId});
 
@@ -89,8 +90,9 @@ export const emitChatSubmitted = (
       }
     });
 
-    socket.on('textGenerated-' + chatId, (response) => {
-      appendContentToMessageInChat(chatId, responseMessageId, response);
+    socket.on('textGenerated-' + chatId, async (response) => {
+      await appendContentToMessageInChat(chatId, responseMessageId, response);
+      socket.off('textGenerated-' + chatId);
     });
   });
 };
