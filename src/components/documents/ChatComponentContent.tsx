@@ -40,7 +40,7 @@ const ChatComponentContent = ({
         if (isMessageVersionArray(message.versions)) {
           const activeVersion = message.versions.find(version => version.isActive);
           if (activeVersion) {
-            messages.push(<MessageRow message={activeVersion.text} key={index} />);
+            messages.push(<MessageRow message={activeVersion.text} key={index} who={activeVersion.type}/>);
           }
         } else {
           // Handle the case where versions array contains strings
@@ -151,7 +151,7 @@ const MessageRow = (props) => {
       <div className="flex flex-col items-end md:items-start md:w-3/12 mx-2 ml-14 mt-2">
         <div className="flex justify-end">
           <div className="w-3 h-3 m-1 bg-blue-500 rounded-full"></div>
-          <div className="text-white mt-1 ml-1 font-bold text-xs text-ellipsis overflow-hidden">John Doed</div>
+          <div className="text-white mt-1 ml-1 font-bold text-xs text-ellipsis overflow-hidden">{props.who}</div>
         </div>
         <div className="text-white mt-1 ml-1 text-xs">Today at 12:34 AM</div>
       </div>

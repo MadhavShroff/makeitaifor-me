@@ -19,7 +19,7 @@ const CodeBlock = ({ inline, match, children, ...props }) => {
 
   const copiedButtonContent = (
     <>
-      <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" className="icon-sm" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" className="icon-sm" height="1.2em" width="1.2em" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"></polyline></svg>
       Copied!
     </>
   );
@@ -33,9 +33,9 @@ const CodeBlock = ({ inline, match, children, ...props }) => {
         viewBox="0 0 24 24"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="icon-sm"
-        height="1em"
-        width="1em"
+        className="icon-lg"
+        height="1.3em"
+        width="1.3em"
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
@@ -48,9 +48,9 @@ const CodeBlock = ({ inline, match, children, ...props }) => {
 
   return !inline && match ? (
     <div className="bg-black rounded-md mb-4">
-      <div className="flex items-center relative text-gray-200 bg-gray-800 px-4 py-2 text-xs font-sans justify-between rounded-t-md">
+      <div className="flex items-center relative text-gray-200 bg-gray-800 px-4 py-1.5 text-xs font-sans justify-between rounded-t-md">
         <span>{match[1]}</span>
-        <button className="flex ml-auto gap-2" onClick={() => copyContentToClipboard(String(children).replace(/\n$/, ''))}>
+        <button className="flex ml-auto gap-2 text-[12px]" onClick={() => copyContentToClipboard(String(children).replace(/\n$/, ''))}>
           {!copied && copyCodeButtonContent}
           {copied && copiedButtonContent}
         </button>

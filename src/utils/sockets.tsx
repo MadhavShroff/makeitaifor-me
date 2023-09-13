@@ -75,6 +75,7 @@ export const emitChatSubmitted = (
 
     // Handle individual words as they come in
     socket.on('textGeneratedChunk-' + chatId, (response) => {
+      console.log('Received response at textGeneratedChunk: ', response);
       const { data, seq } = response;
 
       // Store the received chunk in the buffer
