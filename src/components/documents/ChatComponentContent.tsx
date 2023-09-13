@@ -22,22 +22,7 @@ const ChatComponentContent = ({
   appendMessageToChat,
   appendContentToMessageInChat
 }) => {
-  const [inputValue, setInputValue] = useState('');
   const textareaRef = React.createRef<HTMLTextAreaElement>();
-  const maxHeight = 250;
-
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
-    e.target.style.height = '1.5rem';
-    e.target.style.height = `${e.target.scrollHeight > maxHeight ? maxHeight : e.target.scrollHeight}px`;
-  };
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    onChatSubmitted(chat?._id ?? '', inputValue);
-    setInputValue('');
-    if (textareaRef.current) textareaRef.current.style.height = '1.5rem';
-  };
 
   let messages: JSX.Element[] = [];
 
@@ -96,13 +81,31 @@ const ChatComponentContent = ({
           </div>
         }
       </div>
-      <ChatComponentInputField textareaRef={textareaRef} handleFormSubmit={handleFormSubmit} inputValue={inputValue} handleInputChange={handleInputChange} />
+      <ChatComponentInputField textareaRef={textareaRef} onChatSubmitted={(content) => {
+        onChatSubmitted(chat._id, content);
+      }} />
     </div>
   );
 }
 export default ChatComponentContent;
 
-const ChatComponentInputField = ({ textareaRef, handleFormSubmit, inputValue, handleInputChange }) => {
+const ChatComponentInputField = ({ textareaRef, onChatSubmitted }) => {
+
+  const maxHeight = 250;
+
+  const [inputValue, setInputValue] = useState('');
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+    e.target.style.height = '1.5rem';
+    e.target.style.height = `${e.target.scrollHeight > maxHeight ? maxHeight : e.target.scrollHeight}px`;
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    onChatSubmitted(inputValue);
+    setInputValue('');
+    if (textareaRef.current) textareaRef.current.style.height = '1.5rem';
+  };
   return (
     <div className="md:border-t-0 md:border-transparent md:border-transparent pt-2 md:pl-2 md:w-[calc(100%-.5rem)]">
       <form onSubmit={handleFormSubmit} className="stretch mx-2 flex flex-row gap-3 lg:mx-auto lg:max-w-3xl xl:max-w-6xl">
