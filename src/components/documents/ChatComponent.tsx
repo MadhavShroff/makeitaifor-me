@@ -26,10 +26,10 @@ export const ChatComponent = ({
     setShowSideNav(!showSideNav);
   };
 
-  const clicked = (index) => {
-    setSelectedChat(chats[index]._id);
+  const clicked = async (index) => {
+    await onChatClicked(index);
     console.log("Chat clicked " + index);
-    onChatClicked(index);
+    setSelectedChat(chats[index]._id);
   };
 
   return (
