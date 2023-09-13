@@ -54,9 +54,9 @@ const ChatPage = () => {
       } else {
         fetchChatsMetadata(user.userId).then((user: User) => {
           console.log("Fetched chats metadata for user", user);
-          fetchMessagesData(user.chats[index].messages).then((messages: Message[]) => {
+          fetchMessagesData(user.chats[0].messages).then((messages: Message[]) => {
             console.log("Fetched messages data for user", messages);
-            user.chats[index].messages = messages;
+            user.chats[0].messages = messages;
             setChats([...user.chats]);
           }).catch(console.error);
         }).catch(console.error);
