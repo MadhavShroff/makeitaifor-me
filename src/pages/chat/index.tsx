@@ -54,11 +54,7 @@ const ChatPage = () => {
       } else {
         fetchChatsMetadata(user.userId).then((user: User) => {
           console.log("Fetched chats metadata for user", user);
-          fetchMessagesData(user.chats[0].messages).then((messages: Message[]) => {
-            console.log("Fetched messages data for user", messages);
-            user.chats[0].messages = messages;
-            setChats([...user.chats]);
-          }).catch(console.error);
+          onChatClicked(0);
         }).catch(console.error);
       }
     }
@@ -117,15 +113,33 @@ const ChatPage = () => {
     createNewChat().then(setChats).catch(console.error);
   }
 
-  const onChatClicked = async (index) => {
-    console.log("On chat clicked", index , user?.chats)
-    if(user == null || user.chats == null) return;
-    await fetchMessagesData(user.chats[index].messages).then((messages: Message[]) => {
-      console.log("Fetched messages data for user", messages);
-      user.chats[index].messages = messages;
-      setChats([...user.chats]);
-    }).catch(console.error);
+  /**
+   * Precondition: if user is not null, then user.chats.length >=1
+   * Fetches messages data for ObjectIds in user.chats[index].messages if not already fetched, then updates state. 
+   * @param index index of user.chats[] to fetch messages for if not already fetched
+   * @returns void
+   */
+  const onChatClicked = async (index: number) => {
+    console.log("On chat clicked", index, user?.chats);
+    if (!user || !user.chats || index < 0 || index >= user.chats.length) return;
+    const messages: Message[] = await fetchMessagesData(user.chats[index].messages);
+    console.log("Fetched messages data for user", messages);
+    const updatedUser: User = {
+      ...user,
+      chats: user.chats.map((chat, idx) => {
+        if (idx === index) {
+          return {
+            ...chat,
+            messages: messages,
+          };
+        }
+        return chat;
+      }),
+    };
+    setUser(updatedUser);
+    setChats(updatedUser.chats);
   }
+  
 
   return (
     <div className="h-[100svh]">
