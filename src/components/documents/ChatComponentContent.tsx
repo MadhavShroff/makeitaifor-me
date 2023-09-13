@@ -23,6 +23,10 @@ type ChatComponentContentProps = {
 
 class ChatComponentContent extends React.Component<ChatComponentContentProps, ChatComponentContentState> {
 
+  maxHeight: number;
+
+  textareaRef = React.createRef<HTMLTextAreaElement>();
+
   constructor(props: ChatComponentContentProps) {
     super(props);
     this.state = {
@@ -30,15 +34,19 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.maxHeight = 250;
   }
 
   handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     this.setState({ inputValue: e.target.value });
+    e.target.style.height = '1.5rem'; // reset height to minimum height value
+    e.target.style.height = `${e.target.scrollHeight > this.maxHeight ? this.maxHeight : e.target.scrollHeight}px`; // set to scrollHeight to expand as needed upto max-height
   }
 
   handleFormSubmit(e: React.FormEvent) {
     this.props.onChatSubmitted(this.props.chat?._id ?? '', this.state.inputValue);
     this.setState({ inputValue: '' });
+    if (this.textareaRef.current) this.textareaRef.current.style.height = '1.5rem';
     e.preventDefault();
   }
 
@@ -100,20 +108,14 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
             </div>
           }
         </div>
-        <ChatComponentInputField handleFormSubmit={this.handleFormSubmit} inputValue={this.state.inputValue} handleInputChange={this.handleInputChange} />
+        <ChatComponentInputField textareaRef={this.textareaRef} handleFormSubmit={this.handleFormSubmit} inputValue={this.state.inputValue} handleInputChange={this.handleInputChange} />
       </div>
     );
   }
 }
 export default ChatComponentContent;
 
-const ChatComponentInputField = ({ handleFormSubmit, inputValue, handleInputChange }) => {
-  const maxHeight = 250;
-  const handleInput = (e) => {
-    handleInputChange(e);
-    e.target.style.height = '1.5rem'; // reset height to minimum height value
-    e.target.style.height = `${e.target.scrollHeight > maxHeight ? maxHeight : e.target.scrollHeight}px`; // set to scrollHeight to expand as needed upto max-height
-  };
+const ChatComponentInputField = ({ textareaRef, handleFormSubmit, inputValue, handleInputChange }) => {
 
   return (
     <div className="md:border-t-0 md:border-transparent md:border-transparent pt-2 md:pl-2 md:w-[calc(100%-.5rem)]">
@@ -121,14 +123,15 @@ const ChatComponentInputField = ({ handleFormSubmit, inputValue, handleInputChan
         <div className="relative flex h-full flex-1 items-stretch md:flex-col" role="presentation">
           <div className="flex flex-row w-full flex-grow md:pl-4 relative border border-black/10 bg-black border-gray-900/50 border-white rounded-xl shadow-xs shadow-xs">
             <textarea
+              ref={textareaRef}
               id="prompt-textarea"
               tabIndex={0}
               data-id="root"
               placeholder="Send a message"
               className="m-0 w-full h-[24px] p-0 my-[10px] pr-10 bg-transparent md:pr-12 pl-3 md:pl-0 outline-none resize-none"
               value={inputValue}
-              onChange={handleInput}
-              onInput={handleInput}
+              onChange={handleInputChange}
+              onInput={handleInputChange}
             ></textarea>
             <button type="submit"
               className={"my-1 mx-1 flex items-center justify-center h-10 w-10 rounded-md transition-colors" +
