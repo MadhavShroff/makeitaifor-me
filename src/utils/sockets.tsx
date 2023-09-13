@@ -93,6 +93,7 @@ export const emitChatSubmitted = (
     socket.on('textGenerated-' + chatId, async (response) => {
       await appendContentToMessageInChat(chatId, responseMessageId, response);
       socket.off('textGenerated-' + chatId);
+      socket.off('textGeneratedChunk-' + chatId);
     });
   });
 };
