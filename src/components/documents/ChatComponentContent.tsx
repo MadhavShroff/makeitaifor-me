@@ -11,6 +11,7 @@ import { emitChatSubmitted } from '@/utils/sockets';
 import { Chat, Message, isMessage, isMessageVersionArray } from '@/utils/types';
 import { StacksContainer } from './Stacks';
 import { MessageVersion, isMessageVersion } from '@/utils/types';
+import CodeBlock from '../CodeBlock';
 
 type ChatComponentContentState = { inputValue: string; };
 
@@ -182,6 +183,11 @@ const MessageRow = (props) => {
           children={props.message == null ? '' : props.message}
           remarkPlugins={[remarkMath, remarkGfm]}
           rehypePlugins={[rehypeKatex]}
+          components={
+            {
+              code: ({ node, ...props }) => <CodeBlock value={props.children} />,
+            }
+           }
         // components={customComponents}
         />
         {/* <MathJax.Provider input="tex">
