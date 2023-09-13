@@ -73,7 +73,7 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
 
     return (
       <div className="h-full flex flex-col justify-end items-center">
-        <div className='w-full overflow-auto h-full'>
+        <div className='w-full overflow-auto h-full overscroll-contain'>
           {messages.length != 0 && messages}
           {messages.length == 0 &&
             <div className="flex flex-col items-center max-h-full justify-start sm:justify-start border-t-2 text-white">
