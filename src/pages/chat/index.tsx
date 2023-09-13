@@ -118,6 +118,7 @@ const ChatPage = () => {
   }
 
   const onChatClicked = async (index) => {
+    console.log("On chat clicked", index , user?.chats)
     if(user == null || user.chats == null || typeof user.chats[0] === 'string') return;
     await fetchMessagesData(user.chats[index].messages).then((messages: Message[]) => {
       console.log("Fetched messages data for user", messages);
