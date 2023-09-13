@@ -2,6 +2,7 @@ import { Chat, FileData, Message, S3MetaData, User, areMessages, isMessage } fro
 import { cognitoLogoutUrl } from "./constants";
 import { Environments, whichEnv } from "./whichEnv";
 import { getCookieParser } from "next/dist/server/api-utils";
+import { mockChats } from "@/pages/documents";
 
 // fetches.tsx
 export const fetchUser = (setUser): Promise<void> => {
@@ -93,16 +94,7 @@ export const fetchChatsMetadata = async (userId: string): Promise<User> => {
       "email": "ciramey479@searpen.com",
       "username": "foo2",
       "name": "foo2 Bar2ooqiq Oibqefib",
-      "chats": [
-        {
-          "_id": "64f9eb690c42d44c40b86f57",
-          "messages": [],
-          "title": "New Chat",
-          "__v": 0,
-          createdAt: new Date("2023-09-07T15:25:29.283Z"),
-          updatedAt: new Date("2023-09-07T15:25:29.283Z"),
-        }
-      ],
+      "chats": mockChats,
       "role": "guest",
       "createdAt": new Date("2023-09-07T15:25:29.283Z"),
       "updatedAt": new Date("2023-09-07T15:25:29.283Z"),

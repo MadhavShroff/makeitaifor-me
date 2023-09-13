@@ -23,9 +23,9 @@ const ChatPage = () => {
           userId: "91231123-1230u1u-123132",
           name: "John Doe",
           username: "john@doe.com",
-          role: "guest",
+          role: "authenticated",
           chats: [],
-          _id: "guest",
+          _id: "DUMMY_ID",
           __v: 0
         });
         break;

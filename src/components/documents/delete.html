@@ -1,0 +1,22 @@
+<div class="bg-black rounded-md mb-4"><div class="flex items-center relative text-gray-200 bg-gray-800 px-4 py-2 text-xs font-sans justify-between rounded-t-md"><span>javascript</span><button class="flex ml-auto gap-2"><svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="icon-sm" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>Copy code</button></div><div class="p-4 overflow-y-auto"><code class="!whitespace-pre hljs language-javascript"><span class="hljs-keyword">import</span> <span class="hljs-title class_">React</span> <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">PropTypes</span> <span class="hljs-keyword">from</span> <span class="hljs-string">"prop-types"</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-title class_">SyntaxHighlighter</span> <span class="hljs-keyword">from</span> <span class="hljs-string">'react-syntax-highlighter'</span>;
+<span class="hljs-keyword">import</span> { docco } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-syntax-highlighter/dist/cjs/styles/hljs'</span>;
+
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">CodeBlock</span> = (<span class="hljs-params">{ language, value }</span>) =&gt; (
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">SyntaxHighlighter</span> <span class="hljs-attr">language</span>=<span class="hljs-string">{language}</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{docco}</span>&gt;</span>
+    {value}
+  <span class="hljs-tag">&lt;/<span class="hljs-name">SyntaxHighlighter</span>&gt;</span></span>
+);
+
+<span class="hljs-title class_">CodeBlock</span>.<span class="hljs-property">propTypes</span> = {
+  <span class="hljs-attr">value</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">string</span>.<span class="hljs-property">isRequired</span>,
+  <span class="hljs-attr">language</span>: <span class="hljs-title class_">PropTypes</span>.<span class="hljs-property">string</span>
+};
+
+<span class="hljs-title class_">CodeBlock</span>.<span class="hljs-property">defaultProps</span> = {
+  <span class="hljs-attr">language</span>: <span class="hljs-literal">null</span>
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> <span class="hljs-title class_">CodeBlock</span>;
+</code></div></div>

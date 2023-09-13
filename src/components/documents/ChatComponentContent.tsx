@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from 'react';
+import React, { use, useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import Button from '../Button';
 import remarkMath from 'remark-math';
@@ -12,112 +12,97 @@ import { Chat, Message, isMessage, isMessageVersionArray } from '@/utils/types';
 import { StacksContainer } from './Stacks';
 import { MessageVersion, isMessageVersion } from '@/utils/types';
 import CodeBlock from '../CodeBlock';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { a11yDark } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
-type ChatComponentContentState = { inputValue: string; };
 
-type ChatComponentContentProps = {
-  chat: Chat | undefined;
-  onChatSubmitted: (chatId: string, content: string) => void;
-  appendMessageToChat: (chatId: string, message: Message) => void;
-  appendContentToMessageInChat: (chatId: string, messageId: string, content: string) => void;
-};
+const ChatComponentContent = ({
+  chat,
+  onChatSubmitted,
+  appendMessageToChat,
+  appendContentToMessageInChat
+}) => {
+  const [inputValue, setInputValue] = useState('');
+  const textareaRef = React.createRef<HTMLTextAreaElement>();
+  const maxHeight = 250;
 
-class ChatComponentContent extends React.Component<ChatComponentContentProps, ChatComponentContentState> {
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
+    e.target.style.height = '1.5rem';
+    e.target.style.height = `${e.target.scrollHeight > maxHeight ? maxHeight : e.target.scrollHeight}px`;
+  };
 
-  maxHeight: number;
-
-  textareaRef = React.createRef<HTMLTextAreaElement>();
-
-  constructor(props: ChatComponentContentProps) {
-    super(props);
-    this.state = {
-      inputValue: '',
-    };
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
-    this.maxHeight = 250;
-  }
-
-  handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    this.setState({ inputValue: e.target.value });
-    e.target.style.height = '1.5rem'; // reset height to minimum height value
-    e.target.style.height = `${e.target.scrollHeight > this.maxHeight ? this.maxHeight : e.target.scrollHeight}px`; // set to scrollHeight to expand as needed upto max-height
-  }
-
-  handleFormSubmit(e: React.FormEvent) {
-    this.props.onChatSubmitted(this.props.chat?._id ?? '', this.state.inputValue);
-    this.setState({ inputValue: '' });
-    if (this.textareaRef.current) this.textareaRef.current.style.height = '1.5rem';
+  const handleFormSubmit = (e) => {
     e.preventDefault();
-  }
+    onChatSubmitted(chat?._id ?? '', inputValue);
+    setInputValue('');
+    if (textareaRef.current) textareaRef.current.style.height = '1.5rem';
+  };
 
-  render() {
-    let messages: JSX.Element[] = [];
+  let messages: JSX.Element[] = [];
 
-    if (!this.props.chat || !this.props.chat.messages) {
-      messages = [];
-    } else {
-      let messageIds: string[] = [];
-      this.props.chat.messages.forEach((message: Message | string, index: number) => {
-        if (typeof message === 'string') {
-          messageIds.push(message);
-          return; // Skip to the next iteration
-        }
+  if (!chat || !chat.messages) {
+    messages = [];
+  } else {
+    let messageIds: string[] = [];
+    chat.messages.forEach((message: Message | string, index: number) => {
+      if (typeof message === 'string') {
+        messageIds.push(message);
+        return; // Skip to the next iteration
+      }
 
-        if (isMessage(message)) {
-          if (isMessageVersionArray(message.versions)) {
-            const activeVersion = message.versions.find(version => version.isActive);
-            if (activeVersion) {
-              messages.push(<MessageRow message={activeVersion.text} key={index} />);
-            }
-          } else {
-            // Handle the case where versions array contains strings
+      if (isMessage(message)) {
+        if (isMessageVersionArray(message.versions)) {
+          const activeVersion = message.versions.find(version => version.isActive);
+          if (activeVersion) {
+            messages.push(<MessageRow message={activeVersion.text} key={index} />);
           }
-        } else if (typeof message === 'string') {
-          // Handle the case where message is a string
         } else {
-          throw new Error("Message is not a MessageVersion");
+          // Handle the case where versions array contains strings
         }
-      });
-    }
-
-    return (
-      <div className="h-full flex flex-col justify-end items-center">
-        <div className='w-full overflow-auto h-full overscroll-contain'>
-          {messages.length != 0 && messages}
-          {messages.length == 0 &&
-            <div className="flex flex-col items-center max-h-full justify-start sm:justify-start border-t-2 text-white">
-              <StacksContainer fileNames={["Hello Hi"]} />
-              <Img
-                src={"/logo_nobg.png"}
-                alt="Logo"
-                width={250}
-                height={250}
-                className="object-contain m-10"
-              />
-              <p>Heres some stuff you can try out</p>
-              <div className='flex flex-col max-w-4xl'>
-                <TryOutBox content={[
-                  "What is this app good for? 💡",
-                  "Write a blog article about my new seafood restaurant  🦞🍽️",
-                  "Write all the key Equations to remember for Integration  🧮",
-                  "Does Joe Rogan ever talk about Bears? 🎙️🐻",
-                  "Where is this from: \"To be, or not to be: that is the question.\"  📜❓",
-                  "What exactly is the Higgs Boson?  ⚛️"
-                ]} appendContentToMessageInChat={this.props.appendContentToMessageInChat} appendMessageToChat={this.props.appendMessageToChat} chatId={this.props.chat?._id}></TryOutBox>
-              </div>
-            </div>
-          }
-        </div>
-        <ChatComponentInputField textareaRef={this.textareaRef} handleFormSubmit={this.handleFormSubmit} inputValue={this.state.inputValue} handleInputChange={this.handleInputChange} />
-      </div>
-    );
+      } else if (typeof message === 'string') {
+        // Handle the case where message is a string
+      } else {
+        throw new Error("Message is not a MessageVersion");
+      }
+    });
   }
+
+  return (
+    <div className="h-full flex flex-col justify-end items-center">
+      <div className='w-full overflow-auto h-full overscroll-contain'>
+        {messages.length != 0 && messages}
+        {messages.length == 0 &&
+          <div className="flex flex-col items-center max-h-full justify-start sm:justify-start border-t-2 text-white">
+            <StacksContainer fileNames={["Hello Hi"]} />
+            <Img
+              src={"/logo_nobg.png"}
+              alt="Logo"
+              width={250}
+              height={250}
+              className="object-contain m-10"
+            />
+            <p>Heres some stuff you can try out</p>
+            <div className='flex flex-col max-w-4xl'>
+              <TryOutBox content={[
+                "What is this app good for? 💡",
+                "Write a blog article about my new seafood restaurant  🦞🍽️",
+                "Write all the key Equations to remember for Integration  🧮",
+                "Does Joe Rogan ever talk about Bears? 🎙️🐻",
+                "Where is this from: \"To be, or not to be: that is the question.\"  📜❓",
+                "What exactly is the Higgs Boson?  ⚛️"
+              ]} appendContentToMessageInChat={appendContentToMessageInChat} appendMessageToChat={appendMessageToChat} chatId={chat?._id}></TryOutBox>
+            </div>
+          </div>
+        }
+      </div>
+      <ChatComponentInputField textareaRef={textareaRef} handleFormSubmit={handleFormSubmit} inputValue={inputValue} handleInputChange={handleInputChange} />
+    </div>
+  );
 }
 export default ChatComponentContent;
 
 const ChatComponentInputField = ({ textareaRef, handleFormSubmit, inputValue, handleInputChange }) => {
-
   return (
     <div className="md:border-t-0 md:border-transparent md:border-transparent pt-2 md:pl-2 md:w-[calc(100%-.5rem)]">
       <form onSubmit={handleFormSubmit} className="stretch mx-2 flex flex-row gap-3 lg:mx-auto lg:max-w-3xl xl:max-w-6xl">
@@ -158,17 +143,6 @@ const ChatComponentInputField = ({ textareaRef, handleFormSubmit, inputValue, ha
 
 
 const MessageRow = (props) => {
-  const customComponents = {
-    h1: ({ node, ...props }) => <h1 className="my-heading1" {...props} />,
-    h2: ({ node, ...props }) => <h2 className="my-heading2" {...props} />,
-    h3: ({ node, ...props }) => <h3 className="my-heading3" {...props} />,
-    h4: ({ node, ...props }) => <h4 className="my-heading4" {...props} />,
-    p: ({ node, ...props }) => <p className="my-paragraph" {...props} />,
-    a: ({ node, ...props }) => <a className="my-anchor" {...props} />,
-    img: ({ node, ...props }) => <img className="my-image" {...props} />,
-    code: ({ node, ...props }) => <code className="my-code" {...props} />,
-    // Add more mappings for each HTML tags
-  };
   return (
     <div className="flex flex-col md:flex-row w-full justify-start border-t-2 text-black mb-2">
       <div className="flex flex-col items-end md:items-start md:w-3/12 mx-2 ml-14 mt-2">
@@ -183,15 +157,13 @@ const MessageRow = (props) => {
           children={props.message == null ? '' : props.message}
           remarkPlugins={[remarkMath, remarkGfm]}
           rehypePlugins={[rehypeKatex]}
-          components={
-            {
-              code: ({ node, ...props }) => <CodeBlock value={props.children} />,
-            }
-           }
-        // components={customComponents}
+          components={{
+            code({ node, inline, className, children, ...props }) {
+              const match = /language-(\w+)/.exec(className || '')
+              return CodeBlock({ inline, match, children, ...props });
+            },
+          }}
         />
-        {/* <MathJax.Provider input="tex">
-         </MathJax.Provider> */}
         <div className="flex flex-row md:flex-col justify-between md:justify-start">
           <Button text='Rewrite' _key={1} className='w-fit' />
           <Button text='Reply' _key={2} className='w-fit md:hidden' />
