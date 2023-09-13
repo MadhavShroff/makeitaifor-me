@@ -116,11 +116,11 @@ export const fetchChatsMetadata = async (userId: string): Promise<User> => {
 };
 
 export const fetchMessagesData = async (messages: string[] | Message[]): Promise<Message[]> => {
-  console.log("fetchMessagesData messages: ", messages);
   if(!messages) return [];
   let messageIds = messages.map(message =>
-    typeof message === 'string' ? message : message._id
+    typeof message === 'string' ? message : null
   );
+  console.log("fetchMessagesData for messageIds: ", messageIds);
 
   if (whichEnv(process.env.APP_ENV) === Environments.Development) {
     return [];

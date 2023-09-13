@@ -43,7 +43,6 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
 
   render() {
     let messages: JSX.Element[] = [];
-    console.log(this.props.chat);
 
     if (!this.props.chat || !this.props.chat.messages) {
       messages = [];
