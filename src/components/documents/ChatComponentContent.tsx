@@ -38,6 +38,7 @@ class ChatComponentContent extends React.Component<ChatComponentContentProps, Ch
 
   handleFormSubmit(e: React.FormEvent) {
     this.props.onChatSubmitted(this.props.chat?._id ?? '', this.state.inputValue);
+    this.setState({ inputValue: '' });
     e.preventDefault();
   }
 
