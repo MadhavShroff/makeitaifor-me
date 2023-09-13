@@ -110,7 +110,10 @@ const ChatPage = () => {
 
 
   const onNewChatClicked = () => {
-    createNewChat().then(setChats).catch(console.error);
+    createNewChat().then((chats) => {
+      console.log("Chats returned from createNewChat", chats);
+      setChats(chats);
+    }).catch(console.error);
   }
 
   /**
