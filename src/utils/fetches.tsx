@@ -116,6 +116,7 @@ export const fetchChatsMetadata = async (userId: string): Promise<User> => {
 };
 
 export const fetchMessagesData = async (messages: string[] | Message[]): Promise<Message[]> => {
+  if(!messages) return [];
   let messageIds = messages.map(message =>
     typeof message === 'string' ? message : message._id
   );
