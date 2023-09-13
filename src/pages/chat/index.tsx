@@ -117,9 +117,9 @@ const ChatPage = () => {
     createNewChat().then(setChats).catch(console.error);
   }
 
-  const onChatClicked = (index) => {
+  const onChatClicked = async (index) => {
     if(user == null || user.chats == null || typeof user.chats[0] === 'string') return;
-    fetchMessagesData(user.chats[index].messages).then((messages: Message[]) => {
+    await fetchMessagesData(user.chats[index].messages).then((messages: Message[]) => {
       console.log("Fetched messages data for user", messages);
       user.chats[index].messages = messages;
       setChats([...user.chats]);
