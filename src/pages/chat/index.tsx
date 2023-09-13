@@ -11,6 +11,9 @@ const ChatPage = () => {
   const [user, setUser] = useState<User | null>(null);
   const [chats, setChats] = useState<Chat[]>([]);
 
+  console.log("ChatPage user", user);
+  console.log("ChatPage chats", chats);
+
   useEffect(() => {
     connectToSocket().catch(console.error);
   }, [connectToSocket]);
@@ -54,7 +57,7 @@ const ChatPage = () => {
       } else {
         fetchChatsMetadata(user.userId).then((user: User) => {
           console.log("Fetched chats metadata for user", user);
-          onChatClicked(0);
+          setChats(user.chats);   
         }).catch(console.error);
       }
     }
