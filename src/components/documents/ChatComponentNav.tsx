@@ -87,7 +87,7 @@ export const ChatComponentNav = ({ toggleSideNav, showSideNav, onChatClicked, se
                             </div>
                             <ol>
                                 {
-                                    chats != null && chats.map((chat : Chat, index : number) => <NavRow key={index} text={chat.title} isSelected={selectedChat == chat._id}
+                                    chats != null && chats.reverse().map((chat : Chat, index : number) => <NavRow key={index} text={chat.title} isSelected={(selectedChat === "" ? chat._id === chats[0]._id : selectedChat == chat._id)}
                                     onChatClicked={() => {
                                         onChatClicked(index);
                                         console.log("Chat clicked " + chat.title);
