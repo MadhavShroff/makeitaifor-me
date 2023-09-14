@@ -21,12 +21,15 @@ export const ChatComponent = ({
   const [showSideNav, setShowSideNav] = useState(false);
   const [selectedChat, setSelectedChat] = useState<string | undefined>((chats.find(chat => chat.messages.length == 0))?._id || chats[0]?._id || undefined); // Chat.id
 
+  console.log("selectedChat init value: ", ((chats.find(chat => chat.messages.length == 0)) || chats[0] || undefined));
+
   const toggleSideNav = () => {
     setShowSideNav(!showSideNav);
   };
 
   const clicked = async (index) => {
     await onChatClicked(index);
+    console.log("Selecting existing chat in clicked()", index);
     setSelectedChat(chats[index]._id);
   };
 
@@ -40,6 +43,7 @@ export const ChatComponent = ({
             console.log("Creating new chat");
             onNewChatClicked();
           } else {
+            console.log("Selecting existing chat in ChatComponent/onNewChatClicked(): ", newChat);
             setSelectedChat(newChat._id);
           }
         }}/>
