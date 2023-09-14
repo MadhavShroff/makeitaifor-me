@@ -13,7 +13,7 @@ export const ChatComponent = ({
   appendContentToMessageInChat,
 } : {
   chats: Chat[],
-  onNewChatClicked: () => void,
+  onNewChatClicked: (callback) => void,
   onChatSubmitted: (chatId: string, content: string) => void,
   onChatClicked: (index: number) => void,
   appendMessageToChat : (chatId: string, message: Message) => void,
@@ -39,9 +39,10 @@ export const ChatComponent = ({
           const newChat = chats.find(chat => chat.messages.length == 0);
           if(newChat === undefined) {
             console.log("Creating new chat");
-            onNewChatClicked();
+            onNewChatClicked(setSelectedChat);
+          } else {
+            setSelectedChat(newChat?._id ?? chats[0]._id);
           }
-          setSelectedChat(newChat?._id ?? chats[0]._id);
         }}/>
       <ChatComponentContent chat={chats.find((chat) => {
         return selectedChat == chat._id
