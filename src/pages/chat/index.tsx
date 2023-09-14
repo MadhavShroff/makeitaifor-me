@@ -128,7 +128,6 @@ const ChatPage = () => {
       console.log("Selecting existing chat in ChatComponent/onNewChatClicked(): ", newChat);
       setSelectedChat(newChat._id);
     }
-    
   }
 
   /**
@@ -139,7 +138,11 @@ const ChatPage = () => {
    */
   const onChatClicked = async (index: number) => {
     console.log("On chat clicked", index, user?.chats);
-    if (!user || !chats || index < 0 || index >= chats.length) return;
+    if (!user || !chats || index < 0 || index >= chats.length || chats[index] === undefined) {
+      console.error("Invalid index or user or chats", index, user, chats);
+      return;
+    }
+    setSelectedChat(chats[index]._id);
     const messages: Message[] = await fetchMessagesData(chats[index].messages);
     console.log("Fetched messages data for user", messages);
     setChats(chats.map((chat, idx) => {
