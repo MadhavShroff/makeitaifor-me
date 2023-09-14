@@ -59,7 +59,7 @@ const CodeBlock = ({ inline, match, children, ...props }) => {
         {...props}
         children={String(children).replace(/\n$/, '')}
         style={a11yDark}
-        className="rounded-b-md"
+        className="rounded-b-md overscroll-auto"
         language={match[1]}
         PreTag="div"
       />

@@ -26,6 +26,14 @@ const ChatComponentContent = ({
 
   let messages: JSX.Element[] = [];
 
+  const scrollableContainerRef = React.createRef<HTMLDivElement>();
+  React.useEffect(() => {
+    const scrollableContainer = scrollableContainerRef.current;
+    if (scrollableContainer) {
+      scrollableContainer.scrollTop = scrollableContainer.scrollHeight;
+    }
+  }, [messages]);
+
   if (!chat || !chat.messages) {
     messages = [];
   } else {
@@ -55,7 +63,7 @@ const ChatComponentContent = ({
 
   return (
     <div className="h-full flex flex-col justify-end items-center">
-      <div className='w-full overflow-auto h-full overscroll-contain'>
+      <div className='w-full overflow-auto h-full overscroll-contain' ref={scrollableContainerRef}>
         {messages.length != 0 && messages}
         {messages.length == 0 &&
           <div className="flex flex-col items-center max-h-full justify-start sm:justify-start border-t-2 text-white">
