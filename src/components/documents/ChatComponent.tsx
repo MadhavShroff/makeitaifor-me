@@ -22,37 +22,11 @@ export const ChatComponent = ({
 }) => {
   const [showSideNav, setShowSideNav] = useState(false);
   
-  // useEffect(() => {
-  //   if(selectedChat !== undefined) return;
-  //   const sc = (chats.find(chat => chat.messages.length == 0)?._id || chats[0]?._id || undefined);
-  //   console.log("selectedChat changed to: ", sc);
-  //   setSelectedChat(sc);
-  // }, [chats]);
-
   console.log("selectedChat value @ChatComponent: ", selectedChat);
 
-  // ((chats.find(chat => chat.messages.length == 0)) || chats[0] || undefined)
   const toggleSideNav = () => {
     setShowSideNav(!showSideNav);
   };
-
-  // const clicked = async (index) => {
-  //   await onChatClicked(index);
-  //   console.log("Selecting existing chat in clicked()", index);
-  //   setSelectedChat(chats[index]._id);
-  // };
-
-  // () => {
-  //   console.log("chats:", chats);
-  //   const newChat = chats.find(chat => chat.messages.length == 0);
-  //   if(newChat === undefined) {
-  //     console.log("Creating new chat");
-  //     onNewChatClicked(setSelectedChat);
-  //   } else {
-  //     console.log("Selecting existing chat in ChatComponent/onNewChatClicked(): ", newChat);
-  //     setSelectedChat(newChat._id);
-  //   }
-  // }}
 
   return (
     <div className="border-4 sm:border-2 relative bg-black rounded-lg h-[100svh]">

@@ -142,7 +142,6 @@ const ChatPage = () => {
       console.error("Invalid index or user or chats", index, user, chats);
       return;
     }
-    setSelectedChat(chats[index]._id);
     const messages: Message[] = await fetchMessagesData(chats[index].messages);
     console.log("Fetched messages data for user", messages);
     setChats(chats.map((chat, idx) => {
@@ -154,6 +153,7 @@ const ChatPage = () => {
       }
       return chat;
     }));
+    setSelectedChat(chats[index]._id);
   }
 
   const onChatSubmitted = (chatId: string, content) => {
