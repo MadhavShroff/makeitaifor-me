@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { MDXProvider } from "@mdx-js/react";
 import { ChatComponentNav } from "./ChatComponentNav";
 import ChatComponentContent from "./ChatComponentContent";
 import { Chat, Message } from "@/utils/types";
@@ -20,7 +19,7 @@ export const ChatComponent = ({
   appendContentToMessageInChat : (chatId: string, messageId: string, content: string) => void
 }) => {
   const [showSideNav, setShowSideNav] = useState(false);
-  const [selectedChat, setSelectedChat] = useState<string | undefined>(chats.find(chat => chat.messages.length == 0)?._id || chats[0]._id); // Chat.id
+  const [selectedChat, setSelectedChat] = useState<string | undefined>((chats.find(chat => chat.messages.length == 0))?._id || chats[0]?._id || undefined); // Chat.id
 
   const toggleSideNav = () => {
     setShowSideNav(!showSideNav);
