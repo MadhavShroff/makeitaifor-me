@@ -1,4 +1,6 @@
+import { ChatContext } from "@/pages/chat";
 import { Chat } from "@/utils/types";
+import { useContext } from "react";
 
 const NavButton = ({ toggleSideNav, showSideNav }) =>
     <button
@@ -58,15 +60,20 @@ const NavRow = ({text, onEditClicked, onDeleteClicked, onChatClicked, isSelected
     </li>
 }
 
-export const ChatComponentNav = ({ toggleSideNav, showSideNav, onChatClicked, selectedChat, chats, onNewChatClicked } : {
-    toggleSideNav: () => void,
-    showSideNav: boolean,
-    onChatClicked: (index: number) => void,
-    selectedChat: string | undefined,
-    chats: Chat[] | null,
-    onNewChatClicked: () => void,
-}) =>
-    <div id="chat-nav" className={"z-10 bg-black absolute " + (showSideNav ? "border-2 top-[1px] left-[1px]" : "top-1 left-1")}>
+export const ChatComponentNav = ({ toggleSideNav, showSideNav } : { toggleSideNav: () => void, showSideNav: boolean }) => {
+
+    const context = useContext(ChatContext);
+
+    if (!context) throw new Error("YourChildComponent must be used within a ChatProvider");
+    
+    const {
+        chats, 
+        selectedChat, 
+        onNewChatClicked, 
+        onChatClicked, 
+    } = context;
+
+    return <div id="chat-nav" className={"z-10 bg-black absolute " + (showSideNav ? "border-2 top-[1px] left-[1px]" : "top-1 left-1")}>
         <NavButton toggleSideNav={toggleSideNav} showSideNav={showSideNav} />
         {showSideNav &&
             <nav className="flex h-full w-full flex-col p-2" aria-label="Chat history">
@@ -104,3 +111,4 @@ export const ChatComponentNav = ({ toggleSideNav, showSideNav, onChatClicked, se
             </nav>
         }
     </div>
+}

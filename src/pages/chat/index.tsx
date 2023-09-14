@@ -7,6 +7,19 @@ import { User, Message } from "@/utils/types";
 import LoginPage from "../auth";
 import { Environments, whichEnv } from "@/utils/whichEnv";
 
+type ChatContextType = {
+  chats: Chat[];
+  selectedChat: string | undefined;
+  onNewChatClicked: () => void;
+  onChatSubmitted: (chatId: string, content: any) => void;
+  onChatClicked: (index: number) => Promise<void>;
+  appendContentToMessageInChat: (chatId: string, messageId: string, content: string) => void;
+  appendMessageToChat: (chatId: string, message: Message) => Promise<void>;
+  setChatTitle: (chatId: string, title: string) => void;
+};
+
+export const ChatContext = React.createContext<ChatContextType | null>(null);  
+
 const ChatPage = () => {
   const [user, setUser] = useState<User | null>(null);
   const [chats, setChats] = useState<Chat[]>([]);
@@ -62,7 +75,7 @@ const ChatPage = () => {
     }
   }, [user]);
 
-  const appendMessageToChat = async (chatId: string, message: Message) => { // returns message id
+  const appendMessageToChat = async (chatId: string, message: Message) => {
     const newChat = chats.find((chat) => chat._id == chatId);
     if (newChat == undefined) {
       console.error("Chat with id not found", chatId);
@@ -156,23 +169,50 @@ const ChatPage = () => {
     setSelectedChat(chats[index]._id);
   }
 
+
+  /**
+   * Sets chat title to title, one character at a time
+   * @param chatId chatId of chat to set title for
+   * @param title title to set
+   */
+  const setChatTitle = (chatId: string, title: string) => {
+    for(let i = 0; i < title.length; i++) {
+      setTimeout(() => {
+        const chat = chats.find((chat) => chat._id == chatId);
+        if (chat == undefined) {
+          console.error("Chat with id not found", chatId);
+        } else {
+          const newChats = chats.map((chat) => {
+            if (chat._id == chatId) chat.title = title.substring(0, i+1);
+            return chat;
+          });
+          setChats(newChats);
+        }
+      }, 100 * i);
+    }
+  }
+
   const onChatSubmitted = (chatId: string, content) => {
     console.log("Chat submitted " + chatId + " for user " + user?.userId + "With content " + content);
-    emitChatSubmitted(content, chatId, appendMessageToChat, appendContentToMessageInChat);
+    emitChatSubmitted(content, chatId, appendMessageToChat, appendContentToMessageInChat, setChatTitle);
   }
 
   return (
-    <div className="h-[100svh] overscroll-contain">
-      <ChatComponent
-        chats={chats}
-        selectedChat={selectedChat}
-        onNewChatClicked={onNewChatClicked}
-        onChatSubmitted={onChatSubmitted}
-        onChatClicked={onChatClicked}
-        appendContentToMessageInChat={appendContentToMessageInChat}
-        appendMessageToChat={appendMessageToChat}
-      />
-    </div>)
+    <ChatContext.Provider value={{ 
+      chats, 
+      selectedChat, 
+      onNewChatClicked, 
+      onChatSubmitted, 
+      onChatClicked, 
+      appendContentToMessageInChat, 
+      appendMessageToChat,
+      setChatTitle
+    }}>
+      <div className="h-[100svh] overscroll-contain">
+        <ChatComponent />
+      </div>
+    </ChatContext.Provider>
+  );
 
   // else return (
   //   <main className="bg-white dark:bg-black h-[100dvh]">

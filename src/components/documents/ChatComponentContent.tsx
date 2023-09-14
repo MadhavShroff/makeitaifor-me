@@ -1,4 +1,4 @@
-import React, { use, useEffect, useRef, useState } from 'react';
+import React, { use, useContext, useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import Button from '../Button';
 import remarkMath from 'remark-math';
@@ -14,14 +14,19 @@ import { MessageVersion, isMessageVersion } from '@/utils/types';
 import CodeBlock from '../CodeBlock';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { ChatContext } from '@/pages/chat';
 
 
-const ChatComponentContent = ({
-  chat,
-  onChatSubmitted,
-  appendMessageToChat,
-  appendContentToMessageInChat
-}) => {
+const ChatComponentContent = ({ chat }) => {
+  const context = useContext(ChatContext);
+  if (!context)  throw new Error("YourChildComponent must be used within a ChatProvider");
+
+  const {
+    onChatSubmitted, 
+    appendContentToMessageInChat, 
+    appendMessageToChat
+  } = context;
+
   const textareaRef = React.createRef<HTMLTextAreaElement>();
 
   let messages: JSX.Element[] = [];
@@ -78,7 +83,7 @@ const ChatComponentContent = ({
                 "Does Joe Rogan ever talk about Bears? 🎙️🐻",
                 "Where is this from: \"To be, or not to be: that is the question.\"  📜❓",
                 "What exactly is the Higgs Boson?  ⚛️"
-              ]} appendContentToMessageInChat={appendContentToMessageInChat} appendMessageToChat={appendMessageToChat} chatId={chat?._id}></TryOutBox>
+              ]} chatId={chat?._id}></TryOutBox>
             </div>
           </div>
         }
@@ -182,11 +187,21 @@ const MessageRow = (props) => {
 
 }
 
-const TryOutBox = ({ content, appendContentToMessageInChat, appendMessageToChat, chatId }) => {
+const TryOutBox = ({ content, chatId }) => {
   // split x into 2 equal sized arrays
   const half = Math.ceil(content.length / 2);
   const firstHalf = content.slice(0, half);
   const secondHalf = content.slice(-half);
+
+  const context = useContext(ChatContext);
+  if (!context) throw new Error("YourChildComponent must be used within a ChatProvider");
+
+  const {
+    appendContentToMessageInChat,
+    appendMessageToChat,
+    setChatTitle,
+  } = context;
+
   return (
     <>
       <div className='flex flex-row sm:flex-col sm:mx-2'>
@@ -194,7 +209,7 @@ const TryOutBox = ({ content, appendContentToMessageInChat, appendMessageToChat,
           return <button
             key={index}
             className="m-2 text-center max-w-prose text-sm p-2 hover:bg-orange-500 bg-black border-white border-2 rounded-lg"
-            onClick={() => emitChatSubmitted(buttonText, chatId, appendMessageToChat, appendContentToMessageInChat)}>
+            onClick={() => emitChatSubmitted(buttonText, chatId, appendMessageToChat, appendContentToMessageInChat, setChatTitle)}>
             {buttonText}
           </button>
         })}
@@ -204,7 +219,7 @@ const TryOutBox = ({ content, appendContentToMessageInChat, appendMessageToChat,
           return <button
             key={index}
             className="m-2 text-center max-w-prose text-sm p-2 hover:bg-orange-500 bg-black border-white border-2 rounded-lg"
-            onClick={() => emitChatSubmitted(buttonText, chatId, appendMessageToChat, appendContentToMessageInChat)}>
+            onClick={() => emitChatSubmitted(buttonText, chatId, appendMessageToChat, appendContentToMessageInChat, setChatTitle)}>
             {buttonText}
           </button>
         })}

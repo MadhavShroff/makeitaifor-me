@@ -67,7 +67,7 @@ export const emitChatSubmitted = (
     const responseMessageId = response.message._id;
     const versionId = response.message.versions[0]._id;
 
-    socket.emit('generateText', { query: queryText, ext: chatId, versionId: versionId});
+    socket.emit('generateText', { query: queryText, chatId: chatId, versionId: versionId});
 
     let buffer: { [key: number]: string } = {};
     let expectedSeq = 0;
@@ -95,6 +95,12 @@ export const emitChatSubmitted = (
       await appendContentToMessageInChat(chatId, responseMessageId, response);
       socket.off('textGenerated-' + chatId);
       socket.off('textGeneratedChunk-' + chatId);
+    });
+
+    socket.on('titleGenerated-' + chatId, async (response) => {
+      const { title } = response;
+      await setChatTitle(chatId, title);
+      socket.off('titleGenerated-' + chatId);
     });
   });
 };
