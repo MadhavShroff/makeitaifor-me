@@ -137,17 +137,18 @@ const ChatPage = () => {
       return chat;
     }));
   }
-  
+
+  const onChatSubmitted = (chatId: string, content) => {
+    console.log("Chat submitted " + chatId + " for user " + user?.userId + "With content " + content);
+    emitChatSubmitted(content, chatId, appendMessageToChat, appendContentToMessageInChat);
+  }
 
   return (
     <div className="h-[100svh] overscroll-contain">
       <ChatComponent
         chats={chats}
         onNewChatClicked={onNewChatClicked}
-        onChatSubmitted={(chatId: string, content) => {
-          console.log("Chat submitted " + chatId + " for user " + user?.userId + "With content " + content);
-          emitChatSubmitted(content, chatId, appendMessageToChat, appendContentToMessageInChat);
-        }}
+        onChatSubmitted={onChatSubmitted}
         onChatClicked={onChatClicked}
         appendContentToMessageInChat={appendContentToMessageInChat}
         appendMessageToChat={appendMessageToChat}

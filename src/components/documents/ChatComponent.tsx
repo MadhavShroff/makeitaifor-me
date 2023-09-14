@@ -36,11 +36,12 @@ export const ChatComponent = ({
       <ChatComponentNav toggleSideNav={toggleSideNav} showSideNav={showSideNav} onChatClicked={clicked} selectedChat={selectedChat} chats={chats} 
         onNewChatClicked={() => {
           console.log("chats:", chats);
-          if(chats.find(chat => chat.messages.length == 0) == undefined) {
+          const newChat = chats.find(chat => chat.messages.length == 0);
+          if(newChat === undefined) {
             console.log("Creating new chat");
             onNewChatClicked();
           }
-          setSelectedChat(chats.find((chat) => chat.messages.length == 0)?._id ?? "");
+          setSelectedChat(newChat?._id ?? chats[0]._id);
         }}/>
       <ChatComponentContent chat={chats.find((chat) => {
         return selectedChat == chat._id
