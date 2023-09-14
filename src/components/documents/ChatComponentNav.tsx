@@ -24,7 +24,7 @@ const NavButton = ({ toggleSideNav, showSideNav }) =>
 
 const NavRow = ({text, onEditClicked, onDeleteClicked, onChatClicked, isSelected}) => {
     return <li className="pt-2">
-        <button className={`flex w-full text-left py-3 px-3 items-center gap-3 relative rounded-md cursor-pointer border-2 hover:bg-orange-500 ${isSelected ? " bg-orange-500" : ""}`} onClick={onChatClicked} data-te-ripple-init >
+        <button className={`flex w-full text-left py-3 px-3 items-center gap-3 relative rounded-md cursor-pointer border-2 hover:bg-orange-200 ${isSelected ? " bg-orange-500" : ""}`} onClick={onChatClicked} data-te-ripple-init >
             <svg className="h-4 w-4"  stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg" >
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
             </svg>

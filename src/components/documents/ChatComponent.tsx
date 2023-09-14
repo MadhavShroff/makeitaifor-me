@@ -13,14 +13,14 @@ export const ChatComponent = ({
   appendContentToMessageInChat,
 } : {
   chats: Chat[],
-  onNewChatClicked: (callback) => void,
+  onNewChatClicked: () => void,
   onChatSubmitted: (chatId: string, content: string) => void,
   onChatClicked: (index: number) => void,
   appendMessageToChat : (chatId: string, message: Message) => void,
   appendContentToMessageInChat : (chatId: string, messageId: string, content: string) => void
 }) => {
   const [showSideNav, setShowSideNav] = useState(false);
-  const [selectedChat, setSelectedChat] = useState<string | undefined>(chats[0]?._id); // Chat.id
+  const [selectedChat, setSelectedChat] = useState<string | undefined>(chats.find(chat => chat.messages.length == 0)?._id || chats[0]._id); // Chat.id
 
   const toggleSideNav = () => {
     setShowSideNav(!showSideNav);
@@ -39,9 +39,9 @@ export const ChatComponent = ({
           const newChat = chats.find(chat => chat.messages.length == 0);
           if(newChat === undefined) {
             console.log("Creating new chat");
-            onNewChatClicked(setSelectedChat);
+            onNewChatClicked();
           } else {
-            setSelectedChat(newChat?._id ?? chats[0]._id);
+            setSelectedChat(newChat._id);
           }
         }}/>
       <ChatComponentContent chat={chats.find((chat) => {
