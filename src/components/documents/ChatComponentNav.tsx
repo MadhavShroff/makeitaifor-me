@@ -90,11 +90,11 @@ export const ChatComponentNav = ({ toggleSideNav, showSideNav, onChatClicked, se
                                     chats != null && chats.map((chat : Chat, index : number) => <NavRow key={index} text={chat.title} isSelected={(selectedChat === "" ? chat._id === chats[0]._id : selectedChat == chat._id)}
                                     onChatClicked={() => {
                                         onChatClicked(index);
-                                        console.log("Chat clicked " + chat.title);
+                                        console.log("Chat clicked " + chat._id);
                                     }} onEditClicked={() => {
-                                        console.log("Edit clicked " + chat.title);
+                                        console.log("Edit clicked " + chat._id);
                                     }} onDeleteClicked={() => {
-                                        console.log("Delete clicked " + chat.title);
+                                        console.log("Delete clicked " + chat._id);
                                     }} />)
                                 }
                             </ol>
