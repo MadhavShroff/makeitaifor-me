@@ -22,7 +22,7 @@ export const ChatComponent = ({
   const [selectedChat, setSelectedChat] = useState<string>(); // Chat.id
   
   useEffect(() => {
-    const sc = (chats.find(chat => chat.messages.length == 0)?._id || chats[0]._id || undefined);
+    const sc = (chats.find(chat => chat.messages.length == 0)?._id || chats[0]?._id || undefined);
     console.log("selectedChat changed to: ", sc);
     setSelectedChat(sc);
   }, [chats]);
