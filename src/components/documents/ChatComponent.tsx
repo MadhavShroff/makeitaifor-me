@@ -4,7 +4,8 @@ import ChatComponentContent from "./ChatComponentContent";
 import { Chat, Message } from "@/utils/types";
 
 export const ChatComponent = ({
-  chats: chats,
+  chats,
+  selectedChat,
   onNewChatClicked,
   onChatSubmitted,
   onChatClicked,
@@ -12,6 +13,7 @@ export const ChatComponent = ({
   appendContentToMessageInChat,
 } : {
   chats: Chat[],
+  selectedChat: string | undefined,
   onNewChatClicked: () => void,
   onChatSubmitted: (chatId: string, content: string) => void,
   onChatClicked: (index: number) => void,
@@ -19,41 +21,48 @@ export const ChatComponent = ({
   appendContentToMessageInChat : (chatId: string, messageId: string, content: string) => void
 }) => {
   const [showSideNav, setShowSideNav] = useState(false);
-  const [selectedChat, setSelectedChat] = useState<string>(); // Chat.id
   
-  useEffect(() => {
-    if(selectedChat !== undefined) return;
-    const sc = (chats.find(chat => chat.messages.length == 0)?._id || chats[0]?._id || undefined);
-    console.log("selectedChat changed to: ", sc);
-    setSelectedChat(sc);
-  }, [chats]);
+  // useEffect(() => {
+  //   if(selectedChat !== undefined) return;
+  //   const sc = (chats.find(chat => chat.messages.length == 0)?._id || chats[0]?._id || undefined);
+  //   console.log("selectedChat changed to: ", sc);
+  //   setSelectedChat(sc);
+  // }, [chats]);
 
-  console.log("selectedChat init value: ", ((chats.find(chat => chat.messages.length == 0)) || chats[0] || undefined));
+  console.log("selectedChat value @ChatComponent: ", selectedChat);
 
+  // ((chats.find(chat => chat.messages.length == 0)) || chats[0] || undefined)
   const toggleSideNav = () => {
     setShowSideNav(!showSideNav);
   };
 
-  const clicked = async (index) => {
-    await onChatClicked(index);
-    console.log("Selecting existing chat in clicked()", index);
-    setSelectedChat(chats[index]._id);
-  };
+  // const clicked = async (index) => {
+  //   await onChatClicked(index);
+  //   console.log("Selecting existing chat in clicked()", index);
+  //   setSelectedChat(chats[index]._id);
+  // };
+
+  // () => {
+  //   console.log("chats:", chats);
+  //   const newChat = chats.find(chat => chat.messages.length == 0);
+  //   if(newChat === undefined) {
+  //     console.log("Creating new chat");
+  //     onNewChatClicked(setSelectedChat);
+  //   } else {
+  //     console.log("Selecting existing chat in ChatComponent/onNewChatClicked(): ", newChat);
+  //     setSelectedChat(newChat._id);
+  //   }
+  // }}
 
   return (
     <div className="border-4 sm:border-2 relative bg-black rounded-lg h-[100svh]">
-      <ChatComponentNav toggleSideNav={toggleSideNav} showSideNav={showSideNav} onChatClicked={clicked} selectedChat={selectedChat} chats={chats} 
-        onNewChatClicked={() => {
-          console.log("chats:", chats);
-          const newChat = chats.find(chat => chat.messages.length == 0);
-          if(newChat === undefined) {
-            console.log("Creating new chat");
-            onNewChatClicked();
-          } else {
-            console.log("Selecting existing chat in ChatComponent/onNewChatClicked(): ", newChat);
-            setSelectedChat(newChat._id);
-          }
-        }}/>
+      <ChatComponentNav 
+        toggleSideNav={toggleSideNav} 
+        showSideNav={showSideNav} 
+        onChatClicked={onChatClicked} 
+        selectedChat={selectedChat} 
+        chats={chats} 
+        onNewChatClicked={onNewChatClicked}/>
       <ChatComponentContent chat={chats.find((chat) => {
         return selectedChat == chat._id
       }) ?? chats[0]} 

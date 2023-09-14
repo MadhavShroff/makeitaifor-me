@@ -10,6 +10,7 @@ import { Environments, whichEnv } from "@/utils/whichEnv";
 const ChatPage = () => {
   const [user, setUser] = useState<User | null>(null);
   const [chats, setChats] = useState<Chat[]>([]);
+  const [selectedChat, setSelectedChat] = useState<string | undefined>();
 
   useEffect(() => {
     connectToSocket().catch(console.error);
@@ -54,7 +55,8 @@ const ChatPage = () => {
       } else {
         fetchChatsMetadata(user.userId).then((user: User) => {
           console.log("Fetched chats metadata for user", user);
-          setChats(user.chats);   
+          setChats(user.chats);  
+          setSelectedChat(user.chats[0]._id); 
         }).catch(console.error);
       }
     }
@@ -95,8 +97,8 @@ const ChatPage = () => {
         message
       ];
       setChats([
+        chat,
         ...chats.filter(c => c._id !== chatId),
-        chat
       ]);
 
     } else if (typeof chat.messages[0] === 'string') {
@@ -110,10 +112,23 @@ const ChatPage = () => {
 
 
   const onNewChatClicked = () => {
-    createNewChat().then((chats) => {
-      console.log("Chats returned from createNewChat", chats);
-      setChats(chats);
-    }).catch(console.error);
+    console.log("chats:", chats);
+    const newChat = chats.find(chat => chat.messages.length == 0);
+    if(newChat && chats.indexOf(newChat) != 0) {
+      console.error("New chat already exists, but is not first chat in chats array");
+    }
+    if(newChat === undefined) {
+      console.log("Creating new chat");
+      createNewChat().then((chats) => {
+        console.log("Chats returned from createNewChat", chats);
+        setChats(chats);
+        setSelectedChat(chats[0]._id);
+      }).catch(console.error);
+    } else {
+      console.log("Selecting existing chat in ChatComponent/onNewChatClicked(): ", newChat);
+      setSelectedChat(newChat._id);
+    }
+    
   }
 
   /**
@@ -147,6 +162,7 @@ const ChatPage = () => {
     <div className="h-[100svh] overscroll-contain">
       <ChatComponent
         chats={chats}
+        selectedChat={selectedChat}
         onNewChatClicked={onNewChatClicked}
         onChatSubmitted={onChatSubmitted}
         onChatClicked={onChatClicked}
