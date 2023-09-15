@@ -9,6 +9,7 @@ import { Environments, whichEnv } from "@/utils/whichEnv";
 
 type ChatContextType = {
   chats: Chat[];
+  user: User | null;
   selectedChat: string | undefined;
   onNewChatClicked: () => void;
   onChatSubmitted: (chatId: string, content: any) => void;
@@ -85,8 +86,8 @@ const ChatPage = () => {
     } else {
       (newChat.messages as Message[]).push(message);
       setChats([
+        newChat,
         ...chats.filter((chat) => chat._id != chatId),
-        newChat
       ]);
     }
   }
@@ -203,6 +204,7 @@ const ChatPage = () => {
   return (
     <ChatContext.Provider value={{ 
       chats, 
+      user,
       selectedChat, 
       onNewChatClicked, 
       onChatSubmitted, 

@@ -23,6 +23,7 @@ const ChatComponentContent = ({ chat }) => {
 
   const {
     onChatSubmitted,
+    user
   } = context;
 
   const textareaRef = React.createRef<HTMLTextAreaElement>();
@@ -44,14 +45,16 @@ const ChatComponentContent = ({ chat }) => {
   } else {
     chat.messages.forEach((message: Message | string, index: number) => {
       if (typeof message === 'string') {
+        
         return; // Skip to the next iteration
       } else if (isMessage(message)) {
         if (isMessageVersionArray(message.versions)) {
           const activeVersion = message.versions.find(version => version.isActive);
           if (activeVersion) {
-            messages.push(<MessageRow message={activeVersion.text} key={index} who={activeVersion.type}/>);
+            messages.push(<MessageRow message={activeVersion.text} key={index} who={activeVersion.type} userName={user?.name.split(" ")[0]}/>);
           }
         } else {
+          console.log("Message versions is not an array");
           // Handle the case where versions array contains strings
         }
       } else {
@@ -153,12 +156,18 @@ const ChatComponentInputField = ({ textareaRef, onChatSubmitted }) => {
 
 
 const MessageRow = (props) => {
+  let who = "";
+  if(props.who == 'ai') {
+    who = "AI";
+  } else if(props.who == 'user') {
+    who = props.userName;
+  }
   return (
     <div className="flex flex-col md:flex-row w-full justify-start border-t-2 text-black mb-2">
       <div className="flex flex-col items-end md:items-start md:w-3/12 mx-2 ml-14 mt-2">
         <div className="flex justify-end">
           <div className="w-3 h-3 m-1 bg-blue-500 rounded-full"></div>
-          <div className="text-white mt-1 ml-1 font-bold text-xs text-ellipsis overflow-hidden">{props.who}</div>
+          <div className="text-white mt-1 ml-1 font-bold text-xs text-ellipsis overflow-hidden">{props.who == 'ai' ? "AI" : props.userName}</div>
         </div>
         <div className="text-white mt-1 ml-1 text-xs">Today at 12:34 AM</div>
       </div>
