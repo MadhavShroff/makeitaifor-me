@@ -22,9 +22,7 @@ const ChatComponentContent = ({ chat }) => {
   if (!context)  throw new Error("YourChildComponent must be used within a ChatProvider");
 
   const {
-    onChatSubmitted, 
-    appendContentToMessageInChat, 
-    appendMessageToChat
+    onChatSubmitted,
   } = context;
 
   const textareaRef = React.createRef<HTMLTextAreaElement>();

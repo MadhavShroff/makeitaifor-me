@@ -46,7 +46,8 @@ export const emitChatSubmitted = (
   content: string,
   chatId: string,
   appendMessageToChat: (chatId: string, message: Message) => void,
-  appendContentToMessageInChat: (chatId: string, messageId: string, content: string) => void
+  appendContentToMessageInChat: (chatId: string, messageId: string, content: string) => void,
+  setChatTitle: (chatId: string, title: string) => void
 ) => {
   console.log('Emitting messageSubmitted: ' + chatId);
   console.log('Emitting messageSubmitted: ' + content);
