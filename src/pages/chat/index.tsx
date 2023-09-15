@@ -66,10 +66,13 @@ const ChatPage = () => {
           }
         ]);
       } else {
-        fetchChatsMetadata(user.userId).then((user: User) => {
+        fetchChatsMetadata(user.userId).then(async (user: User) => {
           console.log("Fetched chats metadata for user", user);
-          setChats(user.chats);  
-          setSelectedChat(user.chats[0]._id); 
+          const chats = user.chats;
+          const messages: Message[] = await fetchMessagesData(chats[0].messages);
+          chats[0].messages = messages;
+          setChats(chats);  
+          setSelectedChat(chats[0]._id); 
         }).catch(console.error);
       }
     }
