@@ -29,6 +29,8 @@ const ChatComponentContent = ({ chat }) => {
 
   let messages: JSX.Element[] = [];
 
+  console.log("Chat at ChatComponentContent", chat);
+
   const scrollableContainerRef = React.createRef<HTMLDivElement>();
   React.useEffect(() => {
     const scrollableContainer = scrollableContainerRef.current;
