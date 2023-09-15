@@ -163,7 +163,7 @@ const MessageRow = (props) => {
     who = props.userName;
   }
   return (
-    <div className="flex flex-col md:flex-row w-full justify-start border-t-2 text-black mb-2">
+    <div className="flex flex-col md:flex-row w-full justify-start border-t-1 text-black mb-2">
       <div className="flex flex-col items-end md:items-start md:w-3/12 mx-2 ml-14 mt-2">
         <div className="flex justify-end">
           <div className="w-3 h-3 m-1 bg-blue-500 rounded-full"></div>
