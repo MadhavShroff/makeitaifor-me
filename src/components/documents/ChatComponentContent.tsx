@@ -40,7 +40,7 @@ const ChatComponentContent = ({ chat }) => {
       // Check if the user is near the bottom of the chat
       const isNearBottom = scrollableContainer.scrollHeight - scrollableContainer.scrollTop <= scrollableContainer.clientHeight + 100;
 
-      if (isNearBottom) {
+      if (isNearBottom && !userInteracting) {
         scrollableContainer.scrollTop = scrollableContainer.scrollHeight;
       }
     }
