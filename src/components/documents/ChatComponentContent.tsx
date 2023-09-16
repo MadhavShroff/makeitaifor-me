@@ -37,7 +37,7 @@ const ChatComponentContent = ({ chat }) => {
     const scrollableContainer = scrollableContainerRef.current;
     if (scrollableContainer) {
       // Check if the user is near the bottom of the chat
-      const isNearBottom = scrollableContainer.scrollHeight - scrollableContainer.scrollTop <= scrollableContainer.clientHeight + 50;
+      const isNearBottom = scrollableContainer.scrollHeight - scrollableContainer.scrollTop <= scrollableContainer.clientHeight + 200;
 
       if (isNearBottom) {
         // If user is near the bottom, auto-scroll
