@@ -19,7 +19,7 @@ import { ChatContext } from '@/pages/chat';
 
 const ChatComponentContent = ({ chat }) => {
   const context = useContext(ChatContext);
-  if (!context)  throw new Error("YourChildComponent must be used within a ChatProvider");
+  if (!context) throw new Error("YourChildComponent must be used within a ChatProvider");
 
   const {
     onChatSubmitted,
@@ -32,33 +32,34 @@ const ChatComponentContent = ({ chat }) => {
 
   console.log("Chat at ChatComponentContent", chat);
 
+  const [userInteracting, setUserInteracting] = useState(false);
   const scrollableContainerRef = React.createRef<HTMLDivElement>();
   React.useEffect(() => {
     const scrollableContainer = scrollableContainerRef.current;
     if (scrollableContainer) {
       // Check if the user is near the bottom of the chat
-      const isNearBottom = scrollableContainer.scrollHeight - scrollableContainer.scrollTop <= scrollableContainer.clientHeight + 120;
+      const isNearBottom = scrollableContainer.scrollHeight - scrollableContainer.scrollTop <= scrollableContainer.clientHeight + 100;
 
       if (isNearBottom) {
         scrollableContainer.scrollTop = scrollableContainer.scrollHeight;
       }
     }
-}, [messages]);
+  }, [messages]);
 
-  
+
 
   if (!chat || !chat.messages) {
     messages = [];
   } else {
     chat.messages.forEach((message: Message | string, index: number) => {
       if (typeof message === 'string') {
-        
+
         return; // Skip to the next iteration
       } else if (isMessage(message)) {
         if (isMessageVersionArray(message.versions)) {
           const activeVersion = message.versions.find(version => version.isActive);
           if (activeVersion) {
-            messages.push(<MessageRow message={activeVersion.text} key={index} who={activeVersion.type} userName={user?.name.split(" ")[0]}/>);
+            messages.push(<MessageRow message={activeVersion.text} key={index} who={activeVersion.type} userName={user?.name.split(" ")[0]} />);
           }
         } else {
           console.log("Message versions is not an array");
@@ -72,7 +73,10 @@ const ChatComponentContent = ({ chat }) => {
 
   return (
     <div className="h-full flex flex-col justify-end items-center">
-      <div className='w-full overflow-auto h-full overscroll-contain' ref={scrollableContainerRef}>
+      <div className='w-full overflow-auto h-full overscroll-contain' ref={scrollableContainerRef} onMouseDown={() => setUserInteracting(true)}
+        onMouseUp={() => setUserInteracting(false)}
+        onTouchStart={() => setUserInteracting(true)}
+        onTouchEnd={() => setUserInteracting(false)}>
         {messages.length != 0 && messages}
         {messages.length == 0 &&
           <div className="flex flex-col items-center max-h-full justify-start sm:justify-start border-t-2 text-white">
@@ -164,9 +168,9 @@ const ChatComponentInputField = ({ textareaRef, onChatSubmitted }) => {
 
 const MessageRow = (props) => {
   let who = "";
-  if(props.who == 'ai') {
+  if (props.who == 'ai') {
     who = "AI";
-  } else if(props.who == 'user') {
+  } else if (props.who == 'user') {
     who = props.userName;
   }
   return (
