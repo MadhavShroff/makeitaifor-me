@@ -19,7 +19,7 @@ import { ChatContext } from '@/pages/chat';
 
 const ChatComponentContent = ({ chat }) => {
   const context = useContext(ChatContext);
-  if (!context)  throw new Error("YourChildComponent must be used within a ChatProvider");
+  if (!context) throw new Error("YourChildComponent must be used within a ChatProvider");
 
   const {
     onChatSubmitted,
@@ -33,10 +33,24 @@ const ChatComponentContent = ({ chat }) => {
   console.log("Chat at ChatComponentContent", chat);
 
   const scrollableContainerRef = React.createRef<HTMLDivElement>();
+  const [prevScrollHeight, setPrevScrollHeight] = React.useState<number | null>(null);
+
   React.useEffect(() => {
     const scrollableContainer = scrollableContainerRef.current;
     if (scrollableContainer) {
-      scrollableContainer.scrollTop = scrollableContainer.scrollHeight;
+      // Store the previous scroll height
+      const previousScrollHeight = scrollableContainer.scrollHeight - scrollableContainer.scrollTop;
+
+      // Check if we were at the bottom before this render
+      const wasAtBottom = prevScrollHeight === 0;
+
+      // Update the scroll position only when a new message was added and if the user was already at the bottom
+      if (wasAtBottom) {
+        scrollableContainer.scrollTop = scrollableContainer.scrollHeight;
+      }
+
+      // Update the previous scroll height state for the next render
+      setPrevScrollHeight(previousScrollHeight);
     }
   }, [messages]);
 
@@ -45,13 +59,13 @@ const ChatComponentContent = ({ chat }) => {
   } else {
     chat.messages.forEach((message: Message | string, index: number) => {
       if (typeof message === 'string') {
-        
+
         return; // Skip to the next iteration
       } else if (isMessage(message)) {
         if (isMessageVersionArray(message.versions)) {
           const activeVersion = message.versions.find(version => version.isActive);
           if (activeVersion) {
-            messages.push(<MessageRow message={activeVersion.text} key={index} who={activeVersion.type} userName={user?.name.split(" ")[0]}/>);
+            messages.push(<MessageRow message={activeVersion.text} key={index} who={activeVersion.type} userName={user?.name.split(" ")[0]} />);
           }
         } else {
           console.log("Message versions is not an array");
@@ -157,9 +171,9 @@ const ChatComponentInputField = ({ textareaRef, onChatSubmitted }) => {
 
 const MessageRow = (props) => {
   let who = "";
-  if(props.who == 'ai') {
+  if (props.who == 'ai') {
     who = "AI";
-  } else if(props.who == 'user') {
+  } else if (props.who == 'user') {
     who = props.userName;
   }
   return (
