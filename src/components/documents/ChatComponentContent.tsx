@@ -46,6 +46,7 @@ const ChatComponentContent = ({ chat }) => {
 
       // Update the scroll position only when a new message was added and if the user was already at the bottom
       if (wasAtBottom) {
+        console.log("Scrolling to bottom");
         scrollableContainer.scrollTop = scrollableContainer.scrollHeight;
       }
 
