@@ -19,7 +19,7 @@ import { ChatContext } from '@/pages/chat';
 
 const ChatComponentContent = ({ chat }) => {
   const context = useContext(ChatContext);
-  if (!context) throw new Error("YourChildComponent must be used within a ChatProvider");
+  if (!context)  throw new Error("YourChildComponent must be used within a ChatProvider");
 
   const {
     onChatSubmitted,
@@ -32,48 +32,29 @@ const ChatComponentContent = ({ chat }) => {
 
   console.log("Chat at ChatComponentContent", chat);
 
-  const [userHasScrolledUp, setUserHasScrolledUp] = useState(false);
   const scrollableContainerRef = React.createRef<HTMLDivElement>();
   React.useEffect(() => {
     const scrollableContainer = scrollableContainerRef.current;
-    if (scrollableContainer && !userHasScrolledUp) {
+    if (!scrollableContainer) return;
+    const isAtBottom = scrollableContainer.scrollHeight - scrollableContainer.scrollTop === scrollableContainer.clientHeight;
+    if (isAtBottom) {
       scrollableContainer.scrollTop = scrollableContainer.scrollHeight;
     }
-  }, [messages, userHasScrolledUp]);
-  React.useEffect(() => {
-    const handleScroll = (e) => {
-      const scrollableContainer = scrollableContainerRef.current;
-      if (scrollableContainer) {
-        const { scrollTop, scrollHeight, clientHeight } = scrollableContainer;
-        if (scrollTop + clientHeight < scrollHeight) {
-          setUserHasScrolledUp(true);
-        } else {
-          setUserHasScrolledUp(false);
-        }
-      }
-    };
-
-    const scrollableContainer = scrollableContainerRef.current;
-    if (scrollableContainer) {
-      scrollableContainer.addEventListener('scroll', handleScroll);
-      return () => {
-        scrollableContainer.removeEventListener('scroll', handleScroll);
-      };
-    }
-  }, []);
+  }, [messages]);
+  
 
   if (!chat || !chat.messages) {
     messages = [];
   } else {
     chat.messages.forEach((message: Message | string, index: number) => {
       if (typeof message === 'string') {
-
+        
         return; // Skip to the next iteration
       } else if (isMessage(message)) {
         if (isMessageVersionArray(message.versions)) {
           const activeVersion = message.versions.find(version => version.isActive);
           if (activeVersion) {
-            messages.push(<MessageRow message={activeVersion.text} key={index} who={activeVersion.type} userName={user?.name.split(" ")[0]} />);
+            messages.push(<MessageRow message={activeVersion.text} key={index} who={activeVersion.type} userName={user?.name.split(" ")[0]}/>);
           }
         } else {
           console.log("Message versions is not an array");
@@ -179,9 +160,9 @@ const ChatComponentInputField = ({ textareaRef, onChatSubmitted }) => {
 
 const MessageRow = (props) => {
   let who = "";
-  if (props.who == 'ai') {
+  if(props.who == 'ai') {
     who = "AI";
-  } else if (props.who == 'user') {
+  } else if(props.who == 'user') {
     who = props.userName;
   }
   return (
