@@ -302,42 +302,15 @@ const md2 = [
 
 const messages1: Message[] = [
   {
-    versions: [{
-      _id: "1",
-      text: md1,
-      type: 'user',
-      isActive: true,
-      createdAt: new Date("2021-09-25T20:00:00.000Z"),
-      updatedAt: new Date("2021-09-25T20:00:00.000Z"),
-      __v: 0,
-      versionNumber: 1
-    }],
+    versions: ["1"],
     previousVersion: null,
     _id: "1",
   },{
-    versions: [{
-      _id: "1",
-      text: md0,
-      type: 'user',
-      isActive: true,
-      createdAt: new Date("2021-09-25T20:00:00.000Z"),
-      updatedAt: new Date("2021-09-25T20:00:00.000Z"),
-      __v: 0,
-      versionNumber: 1
-    }],
+    versions: ["2"],
     previousVersion: null,
     _id: "1",
   },{
-    versions: [{
-      _id: "1",
-      text: md2,
-      type: 'user',
-      isActive: true,
-      createdAt: new Date("2021-09-25T20:00:00.000Z"),
-      updatedAt: new Date("2021-09-25T20:00:00.000Z"),
-      __v: 0,
-      versionNumber: 1
-    }],
+    versions: ["3"],
     previousVersion: null,
     _id: "1",
   }

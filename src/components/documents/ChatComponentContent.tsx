@@ -15,6 +15,8 @@ import CodeBlock from '../CodeBlock';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import { ChatContext } from '@/pages/chat';
+import { ChatComponentTopBar } from '../ChatComponentTopBar';
+import Link from 'next/link';
 
 
 const ChatComponentContent = ({ chat }) => {
@@ -73,21 +75,23 @@ const ChatComponentContent = ({ chat }) => {
 
   return (
     <div className="h-full flex flex-col justify-end items-center">
+      {messages.length != 0 && <ChatComponentTopBar title={chat?.title} />}
       <div className='w-full overflow-auto h-full overscroll-contain' ref={scrollableContainerRef} onMouseDown={() => setUserInteracting(true)}
         onMouseUp={() => setUserInteracting(false)}
         onTouchStart={() => setUserInteracting(true)}
         onTouchEnd={() => setUserInteracting(false)}>
         {messages.length != 0 && messages}
         {messages.length == 0 &&
-          <div className="flex flex-col items-center max-h-full justify-start sm:justify-start border-t-2 text-white">
+          <div className="flex relative flex-col items-center max-h-full justify-start sm:justify-start border-t-2 text-white">
+            <ChatComponentTopBar title={chat?.title} />
+            <div className="h-10 sm:h-24"></div>
             <StacksContainer fileNames={["Hello Hi"]} />
-            <Img
-              src={"/logo_nobg.png"}
-              alt="Logo"
-              width={250}
-              height={250}
-              className="object-contain m-10"
-            />
+            <Link
+              href="/" className="px-2 py-10 text-2xl font-bold text-white hover:underline decoration-orange-500">
+              MakeIt<span className="text-orange-500">Ai</span>For.
+              <span className="text-orange-500">Me</span>
+            </Link>
+            <div className="h-14 sm:h-30"></div>
             <p>Heres some stuff you can try out</p>
             <div className='flex flex-col max-w-4xl'>
               <TryOutBox content={[
@@ -104,6 +108,8 @@ const ChatComponentContent = ({ chat }) => {
       </div>
       <ChatComponentInputField textareaRef={textareaRef} onChatSubmitted={(content) => {
         onChatSubmitted(chat._id, content);
+        const scrollableContainer = scrollableContainerRef.current;
+        if (scrollableContainer) scrollableContainer.scrollTop = scrollableContainer.scrollHeight;
       }} />
     </div>
   );
