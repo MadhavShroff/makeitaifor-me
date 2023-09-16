@@ -32,28 +32,35 @@ const ChatComponentContent = ({ chat }) => {
 
   console.log("Chat at ChatComponentContent", chat);
 
+  const [userHasScrolledUp, setUserHasScrolledUp] = useState(false);
   const scrollableContainerRef = React.createRef<HTMLDivElement>();
-  const [prevScrollHeight, setPrevScrollHeight] = React.useState<number | null>(null);
-
   React.useEffect(() => {
     const scrollableContainer = scrollableContainerRef.current;
-    if (scrollableContainer) {
-      // Store the previous scroll height
-      const previousScrollHeight = scrollableContainer.scrollHeight - scrollableContainer.scrollTop;
-
-      // Check if we were at the bottom before this render
-      const wasAtBottom = prevScrollHeight === 0;
-
-      // Update the scroll position only when a new message was added and if the user was already at the bottom
-      if (wasAtBottom) {
-        console.log("Scrolling to bottom");
-        scrollableContainer.scrollTop = scrollableContainer.scrollHeight;
-      }
-
-      // Update the previous scroll height state for the next render
-      setPrevScrollHeight(previousScrollHeight);
+    if (scrollableContainer && !userHasScrolledUp) {
+      scrollableContainer.scrollTop = scrollableContainer.scrollHeight;
     }
-  }, [messages]);
+  }, [messages, userHasScrolledUp]);
+  React.useEffect(() => {
+    const handleScroll = (e) => {
+      const scrollableContainer = scrollableContainerRef.current;
+      if (scrollableContainer) {
+        const { scrollTop, scrollHeight, clientHeight } = scrollableContainer;
+        if (scrollTop + clientHeight < scrollHeight) {
+          setUserHasScrolledUp(true);
+        } else {
+          setUserHasScrolledUp(false);
+        }
+      }
+    };
+
+    const scrollableContainer = scrollableContainerRef.current;
+    if (scrollableContainer) {
+      scrollableContainer.addEventListener('scroll', handleScroll);
+      return () => {
+        scrollableContainer.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, []);
 
   if (!chat || !chat.messages) {
     messages = [];
