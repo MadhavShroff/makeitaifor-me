@@ -35,12 +35,18 @@ const ChatComponentContent = ({ chat }) => {
   const scrollableContainerRef = React.createRef<HTMLDivElement>();
   React.useEffect(() => {
     const scrollableContainer = scrollableContainerRef.current;
-    if (!scrollableContainer) return;
-    const isAtBottom = scrollableContainer.scrollHeight - scrollableContainer.scrollTop === scrollableContainer.clientHeight;
-    if (isAtBottom) {
-      scrollableContainer.scrollTop = scrollableContainer.scrollHeight;
+    if (scrollableContainer) {
+      // Check if the user is near the bottom of the chat
+      const isNearBottom = scrollableContainer.scrollHeight - scrollableContainer.scrollTop <= scrollableContainer.clientHeight + 50;
+
+      if (isNearBottom) {
+        // If user is near the bottom, auto-scroll
+        console.log("Scrolling to bottom");
+        scrollableContainer.scrollTop = scrollableContainer.scrollHeight;
+      }
     }
-  }, [messages]);
+}, [messages]);
+
   
 
   if (!chat || !chat.messages) {
