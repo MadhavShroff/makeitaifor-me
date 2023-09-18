@@ -15,8 +15,7 @@ export type FileNameAndId = { name: string, fileKey: string };
 const Documents = () => {
   const [user, setUser] = useState<User | null>(null);
   const [fileNamesArr, setFileNamesArr] = useState<FileNameAndId[]>([]);
-  const [preview, setPreview] = useState<string | null>(null);
-  const [fileSelected, setFileSelected] = useState<string | null>(null);
+  const [fileSelected, setFileSelected] = useState<string | null>(null); // meta.Key
   const [filesData, setFilesData] = useState<FileData[]>([]);
   useEffect(() => {
     fetchUser(setUser);
@@ -26,10 +25,6 @@ const Documents = () => {
     //   username: "john@doe.com"
     // });
   }, []);
-
-  console.log("filesData: ", filesData);
-  console.log("fileNamesArr: ", fileNamesArr);
-  console.log("fileSelected: ", fileSelected);
 
   useEffect(() => {
     if (user) fetchFilesMetaData(user.userId).then((metas) => {
@@ -89,9 +84,7 @@ const Documents = () => {
   const fileOrStackClicked = (key: string) => {
     console.log('File or stack clicked : ' + key);
     const fileData = filesData.find((file) => file.meta.Key == key);
-    if (fileData && fileData.parsedContent) {
-      setPreview(fileData.parsedContent);
-    } else {
+    if (!(fileData && fileData.parsedContent)) {
       fetchDocumentContent(key, (fileContent: string) => {
         const newFilesData = filesData.map((file) => {
           if (file.meta.Key == key) {
@@ -104,12 +97,12 @@ const Documents = () => {
           }
         });
         setFilesData(newFilesData);
-        setPreview(fileContent);
       });
     }
     setFileSelected(key);
   }
 
+  const selectedFileOrCollection = filesData.find(file => file.meta.Key === fileSelected);
 
   return (
     <main className={'flex flex-col overflow-hidden'}>
@@ -117,58 +110,7 @@ const Documents = () => {
         <Navbar user={user} />
         {<div className='h-[96vh]'>
           <ScrollableStackContainer fileNames={fileNamesArr} fileOrStackClicked={fileOrStackClicked} fileSelected={fileSelected} />
-          <Preview filesData={[{
-            meta: {
-              Key: '',
-              LastModified: new Date(),
-              ETag: '',
-              ChecksumAlgorithm: [],
-              Size: 0,
-              StorageClass: '',
-              Owner: {},
-              RestoreStatus: {}
-            },
-            parsedContent: md0
-          },
-          {
-            meta: {
-              Key: '',
-              LastModified: new Date(),
-              ETag: '',
-              ChecksumAlgorithm: [],
-              Size: 0,
-              StorageClass: '',
-              Owner: {},
-              RestoreStatus: {}
-            },
-            parsedContent: md1
-          },
-          {
-            meta: {
-              Key: '',
-              LastModified: new Date(),
-              ETag: '',
-              ChecksumAlgorithm: [],
-              Size: 0,
-              StorageClass: '',
-              Owner: {},
-              RestoreStatus: {}
-            },
-            parsedContent: md0
-          },
-          {
-            meta: {
-              Key: '',
-              LastModified: new Date(),
-              ETag: '',
-              ChecksumAlgorithm: [],
-              Size: 0,
-              StorageClass: '',
-              Owner: {},
-              RestoreStatus: {}
-            },
-            parsedContent: md1
-          }]} />
+          <Preview fileOrCollection={selectedFileOrCollection ? selectedFileOrCollection : null} />
         </div>}
         {false &&
           <LoginPage />

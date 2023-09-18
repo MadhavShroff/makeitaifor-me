@@ -146,6 +146,7 @@ export const fetchMessagesData = async (messages: string[] | Message[]): Promise
 };
 
 export const fetchDocumentContent = async (fileId, callback): Promise<void> => {
+  if (!fileId) return;
   const res = await fetch(`https://api.makeitaifor.me/fileupload/getDocumentContent/`, {
     method: 'POST',
     credentials: 'include',

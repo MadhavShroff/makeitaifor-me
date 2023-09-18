@@ -1,14 +1,12 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
-
 import { FileData } from "@/utils/types";
 import remarkMath from "remark-math";
 import remarkGfm from "remark-gfm";
 import rehypeKatex from "rehype-katex";
-import { Button } from "@material-tailwind/react";
 
 interface PreviewProps {
-  filesData: FileData[];
+  fileOrCollection: FileData[] | FileData | null;
 }
 
 export const Preview = (props: PreviewProps) => {
@@ -17,7 +15,7 @@ export const Preview = (props: PreviewProps) => {
   const fileWidthInRem = 50; // Width of each file in rem units
 
   const setFileInView = (index: number) => {
-    if (index < 0 || index >= props.filesData.length) return;
+    if (props.fileOrCollection === null) return;
     setCurrentIndex(index);
 
     const fileWidthInPixels =
@@ -30,6 +28,12 @@ export const Preview = (props: PreviewProps) => {
       behavior: "smooth",
     });
   };
+
+  console.log("Preview", props);
+
+  if (props.fileOrCollection === null) {
+    return (<></>);
+  }
 
   return (
     <div className="relative">
@@ -45,30 +49,25 @@ export const Preview = (props: PreviewProps) => {
       >
         Right
       </button> */}
-        {props.filesData && props.filesData.length > 1 && 
-         <div className="absolute h-10 text-3xl px-4 py-3 z-10">
-            <span className="text-orange-500 underline decoration-white">Collection:</span> 
-            Podcasts
-            {/* TODO: Add a breadcrumbs like extension to the end of the name, with a clickable browser default dropdown so the user can go to any single file in the list. On click the scrollbar scrolls to that file location.*/}
+      {props.fileOrCollection === null &&
+        <div className="absolute h-10 text-3xl px-4 py-3 z-10">
+          <span className="text-orange-500 underline decoration-white">Collection:</span>
+          Podcasts
+          {/* TODO: Add a breadcrumbs like extension to the end of the name, with a clickable browser default dropdown so the user can go to any single file in the list. On click the scrollbar scrolls to that file location.*/}
         </div>}
       <div className="flex-col snap-x snap-mandatory border-t-2 sm:border-2 relative bg-black flex overflow-x-auto overscroll-x-contain">
-        {/* Added snap classes */}
         <div ref={scrollRef} className="flex flex-row flex-nowrap w-full h-[100vh]">
-          {props.filesData &&
-            props.filesData.map((file, index) => (
-              <div className="snap-center" key={index}>
-                <FilePreview key={index} file={file} active={false} />
-              </div>
-            ))}
-          {props.filesData && (
-            <div className="snap-center">
-              <FilePreview
-                key={props.filesData.length + 1}
-                file={undefined}
-                active={false}
-              />
+          {props.fileOrCollection !== null && Array.isArray(props.fileOrCollection) && props.fileOrCollection.map((file, index) => (
+            <div className="snap-center" key={index}>
+              <FilePreview key={index} file={file} active={false} />
             </div>
-          )}
+          ))}
+          {
+            props.fileOrCollection !== null && !Array.isArray(props.fileOrCollection) &&
+            <div className="snap-center">
+              <FilePreview key={0} file={props.fileOrCollection} active={false} />
+            </div>
+          }
         </div>
       </div>
     </div>
