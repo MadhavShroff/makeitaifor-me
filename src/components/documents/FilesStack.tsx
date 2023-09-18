@@ -3,21 +3,16 @@ import React, { FC, useEffect, useState } from 'react';
 
 function useViewportWidth() {
     const [windowWidth, setWindowWidth] = useState<number>(0);
-
     useEffect(() => {
         function handleResize() {
             setWindowWidth(window.innerWidth);
         }
-
         window.addEventListener("resize", handleResize);
         handleResize();
-
         return () => window.removeEventListener("resize", handleResize);
     }, []);
-
     return windowWidth;
 }
-
 
 export const FilesStack: FC<{ fileNames: FileNameAndId[], fileOrStackClicked: (id: string | null) => void, fileSelected: string | null }> = ({ fileNames, fileOrStackClicked, fileSelected = null }: { fileNames: FileNameAndId[], fileOrStackClicked: (id: string | null) => void, fileSelected: string | null }) => {
 

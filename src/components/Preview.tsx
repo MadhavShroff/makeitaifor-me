@@ -5,7 +5,6 @@ import remarkMath from "remark-math";
 import remarkGfm from "remark-gfm";
 import rehypeKatex from "rehype-katex";
 
-
 // if fileOrCollection is an Array, then collectionName is not null, null otherwise.
 interface PreviewProps {
   fileOrCollection: FileData[] | FileData | null;
@@ -91,22 +90,14 @@ const FilePreview = (props: FilePreviewProps) => (
       <button className="text-white text-lg flex hover:border-orange-500 hover:border-2 border-2 border-black rounded-full items-center invisible">
         Text
       </button>
-      {props.file !== undefined && <button className="text-white text-lg flex hover:text-orange-500 hover:border-2 border-2 border-black rounded-full items-center">
-        ✏️ Edit
-      </button>}
+      {props.file !== undefined && <button className="text-white text-lg flex hover:text-orange-500 hover:border-2 border-2 border-black rounded-full items-center"> ✏️ Edit </button>}
     </div>
     <div className="border-2 sm:border-2 relative bg-black rounded-lg h-[90%] flex flex-col items-start text-left mx-5 overflow-y-auto overscroll-auto" style={{ minWidth: 'min(48rem, 80vw)', maxWidth: 'max(48rem, 80vw)' }}>
       <div className="flex justify-between flex-row w-full px-5">
         {props.file !== undefined && <h1 className="text-4xl text-left mt-5">File Name 1</h1>}
         <h1 className="text-4xl text-right mt-5 hidden">.</h1>
       </div>
-      {props.file &&
-        props.file.parsedContent &&
-        props.file.parsedContent
-          .split("the")
-          .map((page, index) => (
-            <Page key={index} content={page} pgNum={index + 1} />
-          ))}
+      {props.file && props.file.parsedContent && <Page key={0} content={props.file.parsedContent} pgNum={1} />}
       {props.file === undefined && (
         <button className="h-full w-full flex justify-center items-center text-6xl sm:text-2xl max-w-full p-2 hover:text-orange-500 break-words">
           + Add a new file to this collection?
