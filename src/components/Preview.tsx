@@ -1,9 +1,6 @@
 import React, { useRef, useState } from "react";
-import ReactMarkdown from "react-markdown";
 import { FileData } from "@/utils/types";
-import remarkMath from "remark-math";
-import remarkGfm from "remark-gfm";
-import rehypeKatex from "rehype-katex";
+import { MathpixMarkdownModel as MM } from 'mathpix-markdown-it';
 
 // if fileOrCollection is an Array, then collectionName is not null, null otherwise.
 interface PreviewProps {
@@ -38,7 +35,7 @@ export const Preview = (props: PreviewProps) => {
   }
 
   let fileName;
-  if(!Array.isArray(props.fileOrCollection))
+  if (!Array.isArray(props.fileOrCollection))
     fileName = props.fileOrCollection.meta.Key.substring(37);
   else {
     fileName = props.collectionName;
@@ -60,10 +57,10 @@ export const Preview = (props: PreviewProps) => {
       {props.fileOrCollection !== null &&
         <div className="absolute h-10 text-3xl px-4 py-3 z-10">
           <span className="text-orange-500 underline decoration-white">
-            {fileName && Array.isArray(props.fileOrCollection) && "Collection:"} 
+            {fileName && Array.isArray(props.fileOrCollection) && "Collection:"}
             {fileName && !Array.isArray(props.fileOrCollection) && "File:"}
           </span>
-            {" " + fileName}
+          {" " + fileName}
           {/* TODO: Add a breadcrumbs like extension to the end of the name, with a clickable browser default dropdown so the user can go to any single file in the list. On click the scrollbar scrolls to that file location.*/}
         </div>}
       <div className="flex-col snap-x snap-mandatory border-t-2 sm:border-2 relative bg-black flex overflow-x-auto overscroll-x-contain">
@@ -84,7 +81,7 @@ export const Preview = (props: PreviewProps) => {
   );
 };
 
-const FilePreview = (props: FilePreviewProps) => (
+export const FilePreview = (props: FilePreviewProps) => (
   <>
     <div className="flex flex-row mt-10 mx-5 justify-between" style={{ minWidth: 'min(48rem, 80vw)', maxWidth: 'max(48rem, 80vw)' }}>
       <button className="text-white text-lg flex hover:border-orange-500 hover:border-2 border-2 border-black rounded-full items-center invisible">
@@ -107,7 +104,6 @@ const FilePreview = (props: FilePreviewProps) => (
   </>
 );
 
-
 interface FilePreviewProps {
   file: FileData | undefined;
   active: boolean;
@@ -118,17 +114,14 @@ interface PageProps {
   pgNum: number;
 }
 
-const Page = (props: PageProps) => (
-  <div className="relative bg-white text-black rounded-lg h-full mx-5 my-1 flex flex-col" style={{ minWidth: 'min(45rem, 80vw)', maxWidth: 'min(45rem, 80vw)' }}>
-    <ReactMarkdown
-      children={props.content == null ? "" : props.content}
-      remarkPlugins={[remarkMath, remarkGfm]}
-      rehypePlugins={[rehypeKatex]}
-      className="overflow-y-auto break-words m-1"
-    />
-    <div className="border-t border-black h-4 flex justify-between text-[10px] items-center px-2">
-      <p className="text-left"></p>
-      <p className="text-right">{"Page " + props.pgNum}</p>
+export const Page = (props: PageProps) => {
+  return (
+    <div className="relative bg-white text-black rounded-lg h-full mx-5 my-1 flex flex-col" style={{ minWidth: 'min(45rem, 80vw)', maxWidth: 'min(45rem, 80vw)' }}>
+      <div id='preview-content' dangerouslySetInnerHTML={{__html: MM.markdownToHTML(props.content)}}/>
+      <div className="border-t border-black h-4 flex justify-between text-[10px] items-center px-2">
+        <p className="text-left"></p>
+        <p className="text-right">{"Page " + props.pgNum}</p>
+      </div>
     </div>
-  </div>
-);
+  )
+};
