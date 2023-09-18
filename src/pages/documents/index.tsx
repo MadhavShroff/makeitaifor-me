@@ -25,6 +25,10 @@ const Documents = () => {
     // });
   }, []);
 
+  console.log("filesData: ", filesData);
+  console.log("fileNamesArr: ", fileNamesArr);
+  console.log("fileSelected: ", fileSelected);
+
   useEffect(() => {
     if (user) fetchFilesMetaData(user.userId).then((metas) => {
       setFilesData(metas.map((meta: S3MetaData) => {
