@@ -10,9 +10,11 @@ import LoginPage from '../auth';
 import { Chat, Message, User, FileData, S3MetaData } from '@/utils/types';
 import { Preview } from '@/components/Preview';
 
+export type FileNameAndId = { name: string, fileKey: string };
+
 const Documents = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [fileNamesArr, setFileNamesArr] = useState<{ name: string, fileKey: string }[]>([]);
+  const [fileNamesArr, setFileNamesArr] = useState<FileNameAndId[]>([]);
   const [preview, setPreview] = useState<string | null>(null);
   const [fileSelected, setFileSelected] = useState<string | null>(null);
   const [filesData, setFilesData] = useState<FileData[]>([]);

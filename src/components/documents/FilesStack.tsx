@@ -1,3 +1,4 @@
+import { FileNameAndId } from '@/pages/documents';
 import React, { FC, useEffect, useState } from 'react';
 
 function useViewportWidth() {
@@ -18,7 +19,7 @@ function useViewportWidth() {
 }
 
 
-export const FilesStack: FC<{ fileNames: {name: string, Key: string}[], fileOrStackClicked: (id: string | null) => void, fileSelected: string | null }> = ({ fileNames, fileOrStackClicked, fileSelected = null }: { fileNames: {name: string, Key: string}[], fileOrStackClicked: (id: string|null) => void, fileSelected: string|null }) => {
+export const FilesStack: FC<{ fileNames: FileNameAndId[], fileOrStackClicked: (id: string | null) => void, fileSelected: string | null }> = ({ fileNames, fileOrStackClicked, fileSelected = null }: { fileNames: FileNameAndId[], fileOrStackClicked: (id: string|null) => void, fileSelected: string|null }) => {
 
     const filesShown = fileSelected !== null;
 
@@ -57,7 +58,8 @@ export const FilesStack: FC<{ fileNames: {name: string, Key: string}[], fileOrSt
     let backCount = fileNames.length - 6;
 
     const filesMap: [number, number, string, string][] = fileNames.map((ob, index) => {
-        const key = ob.Key;
+        console.log
+        const key = ob.fileKey;
         if (backCount-- > 0) {
             return [0, 0, ob.name, key]
         }

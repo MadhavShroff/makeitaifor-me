@@ -51,7 +51,7 @@ export const Preview = (props: PreviewProps) => {
             Podcasts
             {/* TODO: Add a breadcrumbs like extension to the end of the name, with a clickable browser default dropdown so the user can go to any single file in the list. On click the scrollbar scrolls to that file location.*/}
         </div>}
-      <div className="flex-col snap-x snap-mandatory border-4 sm:border-2 relative bg-black rounded-lg flex overflow-x-auto overscroll-x-contain">
+      <div className="flex-col snap-x snap-mandatory border-t-2 sm:border-2 relative bg-black flex overflow-x-auto overscroll-x-contain">
         {/* Added snap classes */}
         <div ref={scrollRef} className="flex flex-row flex-nowrap w-full h-[100vh]">
           {props.filesData &&
@@ -85,7 +85,7 @@ const FilePreview = (props: FilePreviewProps) => (
         ✏️ Edit
       </button>}
     </div>
-    <div className="border-4 sm:border-2 relative bg-black rounded-lg h-[90%] flex flex-col items-start text-left mx-5 overflow-y-auto overscroll-auto" style={{ minWidth: 'min(48rem, 80vw)', maxWidth: 'max(48rem, 80vw)' }}>
+    <div className="border-2 sm:border-2 relative bg-black rounded-lg h-[90%] flex flex-col items-start text-left mx-5 overflow-y-auto overscroll-auto" style={{ minWidth: 'min(48rem, 80vw)', maxWidth: 'max(48rem, 80vw)' }}>
       <div className="flex justify-between flex-row w-full px-5">
         {props.file !== undefined && <h1 className="text-4xl text-left mt-5">File Name 1</h1>}
         <h1 className="text-4xl text-right mt-5 hidden">.</h1>
