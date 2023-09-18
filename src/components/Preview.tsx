@@ -61,10 +61,10 @@ export const Preview = (props: PreviewProps) => {
       {props.fileOrCollection !== null &&
         <div className="absolute h-10 text-3xl px-4 py-3 z-10">
           <span className="text-orange-500 underline decoration-white">
-            {fileName && Array.isArray(props.fileOrCollection) && "Collection: "} 
-            {fileName && !Array.isArray(props.fileOrCollection) && "File: "}
+            {fileName && Array.isArray(props.fileOrCollection) && "Collection:"} 
+            {fileName && !Array.isArray(props.fileOrCollection) && "File:"}
           </span>
-          {fileName}
+            {" " + fileName}
           {/* TODO: Add a breadcrumbs like extension to the end of the name, with a clickable browser default dropdown so the user can go to any single file in the list. On click the scrollbar scrolls to that file location.*/}
         </div>}
       <div className="flex-col snap-x snap-mandatory border-t-2 sm:border-2 relative bg-black flex overflow-x-auto overscroll-x-contain">
@@ -74,8 +74,7 @@ export const Preview = (props: PreviewProps) => {
               <FilePreview key={index} file={file} active={false} />
             </div>
           ))}
-          {
-            !Array.isArray(props.fileOrCollection) &&
+          {!Array.isArray(props.fileOrCollection) &&
             <div className="snap-center">
               <FilePreview key={0} file={props.fileOrCollection} active={false} />
             </div>

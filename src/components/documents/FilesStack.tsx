@@ -19,7 +19,7 @@ function useViewportWidth() {
 }
 
 
-export const FilesStack: FC<{ fileNames: FileNameAndId[], fileOrStackClicked: (id: string | null) => void, fileSelected: string | null }> = ({ fileNames, fileOrStackClicked, fileSelected = null }: { fileNames: FileNameAndId[], fileOrStackClicked: (id: string|null) => void, fileSelected: string|null }) => {
+export const FilesStack: FC<{ fileNames: FileNameAndId[], fileOrStackClicked: (id: string | null) => void, fileSelected: string | null }> = ({ fileNames, fileOrStackClicked, fileSelected = null }: { fileNames: FileNameAndId[], fileOrStackClicked: (id: string | null) => void, fileSelected: string | null }) => {
 
     const filesShown = fileSelected !== null;
 
@@ -33,7 +33,7 @@ export const FilesStack: FC<{ fileNames: FileNameAndId[], fileOrStackClicked: (i
     let rightOffset = 5;
 
     if (width < 768) { //This is Tailwind's 'md' breakpoint
-        componentWidth = 11.5; 
+        componentWidth = 11.5;
         offset = 11.5;
         initialOffset = 9;
         trimmedLength = 50;
@@ -71,7 +71,7 @@ export const FilesStack: FC<{ fileNames: FileNameAndId[], fileOrStackClicked: (i
         ];
     });
 
-    if(filesMap.length === 0) return (<></>);
+    if (filesMap.length === 0) return (<></>);
 
     return (
         <div className="group pl-12 pt-7">
@@ -82,16 +82,16 @@ export const FilesStack: FC<{ fileNames: FileNameAndId[], fileOrStackClicked: (i
                 <div className={`w-80 h-40 flex flex-col justify-between p-1 pl-2`}>
                     <div className="w-full">
                         <div className="relative w-72 h-40 sm:w-full">
-                            {filesMap.map(([_0, _1, fileName, id]: [number, number, string, string], index) => {
+                            {filesMap.map(([_0, _1, fileName, key]: [number, number, string, string], index) => {
                                 return (
                                     <button onClick={() => {
-                                        console.log("File clicked", id);
+                                        console.log("File clicked", key);
                                         console.log("File selected", fileSelected);
-                                        fileSelected === id ? fileOrStackClicked(null) : fileOrStackClicked(id);
+                                        fileSelected === key ? fileOrStackClicked(null) : fileOrStackClicked(key);
                                     }} className='' key={index}>
                                         <div className={`group w-72 sm:h-24 sm:w-44 h-40 transform transition-all duration-700 absolute rounded-lg hover:bg-orange-500 ease-in-out `
                                             + (filesShown ? `sm:top-10 top-20` : `sm:top-${_0} top-${_1}`)
-                                            + (fileSelected === id ? ` bg-orange-500` : ` bg-white`)
+                                            + (fileSelected === key ? ` bg-orange-500` : ` bg-white`)
                                         }
                                             style={{
                                                 left: `${filesShown ? ((componentWidth * (filesMap.length - 1)) - (componentWidth * (index))) - leftOffset : (-_1 / (width < 768 ? 8 : 4) - 0.5)}rem`,
@@ -99,7 +99,7 @@ export const FilesStack: FC<{ fileNames: FileNameAndId[], fileOrStackClicked: (i
                                         >
                                             <div className={
                                                 "w-full h-full flex flex-col justify-between text-black text-justify items-end transform transition-all ease-in-out hover:border-4 hover:border-white hover:text-3xl absolute rounded-lg break-all text-ellipsis sm:leading-4 overflow-hidden p-1"
-                                                + (fileSelected === id ? ` border-4 border-white text-3xl sm:text:2xl` : ` border-2 border-black text-xl sm:text-sm`)
+                                                + (fileSelected === key ? ` border-4 border-white text-3xl sm:text:2xl` : ` border-2 border-black text-xl sm:text-sm`)
                                             }>
                                                 <img
                                                     src={`https://source.boringavatars.com/marble/50/HelloHi?colors=EF233C,FED4E7,313638,003E1F`}
