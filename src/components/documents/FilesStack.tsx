@@ -18,7 +18,7 @@ function useViewportWidth() {
 }
 
 
-export const FilesStack: FC<{ fileNames: {name: string, id: string}[], fileOrStackClicked: (id: string | null) => void, fileSelected: string | null }> = ({ fileNames, fileOrStackClicked, fileSelected = null }: { fileNames: {name: string, id: string}[], fileOrStackClicked: (id: string|null) => void, fileSelected: string|null }) => {
+export const FilesStack: FC<{ fileNames: {name: string, Key: string}[], fileOrStackClicked: (id: string | null) => void, fileSelected: string | null }> = ({ fileNames, fileOrStackClicked, fileSelected = null }: { fileNames: {name: string, Key: string}[], fileOrStackClicked: (id: string|null) => void, fileSelected: string|null }) => {
 
     const filesShown = fileSelected !== null;
 
@@ -58,7 +58,7 @@ export const FilesStack: FC<{ fileNames: {name: string, id: string}[], fileOrSta
     let backCount = fileNames.length - 6;
 
     const filesMap: [number, number, string, string][] = fileNames.map((ob, index) => {
-        const id = ob.id;
+        const id = ob.Key;
         if (backCount-- > 0) {
             return [0, 0, ob.name, id]
         }

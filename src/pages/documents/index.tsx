@@ -4,7 +4,7 @@ import { KeyboardSensor, PointerSensor } from '@dnd-kit/core';
 import { useSensor, useSensors } from '@dnd-kit/core';
 import Navbar from '@/components/Navbar';
 import { fetchFilesMetaData, fetchUser, fetchDocumentContent } from '@/utils/fetches';
-import { ScrollableStackContainer, ScrollableBoxContainer } from '@/components/documents/Stacks';
+import { ScrollableStackContainer } from '@/components/documents/Stacks';
 import Footer from '@/components/Footer';
 import LoginPage from '../auth';
 import { Chat, Message, User, FileData, S3MetaData } from '@/utils/types';
@@ -12,7 +12,7 @@ import { Preview } from '@/components/Preview';
 
 const Documents = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [fileNamesArr, setFileNamesArr] = useState<{ name: string, id: string }[]>([]);
+  const [fileNamesArr, setFileNamesArr] = useState<{ name: string, fileKey: string }[]>([]);
   const [preview, setPreview] = useState<string | null>(null);
   const [fileSelected, setFileSelected] = useState<string | null>(null);
   const [filesData, setFilesData] = useState<FileData[]>([]);
@@ -35,10 +35,9 @@ const Documents = () => {
       }));
       setFileNamesArr(metas.sort((a, b) => new Date(a.LastModified).getTime() - new Date(b.LastModified).getTime()).map((meta: S3MetaData) => {
         const fileName = meta.Key.split('/')[1];
-        const fileId = meta.Key;
         return {
           name: fileName.length > 70 ? fileName.substring(0, 70) + '...' + fileName.split('.')[1] : fileName,
-          id: fileId
+          fileKey: meta.Key
         }
       }));
     }).catch(console.error);

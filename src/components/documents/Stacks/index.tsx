@@ -39,16 +39,3 @@ export const StacksContainer = (props) => {
         </div>
     );
 };
-
-
-export const ScrollableBoxContainer = (props) => {
-    const titles = props.titles || [];
-    let Boxes: JSX.Element[] = [];
-    for (let i = 0; i < titles.length; i++)
-        Boxes.push(<Box id={i} key={i}>{titles[i]}</Box>);
-    return (
-        <div className="flex flex-wrap p-2 w-full justify-center-start">
-            {Boxes}
-        </div>
-    );
-}
