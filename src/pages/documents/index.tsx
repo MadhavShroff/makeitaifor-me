@@ -87,7 +87,7 @@ const Documents = () => {
     if (fileData && fileData.parsedContent) {
       setPreview(fileData.parsedContent);
     } else {
-      fetchDocumentContent(user?.userId, id, (fileContent: string) => {
+      fetchDocumentContent(id, (fileContent: string) => {
         const newFilesData = filesData.map((file) => {
           if (file.meta.ETag == id) {
             return {

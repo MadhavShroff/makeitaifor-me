@@ -145,19 +145,23 @@ export const fetchMessagesData = async (messages: string[] | Message[]): Promise
   }
 };
 
-export const fetchDocumentContent = async (user, fileId, callback): Promise<void> => {
-  if (!user) return;
-
-  const res = await fetch(`https://api.makeitaifor.me/chats/getDocumentContent?userId=${user}&fileId=${fileId}`, {
-    method: 'GET',
+export const fetchDocumentContent = async (fileId, callback): Promise<void> => {
+  const res = await fetch(`https://api.makeitaifor.me/chats/getDocumentContent/`, {
+    method: 'POST',
     credentials: 'include',
+    body: JSON.stringify({
+      fileId: fileId,
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
   });
-  console.log(res);
   if (!res.ok) { throw new Error('Not authorized'); }
-
+  
   const data = await res.json();
   if (!data) return;
-
+  
+  console.log("fetchDocumentContent data: ", data);
   callback(data);
 };
 
@@ -217,9 +221,9 @@ export const setModelForChat = async (chatId: string, modelUsed: string): Promis
     method: 'POST',
     credentials: 'include',
     body: JSON.stringify({ chatId: chatId, modelUsed: modelUsed }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
+    headers: {
+      'Content-Type': 'application/json'
+    }
   });
 
   if (!res.ok) {
