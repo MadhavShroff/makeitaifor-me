@@ -1,7 +1,7 @@
 import { ChatComponent } from "@/components/documents/ChatComponent"
 import React, { useEffect, useState } from "react";
 import { Chat, MessageVersion, isMessage } from "@/utils/types";
-import { createNewChat, fetchChatsMetadata, fetchMessagesData, fetchUser } from "@/utils/fetches";
+import { createNewChat, fetchChatsMetadata, fetchMessagesData, fetchUser, setModelForChat } from "@/utils/fetches";
 import { connectToSocket, emitChatSubmitted } from "@/utils/sockets";
 import { User, Message } from "@/utils/types";
 import LoginPage from "../auth";
@@ -17,6 +17,7 @@ type ChatContextType = {
   appendContentToMessageInChat: (chatId: string, messageId: string, content: string) => void;
   appendMessageToChat: (chatId: string, message: Message) => Promise<void>;
   setChatTitle: (chatId: string, title: string) => void;
+  setModelUsed: (chatId: string, model: string) => Promise<void>;
 };
 
 export const ChatContext = React.createContext<ChatContextType | null>(null);  
@@ -64,6 +65,8 @@ const ChatPage = () => {
             "__v": 0,
             createdAt: new Date("2023-09-07T15:25:29.283Z"),
             updatedAt: new Date("2023-09-07T15:25:29.283Z"),
+            docOrCollectionId: "123",
+            modelUsed: "GPT-4"
           }
         ]);
       } else {
@@ -196,6 +199,26 @@ const ChatPage = () => {
     }
   }
 
+  /**
+   * Sets the model used for a chat
+   * @param chatId chatId of chat to set title for
+   * @param title title to set
+   */
+  const setModelUsed = async (chatId: string, model: string) => {
+    // add edge case handling
+    const chat = chats.find((chat) => chat._id == chatId);
+    if (chat == undefined) {
+      console.error("Chat with id not found", chatId);
+    } else {
+      await setModelForChat(chatId, model);
+      const newChats = chats.map((chat) => {
+        if (chat._id == chatId) chat.modelUsed = model;
+        return chat;
+      });
+      setChats(newChats);
+    }
+  }
+
   const onChatSubmitted = (chatId: string, content) => {
     console.log("Chat submitted " + chatId + " for user " + user?.userId + "With content " + content);
     emitChatSubmitted(content, chatId, appendMessageToChat, appendContentToMessageInChat, setChatTitle);
@@ -211,7 +234,8 @@ const ChatPage = () => {
       onChatClicked, 
       appendContentToMessageInChat, 
       appendMessageToChat,
-      setChatTitle
+      setChatTitle,
+      setModelUsed,
     }}>
       <div className="h-[100svh] overscroll-contain">
         <ChatComponent />

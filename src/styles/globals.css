@@ -107,7 +107,7 @@ div#__next > div {
   list-style: blue;
 }
 
-.markdown > p, .markdown > ul > li, dl, blockquote, table {
+.markdown > p, .markdown > ul > li, .markdown > ol > li, dl, blockquote, table {
   font-weight: 100;
   font-size: 16px;
 }

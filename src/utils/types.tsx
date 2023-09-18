@@ -20,7 +20,9 @@ export type Chat = {
     title: string;
     createdAt: Date;
     updatedAt: Date;
-    messages: Message[] | string[]; // array of strings of markdown with math and images, where each \ is escaped. 
+    messages: Message[] | string[]; // array of strings of markdown with math and images, where each \ is escaped.
+    docOrCollectionId: string | null;
+    modelUsed: string | null;
     __v: number;
 }
 
@@ -108,50 +110,41 @@ export interface RestoreStatus {
 }
 
 export function isMessageVersion(obj: any): obj is MessageVersion {
-    if (!obj) {
+    if (!obj)
         // console.log("isMessageVersion Failure: obj is undefined or null");
         return false;
-    }
 
-    if (!(typeof obj._id === 'string' || typeof obj._id === 'number')) {
+    if (!(typeof obj._id === 'string' || typeof obj._id === 'number'))
         // console.log(`isMessageVersion Failure: _id is of type ${typeof obj._id}. Expected type: string or number.`);
         return false;
-    }
 
-    if (typeof obj.text !== 'string') {
+    if (typeof obj.text !== 'string') 
         // console.log(`isMessageVersion Failure: text is of type ${typeof obj.text}. Expected type: string.`);
         return false;
-    }
 
-    if (!(obj.type === 'user' || obj.type === 'ai')) {
+    if (!(obj.type === 'user' || obj.type === 'ai')) 
         // console.log(`isMessageVersion Failure: type has value ${obj.type}. Expected value: 'user' or 'ai'.`);
         return false;
-    }
 
-    if (typeof obj.isActive !== 'boolean') {
+    if (typeof obj.isActive !== 'boolean') 
         // console.log(`isMessageVersion Failure: isActive is of type ${typeof obj.isActive}. Expected type: boolean.`);
         return false;
-    }
 
-    if (typeof obj.versionNumber !== 'number') {
+    if (typeof obj.versionNumber !== 'number') 
         // console.log(`isMessageVersion Failure: versionNumber is of type ${typeof obj.versionNumber}. Expected type: number.`);
         return false;
-    }
 
-    if (!((obj.createdAt instanceof Date) || (typeof obj.createdAt === 'string'))) {
+    if (!((obj.createdAt instanceof Date) || (typeof obj.createdAt === 'string'))) 
         // console.log(`isMessageVersion Failure: createdAt is of type ${typeof obj.createdAt}. Expected type: Date or string.`);
         return false;
-    }
 
-    if (!((obj.updatedAt instanceof Date) || (typeof obj.updatedAt === 'string'))) {
+    if (!((obj.updatedAt instanceof Date) || (typeof obj.updatedAt === 'string'))) 
         // console.log(`isMessageVersion Failure: updatedAt is of type ${typeof obj.updatedAt}. Expected type: Date or string.`);
         return false;
-    }
 
-    if (typeof obj.__v !== 'number') {
+    if (typeof obj.__v !== 'number') 
         // console.log(`isMessageVersion Failure: __v is of type ${typeof obj.__v}. Expected type: number.`);
         return false;
-    }
 
     return true;
 }
@@ -206,7 +199,11 @@ export const isMessageVersionArray = (versions: any[]) : versions is MessageVers
     return versions.length > 0 && typeof versions[0] !== 'string';
 }
 
-
+export type Model = {
+    name: string;
+    color?: string;
+    image?: string;
+}
 
 
 

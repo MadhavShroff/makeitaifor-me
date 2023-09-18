@@ -364,6 +364,8 @@ export const mockChats: Chat[] = [ // metadata of all chats of the user
     _id: "64f9ebc42d44c40b86f57",
     title: "Math Demo",
     messages: messages1,
+    docOrCollectionId: "123",
+    modelUsed: "GPT-4",
     createdAt: new Date("2021-09-25T20:00:00.000Z"),
     updatedAt: new Date("2021-09-25T20:00:00.000Z"),
     __v: 0
@@ -371,6 +373,8 @@ export const mockChats: Chat[] = [ // metadata of all chats of the user
     _id: "64f9ebc42d44c40b86f60",
     title: "Markdown Demo",
     messages: messages2,
+    docOrCollectionId: "123",
+    modelUsed: "GPT-4",
     createdAt: new Date("2021-09-25T20:00:00.000Z"),
     updatedAt: new Date("2021-09-25T20:00:00.000Z"),
     __v: 0

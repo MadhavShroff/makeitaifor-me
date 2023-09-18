@@ -3,6 +3,7 @@ import { cognitoLogoutUrl } from "./constants";
 import { Environments, whichEnv } from "./whichEnv";
 import { getCookieParser } from "next/dist/server/api-utils";
 import { mockChats } from "@/pages/documents";
+import { Model } from "./types";
 
 // fetches.tsx
 export const fetchUser = (setUser): Promise<void> => {
@@ -185,6 +186,45 @@ export const createNewChat = async (): Promise<Chat[]> => {
   if (!res.ok) {
     const errorData = await res.json(); 
     console.log("createNewChat res: ", res);
+    throw new Error(errorData.message || 'Not authorized');
+  }
+
+  return await res.json();
+}
+
+// returns a list of available models
+export const fetchModels = async (): Promise<Model[]> => {
+  console.log("fetchModels");
+  const res = await fetch('https://api.makeitaifor.me/chats/getModels/', {
+    method: 'GET',
+    credentials: 'include'
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json(); 
+    console.log("fetchModels res: ", res);
+    throw new Error(errorData.message || 'Not authorized');
+  }
+
+  const r = await res.json();
+  console.log("fetchModels r: ", r);
+  return r;
+}
+
+// set the modelUsed param for a chat with chatId
+export const setModelForChat = async (chatId: string, modelUsed: string): Promise<void> => {
+  const res = await fetch('https://api.makeitaifor.me/chats/setModelUsed/', {
+    method: 'POST',
+    credentials: 'include',
+    body: JSON.stringify({ chatId: chatId, modelUsed: modelUsed }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json(); 
+    console.log("setModelUsed res: ", res);
     throw new Error(errorData.message || 'Not authorized');
   }
 
