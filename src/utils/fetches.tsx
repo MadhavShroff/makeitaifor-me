@@ -146,7 +146,7 @@ export const fetchMessagesData = async (messages: string[] | Message[]): Promise
 };
 
 export const fetchDocumentContent = async (fileId, callback): Promise<void> => {
-  const res = await fetch(`https://api.makeitaifor.me/chats/getDocumentContent/`, {
+  const res = await fetch(`https://api.makeitaifor.me/fileupload/getDocumentContent/`, {
     method: 'POST',
     credentials: 'include',
     body: JSON.stringify({
