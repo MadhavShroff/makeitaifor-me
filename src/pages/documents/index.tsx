@@ -8,7 +8,7 @@ import { ScrollableStackContainer } from '@/components/documents/Stacks';
 import Footer from '@/components/Footer';
 import LoginPage from '../auth';
 import { Chat, Message, User, FileData, S3MetaData } from '@/utils/types';
-import { Preview } from '@/components/Preview';
+import Preview from '@/components/Preview/Preview';
 
 export type FileNameAndId = { name: string, fileKey: string };
 
