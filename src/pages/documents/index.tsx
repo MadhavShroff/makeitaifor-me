@@ -35,7 +35,7 @@ const Documents = () => {
       }));
       setFileNamesArr(metas.sort((a, b) => new Date(a.LastModified).getTime() - new Date(b.LastModified).getTime()).map((meta: S3MetaData) => {
         const fileName = meta.Key.split('/')[1];
-        const fileId = meta.ETag;
+        const fileId = meta.Key;
         return {
           name: fileName.length > 70 ? fileName.substring(0, 70) + '...' + fileName.split('.')[1] : fileName,
           id: fileId
