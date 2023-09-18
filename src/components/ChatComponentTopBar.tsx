@@ -11,7 +11,7 @@ export const ChatComponentTopBar = (props: ChatComponentTopBarPropType) => {
     const [isCollectionsDropdownVisible, setCollectionsDropdownVisible] = useState(false);
     const [isModelDropdownVisible, setModelDropdownVisible] = useState(false);
     const [modelsAvailable, setModelsAvailable] = useState<Model[]>([]);
-    const [fileNamesArr, setFileNamesArr] = useState<{ name: string, id: string }[]>([]);
+    const [fileNamesArr, setFileNamesArr] = useState<{ name: string, fileKey: string }[]>([]);
     const [filesData, setFilesData] = useState<FileData[]>([]);
 
     const context = React.useContext(ChatContext);
@@ -30,10 +30,10 @@ export const ChatComponentTopBar = (props: ChatComponentTopBarPropType) => {
             }));
             setFileNamesArr(metas.sort((a, b) => new Date(a.LastModified).getTime() - new Date(b.LastModified).getTime()).map((meta: S3MetaData) => {
                 const fileName = meta.Key.split('/')[1];
-                const fileId = meta.ETag;
+                const fileId = meta.Key;
                 return {
                     name: fileName.length > 70 ? fileName.substring(0, 70) + '...' + fileName.split('.')[1] : fileName,
-                    id: fileId
+                    fileKey: fileId
                 }
             }));
         }).catch(console.error);

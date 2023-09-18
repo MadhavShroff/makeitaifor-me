@@ -4,6 +4,7 @@ import FileUploadComponent from "../FileUploadComponent";
 import { FilesStack } from "../FilesStack";
 
 export const ScrollableStackContainer = (props) => {
+    console.log("ScrollableStackContainer props", props);
     return (
         <div className="flex overflow-auto no-scrollbar sm:pl-2 pl-6 overscroll-x-contain">
             <div className="">

@@ -24,7 +24,6 @@ export const FilesStack: FC<{ fileNames: {name: string, Key: string}[], fileOrSt
 
     const width = useViewportWidth();
 
-    //Here you can decide what values you want to assign based on the viewport's width.
     let componentWidth = 20;
     let offset = 19;
     let initialOffset = 14;
@@ -47,8 +46,8 @@ export const FilesStack: FC<{ fileNames: {name: string, Key: string}[], fileOrSt
         rightOffset = 18.5;
     }
 
+    // if a file name is too long, trim its middle and replace it with '...'
     const trim = (fileName: string): string => {
-        // if a file name is too long, trim its middle and replace it with '...'
         if (fileName.length > 80) return fileName.slice(0, trimmedLength / 2) + "..." + fileName.slice(fileName.length - trimmedLength / 2);
         else return fileName;
     }
@@ -58,15 +57,15 @@ export const FilesStack: FC<{ fileNames: {name: string, Key: string}[], fileOrSt
     let backCount = fileNames.length - 6;
 
     const filesMap: [number, number, string, string][] = fileNames.map((ob, index) => {
-        const id = ob.Key;
+        const key = ob.Key;
         if (backCount-- > 0) {
-            return [0, 0, ob.name, id]
+            return [0, 0, ob.name, key]
         }
         return [
             i0++ * 2,
             i1++ * 4,
             trim(ob.name),
-            id
+            key
         ];
     });
 
@@ -84,6 +83,8 @@ export const FilesStack: FC<{ fileNames: {name: string, Key: string}[], fileOrSt
                             {filesMap.map(([_0, _1, fileName, id]: [number, number, string, string], index) => {
                                 return (
                                     <button onClick={() => {
+                                        console.log("File clicked", id);
+                                        console.log("File selected", fileSelected);
                                         fileSelected === id ? fileOrStackClicked(null) : fileOrStackClicked(id);
                                     }} className='' key={index}>
                                         <div className={`group w-72 sm:h-24 sm:w-44 h-40 transform transition-all duration-700 absolute rounded-lg hover:bg-orange-500 ease-in-out `

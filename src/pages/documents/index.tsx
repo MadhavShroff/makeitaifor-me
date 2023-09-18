@@ -80,15 +80,15 @@ const Documents = () => {
     }
   }
 
-  const fileOrStackClicked = (id: string) => {
-    console.log('File or stack clicked :' + id);
-    const fileData = filesData.find((file) => file.meta.ETag == id);
+  const fileOrStackClicked = (key: string) => {
+    console.log('File or stack clicked : ' + key);
+    const fileData = filesData.find((file) => file.meta.Key == key);
     if (fileData && fileData.parsedContent) {
       setPreview(fileData.parsedContent);
     } else {
-      fetchDocumentContent(id, (fileContent: string) => {
+      fetchDocumentContent(key, (fileContent: string) => {
         const newFilesData = filesData.map((file) => {
-          if (file.meta.ETag == id) {
+          if (file.meta.Key == key) {
             return {
               meta: file.meta,
               parsedContent: fileContent
@@ -101,19 +101,8 @@ const Documents = () => {
         setPreview(fileContent);
       });
     }
-    setFileSelected(id);
-
-    // console.log('File or stack clicked :' + id);
-    // if (filesData.find((file) => file.fileId == id)) {
-    //   setPreview(filesData.find((file) => file.fileId == id)?.fileContent ?? null);
-    // } else {
-    //   fetchDocumentContent(id, (fileData: FileData) => {
-    //     setFilesData([...filesData, fileData]);
-    //     setPreview(fileData.fileContent);
-    //   });
-    // }
+    setFileSelected(key);
   }
-  "https://api.makeitaifor.me/chats/getDocumentContent?userId=915b7cd5-08c1-45c2-9709-7585af332ee4&fileId=%222bbf893a65f03a7f374b44de118c7aac%22"
 
 
   return (
