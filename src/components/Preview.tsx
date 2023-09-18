@@ -5,8 +5,11 @@ import remarkMath from "remark-math";
 import remarkGfm from "remark-gfm";
 import rehypeKatex from "rehype-katex";
 
+
+// if fileOrCollection is an Array, then collectionName is not null, null otherwise.
 interface PreviewProps {
   fileOrCollection: FileData[] | FileData | null;
+  collectionName?: string | null;
 }
 
 export const Preview = (props: PreviewProps) => {
@@ -35,6 +38,12 @@ export const Preview = (props: PreviewProps) => {
     return (<></>);
   }
 
+  let fileName;
+  if(!Array.isArray(props.fileOrCollection))
+    fileName = props.fileOrCollection.meta.Key.substring(37);
+  else {
+    fileName = props.collectionName;
+  }
   return (
     <div className="relative">
       {/* <button
@@ -49,21 +58,24 @@ export const Preview = (props: PreviewProps) => {
       >
         Right
       </button> */}
-      {props.fileOrCollection === null &&
+      {props.fileOrCollection !== null &&
         <div className="absolute h-10 text-3xl px-4 py-3 z-10">
-          <span className="text-orange-500 underline decoration-white">Collection:</span>
-          Podcasts
+          <span className="text-orange-500 underline decoration-white">
+            {fileName && Array.isArray(props.fileOrCollection) && "Collection: "} 
+            {fileName && !Array.isArray(props.fileOrCollection) && "File: "}
+          </span>
+          {fileName}
           {/* TODO: Add a breadcrumbs like extension to the end of the name, with a clickable browser default dropdown so the user can go to any single file in the list. On click the scrollbar scrolls to that file location.*/}
         </div>}
       <div className="flex-col snap-x snap-mandatory border-t-2 sm:border-2 relative bg-black flex overflow-x-auto overscroll-x-contain">
         <div ref={scrollRef} className="flex flex-row flex-nowrap w-full h-[100vh]">
-          {props.fileOrCollection !== null && Array.isArray(props.fileOrCollection) && props.fileOrCollection.map((file, index) => (
+          {Array.isArray(props.fileOrCollection) && props.fileOrCollection.map((file, index) => (
             <div className="snap-center" key={index}>
               <FilePreview key={index} file={file} active={false} />
             </div>
           ))}
           {
-            props.fileOrCollection !== null && !Array.isArray(props.fileOrCollection) &&
+            !Array.isArray(props.fileOrCollection) &&
             <div className="snap-center">
               <FilePreview key={0} file={props.fileOrCollection} active={false} />
             </div>
