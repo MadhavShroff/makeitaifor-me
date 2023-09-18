@@ -157,12 +157,14 @@ export const fetchDocumentContent = async (fileId, callback): Promise<void> => {
     }
   });
   if (!res.ok) { throw new Error('Not authorized'); }
+
+  console.log("fetchDocumentContent res: ", res);
   
   const data = await res.json();
   if (!data) return;
   
-  console.log("fetchDocumentContent data: ", data);
-  callback(data);
+  console.log("fetchDocumentContent data: ", data.text);
+  callback(data.text);
 };
 
 export const getGuestAccess = async () => {
