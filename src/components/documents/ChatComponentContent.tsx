@@ -75,14 +75,13 @@ const ChatComponentContent = ({ chat }) => {
 
   return (
     <div className="h-full flex flex-col justify-end items-center">
-      {messages.length != 0 && <ChatComponentTopBar title={chat?.title} />}
       <div className='w-full overflow-auto h-full overscroll-contain' ref={scrollableContainerRef} onMouseDown={() => setUserInteracting(true)}
         onMouseUp={() => setUserInteracting(false)}
         onTouchStart={() => setUserInteracting(true)}
         onTouchEnd={() => setUserInteracting(false)}>
         {messages.length != 0 && messages}
         {messages.length == 0 &&
-          <div className="flex relative flex-col items-center max-h-full justify-start sm:justify-start border-t-2 text-white">
+          <div className="flex relative flex-col items-center max-h-full justify-start sm:justify-start text-white">
             <ChatComponentTopBar title={chat?.title} />
             <div className="h-10 sm:h-24"></div>
             <StacksContainer fileNames={["Hello Hi"]} />

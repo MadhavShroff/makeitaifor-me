@@ -9,8 +9,8 @@ export const ChatComponentTopBar = (props: ChatComponentTopBarPropType) => {
     const [isModelDropdownVisible, setModelDropdownVisible] = useState(false);
 
     return (
-        <div className="flex gap-1 p-1 flex-wrap items-center w-[50%] h-auto border-[2px] border-white bg-black z-10 z-10 bg-black absolute top-1 rounded-lg justify-between">
-            {props.title && <div className="mx-2">{props.title}</div>}
+        <div className="flex gap-1 p-1 mt-2 flex-wrap items-center w-[50%] h-auto border-[2px] border-white bg-black z-10 z-10 bg-black top-1 rounded-lg justify-between">
+            {/* {props.title && <div className="mx-2">{props.title}</div>} */}
             <div>
                 <div className="relative inline-block text-left">
                     <div className='group'>

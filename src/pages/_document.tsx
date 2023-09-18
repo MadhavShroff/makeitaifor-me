@@ -10,6 +10,8 @@ export default function Document() {
         <link rel="mask-icon" href="/icons/icon.svg" color="#5bbad5" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin={""} />
+        <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100;200;300;400;700;800&display=swap" rel="stylesheet" />
         <meta property="og:title" content="Make It AI For Me" />
         <meta property="og:description" content="Empowering your business with cutting-edge AI solutions. Join us on the journey to automation and efficiency." />
         <meta property="og:image" content="https://www.makeitaifor.me/icons/icon512.png" />

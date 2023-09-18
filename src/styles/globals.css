@@ -103,6 +103,15 @@ div#__next > div {
 
 .markdown > *, ::before, ::after {
   all: revert;
-  font-weight: 100;
+  font-weight: 600;
   list-style: blue;
+}
+
+.markdown > p, .markdown > ul > li, dl, blockquote, table {
+  font-weight: 100;
+  font-size: 16px;
+}
+
+.markdown > pre {
+  font-weight: 400;
 }
