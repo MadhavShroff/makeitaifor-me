@@ -15,6 +15,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Link href="https://fonts.googleapis.com/css2?family=Sora:wght@100&display=swap" 
         rel="stylesheet">
       </Link>
+      <Link rel="stylesheet" href="https://latex.now.sh/font?family=cm" />
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-Z9ZPFWBFD4"
         strategy="afterInteractive"
