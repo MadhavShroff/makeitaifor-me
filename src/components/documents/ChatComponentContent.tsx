@@ -81,7 +81,7 @@ const ChatComponentContent = ({ chat }) => {
         onTouchEnd={() => setUserInteracting(false)}>
         {messages.length != 0 && messages}
         {messages.length == 0 &&
-          <div className="flex relative flex-col items-center max-h-full justify-start sm:justify-start text-white">
+          <div className="flex relative flex-col items-center max-h-full justify-start sm:justify-start border-t-2 text-white">
             <ChatComponentTopBar title={chat?.title} />
             <div className="h-10 sm:h-24"></div>
             <StacksContainer fileNames={["Hello Hi"]} />

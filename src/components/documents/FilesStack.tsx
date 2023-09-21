@@ -128,6 +128,5 @@ export const FilesStack: FC<{ fileNames: FileNameAndId[], fileOrStackClicked: (i
                 </div>
             </div>
         </div>
-
     );
 }
