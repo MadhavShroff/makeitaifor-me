@@ -56,29 +56,14 @@ const ChatPage = () => {
   useEffect(() => {
     if (user) {
       console.log("Fetching chats metadata for user", user);
-      if (user.role == "guest") {
-        setChats([
-          {
-            "_id": "123",
-            "messages": [],
-            "title": "New Chat",
-            "__v": 0,
-            createdAt: new Date("2023-09-07T15:25:29.283Z"),
-            updatedAt: new Date("2023-09-07T15:25:29.283Z"),
-            docOrCollectionId: "123",
-            modelUsed: "GPT-4"
-          }
-        ]);
-      } else {
-        fetchChatsMetadata(user.userId).then(async (user: User) => {
-          console.log("Fetched chats metadata for user", user);
-          const chats = user.chats;
-          const messages: Message[] = await fetchMessagesData(chats[0].messages);
-          chats[0].messages = messages;
-          setChats(chats);  
-          setSelectedChat(chats[0]._id); 
-        }).catch(console.error);
-      }
+      fetchChatsMetadata(user.userId).then(async (user: User) => {
+        console.log("Fetched chats metadata for user", user);
+        const chats = user.chats;
+        const messages: Message[] = await fetchMessagesData(chats[0].messages);
+        chats[0].messages = messages;
+        setChats(chats);  
+        setSelectedChat(chats[0]._id); 
+      }).catch(console.error);
     }
   }, [user]);
 

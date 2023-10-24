@@ -64,7 +64,7 @@ export const handleFilesUpload = async (files: File[], setMessage) => {
   // Wait for all uploads to complete
   await Promise.all(uploadPromises).then(() => {
     setMessage('Upload complete');
-    setTimeout(() => setMessage('Upload More Files ?'), 3000);
+    window.location.reload();
   }).catch((error) => {
     setMessage('Upload failed. Try again?');
   });

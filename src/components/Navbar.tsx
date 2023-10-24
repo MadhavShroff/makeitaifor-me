@@ -76,23 +76,20 @@ const Navbar: React.FC<NavbarProps> = (props) => {
           </Link>
         ) : (
           <>
-          <Link
-            key={12}
-            href={cognitoHostedUI}
-            className="px-3 py-1 text-lg sm:text-xl border border-[var(--background-color)] text-[var(--background-color)] rounded-full hover:bg-orange-500 hover:text-white whitespace-nowrap text-center font-bold sm:h-8 sm:py-0"
-          >
-            {'Login'}
-          </Link>
-          <Link
-          key={12}
-          href={'#'}
-          onClick={() => {
-            getGuestAccess();
-          }}
-          className="px-3 py-1 text-lg sm:text-xl border border-[var(--background-color)] text-[var(--background-color)] rounded-full hover:bg-orange-500 hover:text-white whitespace-nowrap text-center font-bold sm:h-8 sm:py-0"
-        >
-          {'Continue as Guest'}
-        </Link>
+            <Link
+              key={12}
+              href={cognitoHostedUI}
+              className="px-3 py-1 text-lg sm:text-xl border border-[var(--background-color)] text-[var(--background-color)] rounded-full hover:bg-orange-500 hover:text-white whitespace-nowrap text-center font-bold sm:h-8 sm:py-0"
+            >
+              {'Login'}
+            </Link>
+            <Link
+              key={12}
+              href={'#'}
+              onClick={() => getGuestAccess()}
+              className="px-3 py-1 text-lg sm:text-xl border border-[var(--background-color)] text-[var(--background-color)] rounded-full hover:bg-orange-500 hover:text-white whitespace-nowrap text-center font-bold sm:h-8 sm:py-0">
+              {'Continue as Guest'}
+            </Link>
           </>
         )}
       </div>
