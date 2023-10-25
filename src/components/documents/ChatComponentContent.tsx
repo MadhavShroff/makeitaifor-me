@@ -11,12 +11,14 @@ import { emitChatSubmitted } from '@/utils/sockets';
 import { Chat, Message, isMessage, isMessageVersionArray } from '@/utils/types';
 import { StacksContainer } from './Stacks';
 import { MessageVersion, isMessageVersion } from '@/utils/types';
-import CodeBlock from '../CodeBlock';
+import CodeBlock from './ReactMarkdownComponents/CodeBlock';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { a11yDark } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 import { ChatContext } from '@/pages/chat';
 import { ChatComponentTopBar } from '../ChatComponentTopBar';
 import Link from 'next/link';
+import { CustomTable } from './ReactMarkdownComponents/CustomTable';
+import { CustomTableCell } from './ReactMarkdownComponents/CustomTableCell';
 
 
 const ChatComponentContent = ({ chat }) => {
@@ -170,7 +172,6 @@ const ChatComponentInputField = ({ textareaRef, onChatSubmitted }) => {
   );
 };
 
-
 const MessageRow = (props) => {
   let who = "";
   if (props.who == 'ai') {
@@ -197,6 +198,12 @@ const MessageRow = (props) => {
               const match = /language-(\w+)/.exec(className || '')
               return CodeBlock({ inline, match, children, ...props });
             },
+            table: CustomTable,
+            thead: ({ children }) => <thead>{children}</thead>,
+            tbody: ({ children }) => <tbody>{children}</tbody>,
+            th: ({ children }) => <CustomTableCell isHeader={true}>{children}</CustomTableCell>,
+            td: ({ children }) => <CustomTableCell isHeader={false}>{children}</CustomTableCell>
+
           }}
         />
         <div className="flex flex-row md:flex-col justify-between md:justify-start">

@@ -178,7 +178,7 @@ export const getGuestAccess = async () => {
       method: 'GET',
       credentials: 'include', 
     });
-  window.location.reload();
+  window.location.href = '/chat';
   console.log(response);
   return response;
 }
