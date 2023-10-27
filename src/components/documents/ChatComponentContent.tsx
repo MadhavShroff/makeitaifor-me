@@ -86,12 +86,15 @@ const ChatComponentContent = ({ chat }) => {
           <div className="flex relative flex-col items-center max-h-full justify-start sm:justify-start border-t-2 text-white">
             <ChatComponentTopBar title={chat?.title} />
             <div className="h-10 sm:h-24"></div>
-            <StacksContainer fileNames={["Hello Hi"]} />
+            {/* <StacksContainer fileNames={["Hello Hi"]} /> */}
+            <div className="h-14 sm:h-30"></div>
+            <div className="h-14 sm:h-30"></div>
             <Link
               href="/" className="px-2 py-10 text-2xl font-bold text-white hover:underline decoration-orange-500">
               MakeIt<span className="text-orange-500">Ai</span>For.
               <span className="text-orange-500">Me</span>
             </Link>
+            <div className="h-14 sm:h-30"></div>
             <div className="h-14 sm:h-30"></div>
             <p>Heres some stuff you can try out</p>
             <div className='flex flex-col max-w-4xl'>

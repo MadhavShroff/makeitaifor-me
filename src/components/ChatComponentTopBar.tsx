@@ -32,7 +32,7 @@ export const ChatComponentTopBar = (props: ChatComponentTopBarPropType) => {
                 const fileName = meta.Key.split('/')[1];
                 const fileId = meta.Key;
                 return {
-                    name: fileName.length > 70 ? fileName.substring(0, 70) + '...' + fileName.split('.')[1] : fileName,
+                    name: fileName.length > 70 ? fileName.substring(0, 70) + '...' + fileName.split('.')[1] : fileName, // truncate file name if too long
                     fileKey: fileId
                 }
             }));
