@@ -210,12 +210,12 @@ const MessageRow = (props) => {
           }}
         />
         <div className="flex flex-row md:flex-col justify-between md:justify-start">
-          <Button text='Rewrite' _key={1} className='w-fit' />
-          <Button text='Reply' _key={2} className='w-fit md:hidden' />
+          {/* <Button text='Rewrite' _key={1} className='w-fit' /> */}
+          {/* <Button text='Reply' _key={2} className='w-fit md:hidden' /> */}
         </div>
       </div>
       <div className="flex flex-col w-full md:w-3/12 my-2 md:my-0">
-        <Button text='Reply' _key={3} className='w-fit hidden md:block' />
+        {/* <Button text='Reply' _key={3} className='w-fit hidden md:block' /> */}
       </div>
     </div>
   );
