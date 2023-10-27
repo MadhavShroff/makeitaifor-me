@@ -31,23 +31,20 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <nav className={`flex items-center justify-start bg-white px-1 flex-wrap rounded`}>
+    <nav className={`flex items-center justify-start bg-orange-500 px-1 flex-wrap rounded`}>
       <div className='flex gap-1 flex-wrap my-1'>
         <Link
           href="/"
-          className="px-2 pr-4 pt-1 text-2xl font-bold text-black hover:underline decoration-orange-500">
-          MakeIt<span className="text-orange-500">Ai</span>For.
-          <span className="text-orange-500">Me</span>
+          className="px-2 pr-4 pt-1 text-2xl font-bold text-black hover:underline decoration-black">
+          MakeIt<span className="text-white">Ai</span>For.
+          <span className="text-white">Me</span>
         </Link>
         {links.map((link, index) => (
           <Link
             key={index}
             href={link.href}
-            className="px-3 sm:px-4 py-1 text-lg sm:text-xl border rounded-full hover:bg-orange-500 whitespace-nowrap font-bold sm:h-8 sm:py-0"
-            style={{
-              borderColor: 'var(--background-color)',
-              color: 'var(--background-color)',
-            }}
+            className="px-3 sm:px-4 py-1 text-lg sm:text-xl text-black border border-black rounded-full bg-white hover:bg-black whitespace-nowrap 
+            font-bold sm:h-8 sm:py-0 hover:text-white"
           >
             {link.text}
           </Link>
@@ -56,11 +53,8 @@ const Navbar: React.FC<NavbarProps> = (props) => {
           <Link
             key={11}
             href={'/profile'}
-            className="flex items-center pr-1 pt-1 pb-1 pl-3 text-lg sm:text-xl border rounded-full hover:bg-orange-500 hover:text-white whitespace-nowrap font-bold mx-1 sm:h-8 sm:py-0"
-            style={{
-              borderColor: 'var(--background-color)',
-              color: 'var(--background-color)',
-            }}
+            className="flex items-center pr-1 pt-1 pb-1 pl-3 text-lg sm:text-xl border border-black rounded-full hover:bg-black 
+             hover:text-white whitespace-nowrap font-bold mx-1 sm:h-8 sm:py-0"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
@@ -79,7 +73,8 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             <Link
               key={12}
               href={cognitoHostedUI}
-              className="px-3 py-1 text-lg sm:text-xl border border-[var(--background-color)] text-[var(--background-color)] rounded-full hover:bg-orange-500 hover:text-white whitespace-nowrap text-center font-bold sm:h-8 sm:py-0"
+              className="px-3 py-1 text-lg sm:text-xl border border-black text-[var(--background-color)] 
+              rounded-full bg-white hover:bg-black hover:text-white whitespace-nowrap text-center font-bold sm:h-8 sm:py-0"
             >
               {'Login'}
             </Link>
@@ -87,7 +82,8 @@ const Navbar: React.FC<NavbarProps> = (props) => {
               key={12}
               href={'#'}
               onClick={() => getGuestAccess()}
-              className="px-3 py-1 text-lg sm:text-xl border border-[var(--background-color)] text-[var(--background-color)] rounded-full hover:bg-orange-500 hover:text-white whitespace-nowrap text-center font-bold sm:h-8 sm:py-0">
+              className="px-3 py-1 text-lg sm:text-xl border border-black text-[var(--background-color)] 
+              rounded-full bg-white hover:bg-black hover:text-white whitespace-nowrap text-center font-bold sm:h-8 sm:py-0">
               {'Continue as Guest'}
             </Link>
           </>
