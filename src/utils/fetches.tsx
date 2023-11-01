@@ -214,7 +214,7 @@ export const fetchModels = async (): Promise<Model[]> => {
   }
 
   const r = await res.json();
-  console.log("fetchModels r: ", r);
+  console.log("fetchModels response: ", r);
   return r;
 }
 

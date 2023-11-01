@@ -13,7 +13,7 @@ export const ChatComponentTopBar = (props: ChatComponentTopBarPropType) => {
     const [modelsAvailable, setModelsAvailable] = useState<Model[]>([]);
     const [fileNamesArr, setFileNamesArr] = useState<{ name: string, fileKey: string }[]>([]);
     const [filesData, setFilesData] = useState<FileData[]>([]);
-    const [selectedFile, setSelectedFile] = useState<FileData | null>(null);
+    const [selectedFile, setSelectedFile] = useState<string | null>(null); // fileKey
     const [selectedModel, setSelectedModel] = useState<Model | null>(null);
 
     const context = React.useContext(ChatContext);
@@ -65,7 +65,7 @@ export const ChatComponentTopBar = (props: ChatComponentTopBarPropType) => {
                             aria-haspopup="true"
                         >
                             {selectedFile == null && "Use File or Collection"}
-                            {selectedFile != null && selectedFile.meta.Key.split('/')[1]}
+                            {selectedFile != null && selectedFile.split('/')[1]}
                             <svg className="-mr-1 h-5 w-5 text-gray-400 group-hover:text-black" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
                             </svg>
@@ -81,10 +81,18 @@ export const ChatComponentTopBar = (props: ChatComponentTopBarPropType) => {
                                         </div>
                                     </a>
                                 }
+                                <a key={-1} href="#" className="flex items-center px-2 py-1 hover:text-black hover:bg-white rounded mx-1" role="menuitem" onClick={
+                                        () => {
+                                            setSelectedFile(null);
+                                            setCollectionsDropdownVisible(false);
+                                        }
+                                    }>
+                                    {"None"}
+                                    </a>
                                 {fileNamesArr.map((file, index) => (
                                     <a key={index} href="#" className="flex items-center px-2 py-1 hover:text-black hover:bg-white rounded mx-1" role="menuitem" onClick={
                                         () => {
-                                            setSelectedFile(filesData[index]);
+                                            setSelectedFile(file.fileKey);
                                             setCollectionsDropdownVisible(false);
                                         }
                                     }>
