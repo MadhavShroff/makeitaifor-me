@@ -53,7 +53,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
           <Link
             key={11}
             href={'/profile'}
-            className="flex items-center pr-1 pt-1 pb-1 pl-3 text-lg sm:text-xl border border-black rounded-full hover:bg-black 
+            className="flex items-center pr-1 pt-1 pb-1 pl-3 text-lg text-black sm:text-xl border border-black rounded-full bg-white hover:bg-black 
              hover:text-white whitespace-nowrap font-bold mx-1 sm:h-8 sm:py-0"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
