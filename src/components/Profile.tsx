@@ -43,7 +43,7 @@ const Profile = (props) => {
                             {user.username}
                         </p>
                         <p className="text-sm leading-7 font-normal">
-                            {"#" + user.id}
+                            {"#" + user.email}
                         </p>
                     </div>
                 </div>
