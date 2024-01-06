@@ -17,14 +17,18 @@ const HeroSection: FC<HeroSectionProps> = ({
         </h1>
         <br></br>
         <h2 className="md:text-5xl">
-          This is MakeIt<span className="text-orange-500">Ai</span>For.
-          <span className="text-orange-500">Me</span>
-          <br></br>Let&apos;s Put <span className="text-orange-500"> Ai </span>
+          {/* This is MakeIt<span className="text-orange-500">Ai</span>For.
+          <span className="text-orange-500">Me</span> */}
+          This Is the <span className="text-orange-500"> World's First </span> AI System <span className="text-orange-500"> capable of Advanced Math</span>, built for <span className="text-orange-500"> Academics. </span> 
+          <br></br>
+          <br></br>
+          <p>🦾🤖🦾</p>
+          {/* <br></br>Let&apos;s Put <span className="text-orange-500"> Ai </span>
           to work for <span className="text-orange-500">
             Your Business
-          </span>{' '}
-          <br></br>🦾🤖🦾
+          </span>{' '} */}
         </h2>
+        <br></br>
         <Link href="/chat">
           <button
             key="1"

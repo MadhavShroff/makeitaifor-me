@@ -31,7 +31,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <nav className={`flex items-center justify-start bg-orange-500 px-1 flex-wrap rounded`}>
+    <nav className={`inline-flex items-center bg-orange-500 px-1 flex-wrap rounded-full navsm:rounded mt-3 mx-3`}>
       <div className='flex gap-1 flex-wrap my-1'>
         <Link
           href="/"

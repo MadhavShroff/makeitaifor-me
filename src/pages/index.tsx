@@ -17,7 +17,7 @@ const Home = () => {
   }, []);
 
   return (
-    <main className={'min-h-screen items-center'}>
+    <main className={'min-h-screen flex flex-col items-center grid-lines'}>
       <Navbar user={user} />
       <HeroSection imageUrl="/logo_nobg.png" />
       <ProductSection />

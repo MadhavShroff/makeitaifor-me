@@ -19,7 +19,7 @@
 
 :root {
   --primary-color: #1a202c;
-  --secondary-color: lightgray;
+  --secondary-color: #555555;
   --accent-color: #f56565;
   --text-color: #ffffff;
   --background-color: rgb(25, 29, 30);
@@ -114,4 +114,27 @@ div#__next > div {
 
 .markdown > pre {
   font-weight: 400;
+}
+
+main.grid-lines {
+  background-color: #000;
+  position: relative;
+  z-index: 0;
+}
+
+main.grid-lines::before {
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  content: " ";
+  background-image: linear-gradient(#353535 1px, transparent 1px), 
+  linear-gradient(90deg, #353535 1px, transparent 1px), 
+  linear-gradient(rgba(80, 80, 80, 0.3) 1px, transparent 1px), 
+  linear-gradient(90deg, rgba(80, 80, 80, 0.3) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  background-position: -20px -20px, -20px -20px, -1px -1px, -1px -1px;
 }

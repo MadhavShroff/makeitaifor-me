@@ -1,7 +1,7 @@
 import { ChatComponent } from "@/components/documents/ChatComponent"
 import React, { useEffect, useState } from "react";
-import { Chat, MessageVersion, isMessage } from "@/utils/types";
-import { createNewChat, fetchChatsMetadata, fetchMessagesData, fetchUser, setModelForChat } from "@/utils/fetches";
+import { Chat, MessageVersion, Model, isMessage } from "@/utils/types";
+import { createNewChat, fetchChatsMetadata, fetchMessagesData, fetchUser, setFileOrCollectionForChat, setModelForChat } from "@/utils/fetches";
 import { connectToSocket, emitChatSubmitted } from "@/utils/sockets";
 import { User, Message } from "@/utils/types";
 import LoginPage from "../auth";
@@ -17,7 +17,8 @@ type ChatContextType = {
   appendContentToMessageInChat: (chatId: string, messageId: string, content: string) => void;
   appendMessageToChat: (chatId: string, message: Message) => Promise<void>;
   setChatTitle: (chatId: string, title: string) => void;
-  setModelUsed: (chatId: string, model: string) => Promise<void>;
+  setModelUsed: (chatId: string, model: Model) => Promise<void>;
+  setFileOrCollectionUsed: (chatId: string, fileOrCollectionKey: string | null) => Promise<void>;
 };
 
 export const ChatContext = React.createContext<ChatContextType | null>(null);  
@@ -189,15 +190,36 @@ const ChatPage = () => {
    * @param chatId chatId of chat to set title for
    * @param title title to set
    */
-  const setModelUsed = async (chatId: string, model: string) => {
+  const setModelUsed = async (chatId: string, model: Model) => {
     // add edge case handling
     const chat = chats.find((chat) => chat._id == chatId);
     if (chat == undefined) {
       console.error("Chat with id not found", chatId);
     } else {
-      await setModelForChat(chatId, model);
+      await setModelForChat(chatId, model.name);
       const newChats = chats.map((chat) => {
-        if (chat._id == chatId) chat.modelUsed = model;
+        if (chat._id == chatId) chat.modelUsed = model.name;
+        return chat;
+      });
+      setChats(newChats);
+    }
+  }
+
+  /**
+   * called by ChatComponentTopBar when user selects a file or collection to use for a chat, 
+   * calls setFileOrCollectionForChat in fetches.tsx to set the docOrCollectionId for the chat in the db
+   * @param chatId chatId of chat to set the docOrCollectionId for
+   * @param fileOrCollectionKey S3 Object Key to use for this chat
+   */
+  const setFileOrCollectionUsed = async (chatId: string, fileOrCollectionKey: string | null) => {
+    // add edge case handling
+    const chat = chats.find((chat) => chat._id == chatId);
+    if (chat == undefined) {
+      console.error("Chat with id not found", chatId);
+    } else {
+      await setFileOrCollectionForChat(chatId, fileOrCollectionKey);
+      const newChats = chats.map((chat) => {
+        if (chat._id == chatId) chat.docOrCollectionId = fileOrCollectionKey;
         return chat;
       });
       setChats(newChats);
@@ -221,6 +243,7 @@ const ChatPage = () => {
       appendMessageToChat,
       setChatTitle,
       setModelUsed,
+      setFileOrCollectionUsed,
     }}>
       <div className="h-[100svh] overscroll-contain">
         <ChatComponent />

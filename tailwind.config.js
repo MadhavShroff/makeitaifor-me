@@ -32,6 +32,7 @@ module.exports = withMT({
       },
       screens: {
         'sm': {'max': '767px'},
+        "navsm": {'max': '900px'},
       },
       variants: {
         extend: {

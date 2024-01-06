@@ -237,3 +237,23 @@ export const setModelForChat = async (chatId: string, modelUsed: string): Promis
 
   return await res.json();
 }
+
+// set the fileOrCollectionUsed param for a chat with chatId. null implies no file or collection is used for this chat.
+export const setFileOrCollectionForChat = async (chatId: string, fileOrCollectionKey: string | null): Promise<void> => {
+  const res = await fetch('https://api.makeitaifor.me/chats/setFileOrCollectionUsed/', {
+    method: 'POST',
+    credentials: 'include',
+    body: JSON.stringify({ chatId: chatId, fileOrCollectionKey: fileOrCollectionKey }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json(); 
+    console.log("setFileOrCollectionForChat res: ", res);
+    throw new Error(errorData.message || 'Not authorized');
+  }
+
+  return await res.json();
+}
