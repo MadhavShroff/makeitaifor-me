@@ -20,6 +20,8 @@ export const ChatComponent = () => {
 
   const [showModal, setShowModal] = useState(user == null);
 
+  console.log("User value @ChatComponent: ", user);
+
   console.log("selectedChat value @ChatComponent: ", selectedChat);
 
   const toggleSideNav = () => {
