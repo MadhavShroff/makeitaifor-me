@@ -20,7 +20,11 @@ export const ChatComponent = () => {
 
   const [showModal, setShowModal] = useState(user == null);
 
-  console.log("User value @ChatComponent: ", user);
+  useEffect(() => {
+    setShowModal(user == null);
+  }, [user]);
+
+  console.log(`User value @ChatComponent: ${user}, showModal value @ChatComponent: ${showModal}`);
 
   console.log("selectedChat value @ChatComponent: ", selectedChat);
 
