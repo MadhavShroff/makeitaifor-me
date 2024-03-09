@@ -5,7 +5,7 @@ import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
 import rehypeKatex from 'rehype-katex';
 import Img from 'next/image';
-// import MathJax from 'react-mathjax';
+
 import 'katex/dist/katex.min.css';
 import { emitChatSubmitted } from '@/utils/sockets';
 import { Chat, Message, isMessage, isMessageVersionArray } from '@/utils/types';
@@ -57,7 +57,6 @@ const ChatComponentContent = ({ chat }) => {
   } else {
     chat.messages.forEach((message: Message | string, index: number) => {
       if (typeof message === 'string') {
-
         return; // Skip to the next iteration
       } else if (isMessage(message)) {
         if (isMessageVersionArray(message.versions)) {
@@ -186,7 +185,8 @@ const MessageRow = (props) => {
     <div className="flex flex-col md:flex-row w-full justify-start border-t-[1px] text-black mb-2">
       <div className="flex flex-col items-end md:items-start md:w-3/12 mx-2 ml-14 mt-2">
         <div className="flex justify-end">
-          <div className="w-3 h-3 m-1 bg-blue-500 rounded-full"></div>
+          {props.who == 'ai' && <div className="w-3 h-3 m-1 bg-blue-500 rounded-full"></div> }
+          {props.who == 'user' && <div className="w-3 h-3 m-1 bg-orange-500 rounded-full"></div>}
           <div className="text-white mt-1 ml-1 font-bold text-xs text-ellipsis overflow-hidden">{props.who == 'ai' ? "AI" : props.userName}</div>
         </div>
         <div className="text-white mt-1 ml-1 text-xs">Today at 12:34 AM</div>
@@ -205,8 +205,7 @@ const MessageRow = (props) => {
             thead: ({ children }) => <thead>{children}</thead>,
             tbody: ({ children }) => <tbody>{children}</tbody>,
             th: ({ children }) => <CustomTableCell isHeader={true}>{children}</CustomTableCell>,
-            td: ({ children }) => <CustomTableCell isHeader={false}>{children}</CustomTableCell>
-
+            td: ({ children }) => <CustomTableCell isHeader={false}>{children}</CustomTableCell>,
           }}
         />
         <div className="flex flex-row md:flex-col justify-between md:justify-start">
