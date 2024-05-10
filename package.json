@@ -27,7 +27,7 @@
     "katex": "^0.16.8",
     "mathpix-markdown-it": "^1.2.12",
     "mongoose": "^7.1.0",
-    "next": "^13.3.2",
+    "next": "^14.1.1",
     "noisejs": "^2.1.0",
     "postcss": "^8.4.24",
     "postcss-loader": "^7.3.3",
