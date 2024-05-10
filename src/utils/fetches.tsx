@@ -1,7 +1,5 @@
 import { Chat, FileData, Message, S3MetaData, User, areMessages, isMessage } from "./types";
-import { cognitoLogoutUrl } from "./constants";
 import { Environments, whichEnv } from "./whichEnv";
-import { getCookieParser } from "next/dist/server/api-utils";
 import { mockChats } from "@/pages/documents";
 import { Model } from "./types";
 
