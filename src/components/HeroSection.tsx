@@ -19,8 +19,7 @@ const HeroSection: FC<HeroSectionProps> = ({
         <h2 className="md:text-5xl">
           {/* This is MakeIt<span className="text-orange-500">Ai</span>For.
           <span className="text-orange-500">Me</span> */}
-          This Is the <span className="text-orange-500"> World's First </span> AI System <span className="text-orange-500"> capable of Advanced Math</span>, built for <span className="text-orange-500"> Academics. </span> 
-          <br></br>
+          This is how interacting with <span className="text-orange-500">Ai</span> was always meant to be.
           <br></br>
           <p>🦾🤖🦾</p>
           {/* <br></br>Let&apos;s Put <span className="text-orange-500"> Ai </span>
