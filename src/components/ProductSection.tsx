@@ -15,43 +15,25 @@ type Product = {
 
 const defaults: Product[] = [
   {
-    title: 'Collections Search',
+    title: 'Launches on July 15th',
     description: [
-      "AI, understands, and fetches information from a range of document types for you.",
-      "Create, modify and then interface with document collections.",
-      "Supports ingesting and searching through PDFs, Research papers (Yes, including the math), youtube videos, Web articles. More coming up soon.",
+      "𝑓 (function) = A black box (model like GPT-4, Midjourney or tool like calculator)",
+      "Many such 𝑓s can be chained in interesting ways to solve tough problems",
+      "Most popular requests for 𝑓s will be built first",
+      "Got a request?"
+      // TODO: Add button here to link to the requested features page, user can request a feature but must be logged in
     ],
     image: '/circleSpecular.svg',
-    subheading: 'The Future of information retrieval',
+    subheading: 'Self organizing 𝑓s',
     bg: 'bg-black',
-  },
-  {
-    title: 'Content Writing',
-    description: [
-      'Write content for your website, blog, or social media with the help of AI. Simply provide a few keywords and let the AI do the rest.',
-      "Coming Soon ...",
-    ],
-    image: '/icon3.png',
-    bg: 'bg-black',
-    ltr: true,
-  },
-  {
-    title: 'And a Lot More',
-    description: [
-      'As AI becomes more and more powerful, we will provide more and more services that build upon the latest models available.',
-      "Stay tuned for more ...",
-    ],
-    image: '/icon2.png',
-    bg: 'bg-black',
-    ltr: true,
-  },
+  }
 ];
 
 const ProductDisplay = ({ product }: { product: Product }) => {
   return (
     <div
       className={
-        'flex flex-col md:flex-row items-start justify-between p-6 sm:p-2 rounded-lg shadow-lg border-2 border-white ' +
+        'flex flex-col md:flex-row items-start justify-between p-6 sm:p-2 rounded-[36px] shadow-lg border-2 border-white ' +
         product.bg
       }
     >
@@ -65,7 +47,7 @@ const ProductDisplay = ({ product }: { product: Product }) => {
           </p>
           {Array.isArray(product.description) ? (
             product.description.map((desc, index) => (
-              <p key={index} className={"pb-1 sm:text-sm text-lg lg:text-2xl font-normal " + ((index%2==1) ? "text-orange-500" : "")} >
+              <p key={index} className={"pb-1 sm:text-sm text-lg lg:text-2xl font-normal "} >
                 {desc}
               </p>
             ))
@@ -76,7 +58,7 @@ const ProductDisplay = ({ product }: { product: Product }) => {
           )}
         </div>
       </div>
-      <div className="flex h-full w-full md:w-400 md:h-400 relative antialiased justify-center">
+      <div className="flex h-full w-full md:w-400 md:h-400 relative antialiased justify-end">
         <Image
           src={product.image}
           alt={product.title}
@@ -92,7 +74,7 @@ const ProductDisplay = ({ product }: { product: Product }) => {
 
 const ProductSection = ({ products = defaults }: { products?: Product[] }) => {
   return (
-    <section className="flex flex-col gap-5 sm:gap-5 p-10 sm:p-3">
+    <section className="flex flex-col gap-5 sm:gap-5 p-4 sm:p-3 z-10">
       <IntroSection />
       {/* <MarqueeText text={'Engage'} /> */}
       {products.map((product) => (

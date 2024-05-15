@@ -16,10 +16,11 @@ const Home = () => {
   }, []);
 
   return (
-    <main className={'min-h-screen flex flex-col items-center grid-lines'}>
+    <main className={'min-h-screen flex flex-col items-center grid-lines overflow-hidden'}>
       <Navbar user={user} />
       <HeroSection imageUrl="/logo_nobg.png" />
-      {/* <Image src="/image16.svg" alt="image" className="absolute w-[24vh] right-[-5vh] sm:top-[110vh] top-[70vh] rotate-45 text-white w-[20vh] " width={500} height={500} style={{filter: "invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);"}}/> */}
+      <Image src="/image16.svg" alt="image" className="z-0 absolute w-[24vh] right-[-5vh] top-[110vh] xl:top-[70vh] 2xl:top-[105vh] 2xl:right-[5vh] rotate-45 text-orange-500 w-[20vh] " width={500} height={500}/>
+      <Image src="/image17.svg" alt="image" className="z-0 absolute w-[24vh] left-[-5vh] top-[70vh] xl:top-[110vh] 2xl:top-[70vh] 2xl:left-[5vh] rotate-45 text-orange-500 w-[20vh] " width={500} height={500}/>
       <ProductSection />
       <Footer />
     </main>
