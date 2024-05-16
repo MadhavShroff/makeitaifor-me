@@ -1,16 +1,14 @@
-import React, { FC } from 'react';
-import Img from 'next/image';
-import Link from 'next/link';
+import React, { FC } from "react";
+import Img from "next/image";
+import Link from "next/link";
 
 interface HeroSectionProps {
   imageUrl?: string;
 }
 
-const HeroSection: FC<HeroSectionProps> = ({
-  imageUrl = '/logo_nobg.png',
-}) => {
+const HeroSection: FC<HeroSectionProps> = ({ imageUrl = "/logo_nobg.png" }) => {
   return (
-    <section className="flex flex-col items-center md:flex-row items-center justify-between p-6 md:p-10 overflow-hidden">
+    <section className="flex flex-col items-center md:flex-row justify-between p-6 md:p-10 overflow-hidden">
       <div className="flex flex-col text-4xl md:text-6xl md:text-left text-center md:ml-10">
         <h1>
           Hey There! <br></br>Glad you could make it.
@@ -19,7 +17,8 @@ const HeroSection: FC<HeroSectionProps> = ({
         <h2 className="md:text-5xl">
           {/* This is MakeIt<span className="text-orange-500">Ai</span>For.
           <span className="text-orange-500">Me</span> */}
-          This is how interacting with <span className="text-orange-500">Ai</span> was always meant to be.
+          This is how interacting with{" "}
+          <span className="text-orange-500">Ai</span> was always meant to be.
           <br></br>
           <p>🦾🤖🦾</p>
           {/* <br></br>Let&apos;s Put <span className="text-orange-500"> Ai </span>
@@ -31,7 +30,10 @@ const HeroSection: FC<HeroSectionProps> = ({
         <Link href="/chat">
           <button
             key="1"
-            className={"px-3 sm:px-4 py-2 mt-4 text-4xl border rounded-full hover:bg-orange-500 whitespace-nowrap font-bold m-1 text-white border-white hover:text-black hover:border-black "} >
+            className={
+              "px-3 sm:px-4 py-2 mt-4 text-4xl border rounded-full hover:bg-orange-500 whitespace-nowrap font-bold m-1 text-white border-white hover:text-black hover:border-black "
+            }
+          >
             {"Start for Free →"}
           </button>
         </Link>
