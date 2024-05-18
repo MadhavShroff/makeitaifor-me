@@ -32,21 +32,46 @@ const BlogPost = ({ source, frontMatter }: BlogPostProps) => {
     fetchUser(setUser);
   }, []);
 
+
+  const jsonLd = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: frontMatter.title,
+    description: frontMatter.description,
+    datePublished: frontMatter.date,
+    author: {
+      '@type': 'Person',
+      name: 'Madhav Shroff', // Replace with the actual author name
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'makeitaifor.me', // Replace with your website name
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://makeitaifor.me/logo.png', // Replace with your website logo URL
+      },
+    },
+  });
+
   return (
     <div className="min-h-screen flex flex-col">
       <div className="flex flex-col items-center">
-      <Navbar user={user} />
+        <Navbar user={user} />
       </div>
-      <div className="p-20">
-      <main className="flex-1">
-        <article className="prose prose-lg w-full bg-black p-6 text-white">
-          <MDXRemote {...source} components={components} />
-        </article>
-      </main>
+      <div className="p-20 sm:p-5">
+        <main className="flex-1">
+          <article className="prose prose-lg w-full bg-black p-6 text-white">
+            <MDXRemote {...source} components={components} />
+          </article>
+        </main>
       </div>
+      <Footer />
+      {/* Inject JSON-LD into the page */}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
     </div>
   );
 };
+
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const blogsDirectory = path.join(process.cwd(), 'src', 'blogs');
