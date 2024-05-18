@@ -16,6 +16,14 @@ interface BlogPostProps {
   };
 }
 
+const components = {
+  h1: (props) => <h1 className="text-4xl font-bold mb-4 text-orange-500 text-center pb-10">{props.children}</h1>,
+  h2: (props) => <h2 className="text-3xl font-bold mb-3 text-orange-500 text-center pb-5">{props.children}</h2>,
+  h3: (props) => <h3 className="text-2xl font-bold mb-2 text-orange-500 text-center pb-5">{props.children}</h3>,
+  p: (props) => <p className="mb-4 text-white">{props.children}</p>,
+  // You can define custom components for other elements like lists, images, etc.
+};
+
 const BlogPost = ({ source, frontMatter }: BlogPostProps) => {
   const [user, setUser] = useState(null);
 
@@ -24,13 +32,16 @@ const BlogPost = ({ source, frontMatter }: BlogPostProps) => {
   }, []);
 
   return (
-    <main className="min-h-screen flex flex-col items-center ">
+    <div className="min-h-screen flex flex-col">
+      <div className="flex flex-col items-center">
       <Navbar user={user} />
-      <article className="prose w-full bg-black p-6">
-        <MDXRemote {...source} />
-      </article>
-      {/* <Footer /> */}
-    </main>
+      </div>
+      <main className="flex-1">
+        <article className="prose prose-lg w-full bg-gray-900 p-6 text-white">
+          <MDXRemote {...source} components={components} />
+        </article>
+      </main>
+    </div>
   );
 };
 
