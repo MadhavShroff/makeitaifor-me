@@ -1,17 +1,20 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import Link from 'next/link';
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import { fetchUser } from '@/utils/fetches';
 import React, { useEffect, useState } from 'react';
+import BlogOverview from '@/components/BlogOverview';
+import BlogCategorySection from '@/components/BlogCategorySection';
 
 interface BlogPost {
   slug: string;
   title: string;
   description: string;
   date: string;
+  thumbnail: string;
+  tags: string[];
 }
 
 const BlogIndex = ({ posts }: { posts: BlogPost[] }) => {
@@ -21,22 +24,35 @@ const BlogIndex = ({ posts }: { posts: BlogPost[] }) => {
     fetchUser(setUser);
   }, []);
 
+  // Filter the first three posts for the overview section
+  const overviewPosts = posts.slice(0, 3);
+
+  // Categorize the remaining posts by tags
+  const categorizedPosts: { [key: string]: BlogPost[] } = posts.slice(3).reduce((acc, post) => {
+    post.tags.forEach((tag) => {
+      if (!acc[tag]) {
+        acc[tag] = [];
+      }
+      acc[tag].push(post);
+    });
+    return acc;
+  }, {} as { [key: string]: BlogPost[] });
+
+  const tagsToDisplay = ['research', 'tutorial', 'news']; // Define which tags you want to display
+
   return (
-    <main className="min-h-screen flex flex-col items-center bg-gray-900">
+    <main className="min-h-screen flex flex-col items-center bg-black">
       <Navbar user={user} />
-      <div className="w-full p-6">
-        <h1 className="text-3xl font-bold mb-6">Blog Posts</h1>
-        <ul className="space-y-4">
-          {posts.map((post) => (
-            <li key={post.slug} className="bg-black p-4 rounded shadow">
-              <Link href={`/blog/${post.slug}`}>
-                <p className="text-2xl font-semibold">{post.title}</p>
-              </Link>
-              <p className="text-gray-600">{post.description}</p>
-              <p className="text-gray-400 text-sm">{post.date}</p>
-            </li>
-          ))}
-        </ul>
+      <div className="w-full max-w-5xl p-6">
+        <h1 className="text-4xl font-bold mb-10 text-center">Overview</h1>
+        
+        {/* Overview Section */}
+        <BlogOverview posts={overviewPosts} />
+
+        {/* Categorized Sections */}
+        {tagsToDisplay.map((tag) => (
+          <BlogCategorySection key={tag} tag={tag} posts={categorizedPosts[tag] || []} />
+        ))}
       </div>
       {/* <Footer /> */}
     </main>
@@ -57,6 +73,8 @@ export const getStaticProps = async () => {
       title: data.title,
       description: data.description,
       date: data.date,
+      thumbnail: data.thumbnail || '/images/default-thumbnail.jpg',
+      tags: data.tags || [],
     };
   });
 

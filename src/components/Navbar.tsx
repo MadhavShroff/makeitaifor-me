@@ -22,7 +22,7 @@ const defaultLinks: LinkProps[] = [
   // { href: '/writing', text: 'Content Writing' },
   { href: '/chat', text: 'Go To Chat →' },
   { href: '/documents', text: 'Manage Docs' },
-  { href: "/blog", text: "Blog" },
+  { href: "/blog", text: "Blogs" },
   // { href: '/newsletter', text: 'Newsletter' },
 ];
 
