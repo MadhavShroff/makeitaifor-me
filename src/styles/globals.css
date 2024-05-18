@@ -138,3 +138,30 @@ main.grid-lines::before {
   background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
   background-position: -20px -20px, -20px -20px, -1px -1px, -1px -1px;
 }
+
+/* src/styles/globals.css */
+
+.prose a {
+  color: #FFA500; /* Orange color for links */
+  text-decoration: underline;
+}
+
+.prose a:hover {
+  color: #FF8C00; /* Darker orange on hover */
+}
+
+.prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  color: #FFA500; /* Orange color for headers */
+}
+
+.prose code {
+  background-color: #333; /* Dark background for inline code */
+  color: #FFA500; /* Orange color for inline code */
+}
+
+.prose pre {
+  background-color: #1a1a1a; /* Dark background for code blocks */
+  color: #FFA500; /* Orange color for code text */
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
