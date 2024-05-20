@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 type ContactFormData = {
   name: string,
-  email: string,  
+  email: string,
   message: string;
 }
 
@@ -33,6 +33,11 @@ const Footer: React.FC = () => {
       });
       if (response.ok) {
         console.log("Form submission success");
+        setFormData({
+          name: '',
+          email: '',
+          message: '' 
+        });
         setShowNewsletterPopup(true);
       } else {
         console.error('Form submission failed');
@@ -43,6 +48,7 @@ const Footer: React.FC = () => {
   };
 
   const handleNewsletterResponse = async (subscribe: boolean) => {
+    setShowNewsletterPopup(false);
     if (subscribe) {
       try {
         const newsletterResponse = await fetch('http://api.makeitaifor.me/newsletter/subscribe', {
@@ -64,7 +70,6 @@ const Footer: React.FC = () => {
         console.error('Newsletter submission error encountered', error);
       }
     }
-    setShowNewsletterPopup(false); 
   };
 
   return (
@@ -134,15 +139,15 @@ const Footer: React.FC = () => {
         </div>
       </div>
     </footer>
-    {!showNewsletterPopup && (
-    <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50">
-      <div className="bg-black p-8 rounded-lg">
-        <h2 className="text-2xl text-white font-bold mb-4">Join <span className="text-orange-500">Our</span> Newsletter!</h2>
-        <p className="text-white mb-4">Subscribe to our <span className="text-orange-500">newsletter</span> for <span className="text-orange-500">updates</span> and <span className="text-orange-500">news.</span></p>
-        <button className="text-black border border-white rounded-full hover:underline text-white decoration-black hover:bg-white hover:text-black mt-4 px-4 py-2 rounded" onClick={() => handleNewsletterResponse(true)}>Subscribe</button>
-        <button className="text-black border border-white rounded-full hover:underline text-white decoration-black hover:bg-white hover:text-black mt-4 ml-4 px-4 py-2 rounded" onClick={() => handleNewsletterResponse(false)}>Close</button>
+    {showNewsletterPopup && (
+      <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50">
+        <div className="bg-black p-8 rounded-lg">
+          <h2 className="text-2xl text-white font-bold mb-4">Join <span className="text-orange-500">Our</span> Newsletter!</h2>
+          <p className="text-white mb-4">Subscribe to our <span className="text-orange-500">newsletter</span> for <span className="text-orange-500">updates</span> and <span className="text-orange-500">news.</span></p>
+          <button className="text-black border border-white rounded-full hover:underline text-white decoration-black hover:bg-white hover:text-black mt-4 px-4 py-2 rounded" onClick={() => handleNewsletterResponse(true)}>Subscribe</button>
+          <button className="text-black border border-white rounded-full hover:underline text-white decoration-black hover:bg-white hover:text-black mt-4 ml-4 px-4 py-2 rounded" onClick={() => setShowNewsletterPopup(false)}>Close</button>
+        </div>
       </div>
-    </div>
     )}
     </>
   );
