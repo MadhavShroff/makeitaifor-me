@@ -17,13 +17,9 @@ interface NavbarProps {
 }
 
 const defaultLinks: LinkProps[] = [
-  // { href: '/scheduler', text: 'Scheduler' },
-  // { href: '/outreach', text: 'Outreach' },
-  // { href: '/writing', text: 'Content Writing' },
   { href: '/chat', text: 'Go To Chat →' },
   { href: '/documents', text: 'Manage Docs' },
   { href: "/blog", text: "Blogs" },
-  // { href: '/newsletter', text: 'Newsletter' },
 ];
 
 const Navbar: React.FC<NavbarProps> = (props) => {
