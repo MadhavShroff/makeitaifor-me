@@ -4,8 +4,8 @@ import path from 'path';
 import matter from 'gray-matter';
 import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
-import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
+import Footer from '@/components/landing-page/Footer';
+import Navbar from '@/components/landing-page/Navbar';
 import { fetchUser } from '@/utils/fetches';
 import React, { useEffect, useState } from 'react';
 

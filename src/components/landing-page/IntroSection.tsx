@@ -1,4 +1,5 @@
 import Link from "next/link";
+import StartForFreeButton from "./StartForFreeButton";
 
 const IntroSection = () => {
     return (
@@ -17,11 +18,7 @@ const IntroSection = () => {
                 {/* TODO: Add the following large graphic with text something like: Access to all the latest and greatest Open source and Proprietary LLM models in the market, Check (large green tick mark), Autoflows - Ai driven workflows that are constructed and run automatically, on demand and in real time (Check), A sexy user interface to tie it all together (Check) */}
                 <div className="justify-center items-center">
                     <Link href="/chat">
-                        <button
-                            key="1"
-                            className={"px-3 sm:px-4 py-2 mt-4 text-4xl border rounded-full hover:bg-orange-500 whitespace-nowrap font-bold m-1 text-white border-white hover:text-black hover:border-black "} >
-                            {"Start for Free →"}
-                        </button>
+                        <StartForFreeButton />
                     </Link>
                     <br />
                     {/* <span className="text-sm sm:text-lg lg:text-xl font-light ml-4">with sample collections, or create your own!</span> */}

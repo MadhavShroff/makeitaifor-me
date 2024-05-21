@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from "@/components/Navbar";
-import Footer from '@/components/Footer';
+import Navbar from "@/components/landing-page/Navbar";
+import Footer from '@/components/landing-page/Footer';
 import { fetchUser } from '@/utils/fetches';
 import Profile from '@/components/Profile';
 
