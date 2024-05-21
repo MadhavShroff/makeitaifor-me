@@ -132,8 +132,8 @@ const Footer: React.FC = () => {
               <li><a href="#" className="hover:underline">Privacy Policy</a></li>
               <li><a href="#" className="hover:underline">Cookies</a></li>
             </ul> */}
-            <div className="mt-8"> Made with 💙 </div>
-            <div> By Madhav Shroff </div>
+            {/* <div className="mt-8"> Made with 💙 </div>
+            <div> By Madhav Shroff </div> */}
           </div>
           <Image src="/image3.svg" alt="image" className="absolute w-[24vh] right-0 bottom-0" width={500} height={500} />
         </div>

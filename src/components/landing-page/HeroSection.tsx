@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import Img from 'next/image';
 import Link from 'next/link';
+import StartForFreeButton from './StartForFreeButton';
 
 interface HeroSectionProps {
   imageUrl?: string;
@@ -29,11 +30,7 @@ const HeroSection: FC<HeroSectionProps> = ({
         </h2>
         <br></br>
         <Link href="/chat">
-          <button
-            key="1"
-            className={"px-3 sm:px-4 py-2 mt-4 text-4xl border rounded-full hover:bg-orange-500 whitespace-nowrap font-bold m-1 text-white border-white hover:text-black hover:border-black "} >
-            {"Start for Free →"}
-          </button>
+          <StartForFreeButton />
         </Link>
       </div>
       <Img
