@@ -1,10 +1,10 @@
 // Home.jsx
 
 import React, { useEffect, useState } from 'react';
-import Navbar from "@/components/Navbar";
-import HeroSection from '@/components/HeroSection';
-import ProductSection from '@/components/ProductSection';
-import Footer from '@/components/Footer';
+import Navbar from "@/components/landing-page/Navbar";
+import HeroSection from '@/components/landing-page/HeroSection';
+import ProductSection from '@/components/landing-page/ProductSection';
+import Footer from '@/components/landing-page/Footer';
 import { fetchUser } from '@/utils/fetches'; // import the fetchUser function
 import Image from 'next/image';
 

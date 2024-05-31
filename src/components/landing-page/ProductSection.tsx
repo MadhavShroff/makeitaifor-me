@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import IntroSection from './IntroSection';
-import MarqueeText from './MarqueeText';
+import MarqueeText from '../MarqueeText';
 import Link from 'next/link';
 
 type Product = {
