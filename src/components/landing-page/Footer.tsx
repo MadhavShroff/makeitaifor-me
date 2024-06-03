@@ -56,7 +56,7 @@ const Footer: React.FC = () => {
     setShowNewsletterPopup(false);
     if (subscribe) {
       try {
-        const newsletterResponse = await fetch('http://localhost:3000/newsletter/subscribe', {
+        const newsletterResponse = await fetch('http://api.makeitaifor.me/newsletter/subscribe', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
