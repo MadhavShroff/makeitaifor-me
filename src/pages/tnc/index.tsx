@@ -88,7 +88,7 @@ const TermsAndConditionsPage: React.FC = () => {
 
                         <h3 className="text-lg text-white mt-4">"Website"</h3>
                         <ul className="list-disc text-white font-light text-sm ml-4">
-                            <li>Website refers to <span className="font-semibold">MakeItAiFor.Me</span>, accessible from <span className="font-semibold">http://makeitaifor.me.</span></li>
+                            <li>Website refers to <span className="font-semibold">MakeItAiFor.Me</span>, accessible from <span className="font-semibold">https://makeitaifor.me.</span></li>
                         </ul>
 
                         <h3 className="text-lg text-white mt-4">"You"</h3>

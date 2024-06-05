@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://api.makeitaifor.me/emails/contact-founder', {
+      const response = await fetch('https://api.makeitaifor.me/emails/contact-founder', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -56,7 +56,7 @@ const Footer: React.FC = () => {
     setShowNewsletterPopup(false);
     if (subscribe) {
       try {
-        const newsletterResponse = await fetch('http://api.makeitaifor.me/newsletter/subscribe', {
+        const newsletterResponse = await fetch('https://api.makeitaifor.me/newsletter/subscribe', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
