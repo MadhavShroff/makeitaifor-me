@@ -5,6 +5,7 @@ import Script from "next/script";
 import "../styles/globals.css";
 import "../styles/FileUpload.css";
 import "../styles/markdown.css";
+import "../styles/Boxes.module.css";
 import Link from "next/link";
 
 const App = ({ Component, pageProps }: AppProps) => {

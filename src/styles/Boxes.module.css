@@ -1,0 +1,30 @@
+.box {
+  width: 100px;
+  height: 100px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 600;
+  margin: 10px;
+}
+
+.circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 99%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 600;
+  margin: 10px;
+}
+
+.App-test, .container-tests {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  min-height: 100vh;
+}

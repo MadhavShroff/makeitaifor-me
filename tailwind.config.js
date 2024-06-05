@@ -8,6 +8,8 @@ module.exports = withMT({
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/pages/',
+    '!.src/pages/test/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   plugins: [
     require("daisyui"),
