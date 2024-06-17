@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect, createRef } from "react";
-import { Point, CurvedArrow } from "./CurvedArrow";
-import { GraphView, Graph } from "./GraphView";
+import { GraphView, Graph } from "../../components/GraphRendering/GraphView";
 import { fetchTestGraph } from "@/utils/fetches";
 
 const TestPage = () => {
