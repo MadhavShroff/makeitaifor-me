@@ -19,6 +19,22 @@ export const fetchUser = (setUser): Promise<void> => {
     });
 };
 
+// fetches.tsx
+export const fetchTestGraph = (setGraph): Promise<void> => {
+  return fetch('https://api.makeitaifor.me/test/graph/1', { method: 'GET', credentials: 'include', })
+    .then((res) => {
+      if (!res.ok) { throw new Error('Not authorized'); }
+      return res.json();
+    })
+    .then((data) => {
+      console.log("fetchUser data: ", data);
+      setGraph(data);
+    })
+    .catch((error) => {
+      setGraph(null);
+    });
+};
+
 export const handleFilesUpload = async (files: File[], setMessage) => {
   console.log("handleFilesUpload");
   console.log("files: ", files);

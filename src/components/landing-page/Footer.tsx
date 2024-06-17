@@ -36,7 +36,7 @@ const Footer: React.FC = () => {
       if (response.ok) {
         console.log("Form submission success");
         setShowConfirmation(true);
-        setShowNewsletterPopup(true);
+        if(formData.email != undefined || formData.email != "") setShowNewsletterPopup(true);
         if (showNewsletterPopup == false){
           setFormData({
             name: '',
@@ -44,10 +44,9 @@ const Footer: React.FC = () => {
             message: '' 
           });
         }
-      } else {
-        console.error('Form submission failed');
-      }
+      } else throw new Error('Form submission failed');
     } catch (error) {
+      alert("There was an error processing your request. Please try again later.");
       console.error('Error:', error);
     }
   };
@@ -90,8 +89,8 @@ const Footer: React.FC = () => {
               <p className="font-light">Get the dev team in trouble, or send them a complement! Your message goes to our founder's inbox.</p> 
             <br />
             <form onSubmit={handleSubmit} className="flex flex-col items-start w-full" method="post" action="">
-              <input className="mb-2 px-1 py-1 text-sm placeholder-base font-light rounded-lg w-full" type="text" id="name" name="name" value={formData.name} onChange={handleChange} placeholder="First Name" required />
-              <input className="mb-2 px-1 py-1 text-sm placeholder-base font-light rounded-lg w-full" type="email" id="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email Address" required />
+              <input className="mb-2 px-1 py-1 text-sm placeholder-base font-light rounded-lg w-full" type="text" id="name" name="name" value={formData.name} onChange={handleChange} placeholder="First Name"/>
+              <input className="mb-2 px-1 py-1 text-sm placeholder-base font-light rounded-lg w-full" type="email" id="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email Address" />
               <textarea className= "px-1 py-2 text-sm placeholder-base font-light rounded-lg w-full" id="message" name="message" rows={4} value={formData.message} onChange={handleChange} placeholder="Message" required></textarea>
               <button className="mt-3 mb-4 pl-2 pr-2 rounded-full bg-white hover:bg-black hover:text-white whitespace-nowrap border border-black text-[var(--background-color)]" type="submit">Submit</button>
             </form> 
