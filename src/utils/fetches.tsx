@@ -27,7 +27,7 @@ export const fetchTestGraph = (setGraph): Promise<void> => {
       return res.json();
     })
     .then((data) => {
-      console.log("fetchUser data: ", data);
+      console.log("fetchTestGraph data: ", data);
       setGraph(data);
     })
     .catch((error) => {
