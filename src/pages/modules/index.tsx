@@ -1,36 +1,26 @@
-import Sidebar from "../../components/modules-page/Sidebar";
+import { fetchUser } from "@/utils/fetches";
+import React, { useEffect, useState } from "react";
+import Navbar from "@/components/landing-page/Navbar";
+import Sidebar from "@/components/modules-page/Sidebar";
+import GoogleSearch from "@/components/modules-page/modules/GoogleSearch";
 
 const ModulesIndex = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    fetchUser(setUser);
+  }, []);
+
   return (
-    <div className="flex ">
-      <Sidebar />
-      <div className="ml-52 p-4 w-full h-screen">
-        <section id="section1" className="h-screen bg-red-400 mb-4 rounded p-4">
-          <h1 className="text-3xl">Google Search Module</h1>
-        </section>
-        <section
-          id="section2"
-          className="h-screen bg-green-400 mb-4 rounded p-4"
-        >
-          <h1 className="text-3xl">Module 2</h1>
-          <p>demo for module 2...</p>
-        </section>
-        <section
-          id="section3"
-          className="h-screen bg-blue-400 mb-4 rounded p-4"
-        >
-          <h1 className="text-3xl">Module 3</h1>
-          <p>demo for module 3...</p>
-        </section>
-        <section
-          id="section4"
-          className="h-screen bg-yellow-400 mb-4 rounded p-4"
-        >
-          <h1 className="text-3xl">Module 4</h1>
-          <p>demo for module 4...</p>
-        </section>
+    <main className="min-h-screen flex flex-col items-center bg-black">
+      <Navbar user={user} />
+      <div className="flex ">
+        <Sidebar />
+        <div className="ml-52 p-4 w-full h-screen">
+          <GoogleSearch />
+        </div>
       </div>
-    </div>
+    </main>
   );
 };
 

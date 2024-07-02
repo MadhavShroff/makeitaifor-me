@@ -7,10 +7,10 @@ interface SidebarLink {
 }
 
 const links: SidebarLink[] = [
-  { id: "section1", label: "Section 1", href: "#section1" },
-  { id: "section2", label: "Section 2", href: "#section2" },
-  { id: "section3", label: "Section 3", href: "#section3" },
-  { id: "section4", label: "Section 4", href: "#section4" },
+  { id: "section1", label: "Module 1", href: "#section1" },
+  { id: "section2", label: "Module 2", href: "#section2" },
+  { id: "section3", label: "Module 3", href: "#section3" },
+  { id: "section4", label: "Module 4", href: "#section4" },
 ];
 
 const Sidebar = () => {
