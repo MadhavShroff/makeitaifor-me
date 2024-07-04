@@ -15,8 +15,8 @@ function GoogleSearch() {
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
     if (event.key === "Enter") {
-      const query = searchQuery.trim(); // Trim whitespace from the query
-      if (!query) return; // Exit early if query is empty
+      const query = searchQuery.trim(); 
+      if (!query) return;
       setIsLoading(true);
       setSearchResult(null);
       try {
@@ -55,9 +55,9 @@ function GoogleSearch() {
   return (
     <section
       id="section1"
-      className="h-screen bg-[#FFA500] mb-4 rounded p-4 pb-20"
+      className="md:h-screen bg-[#FFA500] mt-4 mb-20 rounded p-4 md:pb-20"
     >
-      <h1 className="text-3xl pb-6">Google Search Module</h1>
+      <h1 className="text-3xl pb-6 text-black">Google Search Module</h1>
       <div className="flex flex-col gap-8 p-4 h-full">
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam eos
@@ -68,17 +68,16 @@ function GoogleSearch() {
         </p>
 
         {/* Browser overlay */}
-        <div className="mockup-browser border-base-300 bg-gray-900 border h-full overflow-y-auto">
-          <div className="mockup-browser-toolbar flex justify-between">
-            <label className="input input-bordered flex items-center gap-2">
+        <div className="mockup-browser border-base-300 bg-gray-900 border h-full overflow-y-auto z-0">
+          <div className="mockup-browser-toolbar flex justify-between p-2">
+            <label className="input input-bordered flex items-center gap-2 w-full md:w-auto">
               <input
                 type="text"
-                className="grow"
+                className="grow outline-none"
                 placeholder="Search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyPress={handleKeyPress}
-                style={{ outline: "none" }}
               />
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -99,26 +98,25 @@ function GoogleSearch() {
           </div>
 
           {/* Browser content */}
-          <div className="border-base-300 flex flex-wrap justify-center border-t px-4 py-16 text-black">
+          <div className="border-base-300 flex flex-wrap justify-center border-t p-4 text-black">
             {isLoading ? (
-              <span className="loading loading-dots loading-lg flex justify-center px-4 py-28"></span>
+              <span className="loading loading-dots loading-lg flex justify-center py-16"></span>
             ) : searchResult ? (
               Object.entries(searchResult.results).map(
                 ([url, content], index) => (
-                  <div className="card lg:card-side bg-base-100 shadow-xl m-4">
-                    <figure style={{ width: "100%", height: "200px" }}>
+                  <div
+                    key={url}
+                    className="card lg:card-side bg-base-100 shadow-xl m-4 w-full md:w-auto"
+                  >
+                    <figure className="w-full h-48 md:w-48 md:h-auto">
                       {searchResult.images[index] ? (
                         <img
                           src={searchResult.images[index]}
                           alt="Search result"
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                          }}
+                          className="object-cover w-full h-full"
                         />
                       ) : (
-                        <div style={{ width: "100%", height: "100%" }}>
+                        <div className="flex items-center justify-center w-full h-full">
                           No Image Available
                         </div>
                       )}
@@ -134,9 +132,7 @@ function GoogleSearch() {
                 )
               )
             ) : (
-              <div className="flex justify-center px-4 py-28 text-white">
-                Hello!
-              </div>
+              <div className="flex justify-center py-16 text-white">Hello!</div>
             )}
           </div>
         </div>

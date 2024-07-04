@@ -12,12 +12,20 @@ const ModulesIndex = () => {
   }, []);
 
   return (
-    <main className="min-h-screen flex flex-col items-center bg-black">
-      <Navbar user={user} />
-      <div className="flex ">
+    <main className="min-h-screen flex flex-col bg-black">
+      <div className="w-full flex justify-center md:pl-48 ">
+        <Navbar user={user} />
+      </div>
+      <div className="flex flex-col md:flex-row w-full">
         <Sidebar />
-        <div className="ml-52 p-4 w-full h-screen">
+        <div className="md:ml-48 p-4 w-full min-h-screen center-div mx-auto">
           <GoogleSearch />
+          <section
+            id="section2"
+            className="h-screen bg-[#FFA500] mb-4 rounded p-4 pb-20"
+          >
+            Module 2
+          </section>
         </div>
       </div>
     </main>
