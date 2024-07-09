@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "@/components/landing-page/Navbar";
 import Sidebar from "@/components/modules-page/Sidebar";
 import GoogleSearch from "@/components/modules-page/modules/GoogleSearch";
+import CitedContentDisplay from "@/components/CitedContentDisplay";
 
 const ModulesIndex = () => {
   const [user, setUser] = useState(null);
@@ -12,7 +13,7 @@ const ModulesIndex = () => {
   }, []);
 
   return (
-    <main className="min-h-screen flex flex-col bg-black">
+    <main className="min-h-screen flex flex-col bg-black w-full">
       <div className="w-full flex justify-center md:pl-48 ">
         <Navbar user={user} />
       </div>
@@ -22,7 +23,7 @@ const ModulesIndex = () => {
           <GoogleSearch />
           <section
             id="section2"
-            className="h-screen bg-[#FFA500] mb-4 rounded p-4 pb-20"
+            className="h-screen bg-orange-500 mb-4 rounded p-4 pb-20"
           >
             Module 2
           </section>

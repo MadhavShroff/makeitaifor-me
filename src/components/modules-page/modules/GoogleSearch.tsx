@@ -55,7 +55,7 @@ function GoogleSearch() {
   return (
     <section
       id="section1"
-      className="md:h-screen bg-[#FFA500] mt-4 mb-20 rounded p-4 md:pb-20"
+      className="md:h-screen bg-orange-500 mt-4 mb-20 rounded p-4 md:pb-20"
     >
       <h1 className="text-3xl pb-6 text-black">Google Search Module</h1>
       <div className="flex flex-col gap-8 p-4 h-full">
@@ -123,7 +123,7 @@ function GoogleSearch() {
                     </figure>
                     <div className="card-body">
                       <h1 className="card-title">{getTitle(content)}</h1>
-                      <a className="text-blue-600 hover:underline" href={url}>
+                      <a className="text-orange-500 hover:underline" href={url}>
                         {url}
                       </a>
                       <p>{limitContent(content)}</p>
