@@ -83,7 +83,7 @@ const ChatComponentContent = ({ chat }) => {
         {messages.length != 0 && messages}
         {messages.length == 0 &&
           <div className="flex relative flex-col items-center max-h-full justify-start sm:justify-start border-t-2 text-white">
-            <ChatComponentTopBar title={chat?.title} chatId={chat?._id}/>
+            {/* <ChatComponentTopBar title={chat?.title} chatId={chat?._id}/> */}
             <div className="h-10 sm:h-24"></div>
             {/* <StacksContainer fileNames={["Hello Hi"]} /> */}
             <div className="h-14 sm:h-30"></div>
@@ -117,6 +117,7 @@ const ChatComponentContent = ({ chat }) => {
     </div>
   );
 }
+
 export default ChatComponentContent;
 
 const ChatComponentInputField = ({ textareaRef, onChatSubmitted }) => {

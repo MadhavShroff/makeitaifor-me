@@ -1,5 +1,6 @@
 import { FileNameAndId } from '@/pages/documents';
 import React, { FC, useEffect, useState } from 'react';
+import Avatar from "boring-avatars";
 
 function useViewportWidth() {
     const [windowWidth, setWindowWidth] = useState<number>(0);
@@ -96,33 +97,15 @@ export const FilesStack: FC<{ fileNames: FileNameAndId[], fileOrStackClicked: (i
                                                 "w-full h-full flex flex-col justify-between text-black text-justify items-end transform transition-all ease-in-out hover:border-4 hover:border-white hover:text-3xl absolute rounded-lg break-all text-ellipsis sm:leading-4 overflow-hidden p-1"
                                                 + (fileSelected === key ? ` border-4 border-white text-3xl sm:text:2xl` : ` border-2 border-black text-xl sm:text-sm`)
                                             }>
-                                                <img
-                                                    src={`https://source.boringavatars.com/marble/50/HelloHi?colors=EF233C,FED4E7,313638,003E1F`}
-                                                    alt="Profile Picture"
-                                                    className="rounded-full h-[30%]"
-                                                />
+                                                <div className="rounded-full w-40 h-40">
+                                                    <Avatar name={"123"} size={20}/>
+                                                </div>
                                                 {fileName}
                                             </div>
                                         </div>
                                     </button>
                                 );
                             })}
-                            {/* <div className="w-full sm:h-24 sm:w-44 h-40 bg-white flex flex-col p-2 justify-between text-black text-end items-end border-2 border-black transform transition-all absolute sm:top-10 top-20 sm:-left-10 -left-20 rounded-lg group-hover:skew-x-12 group-hover:-skew-y-12 delay-[0ms]">
-                                <img
-                                    src={`https://source.boringavatars.com/marble/50/HelloHi?colors=EF233C,FED4E7,313638,003E1F`}
-                                    alt="Profile Picture"
-                                    className="rounded-full h-[40%]"
-                                />
-                                "Hello"
-                            </div> */}
-                            {/* <div className="group w-full sm:h-24 sm:w-44 h-40 flex flex-col items-center transform transition-all absolute sm:top-10 top-20 sm:-left-10 -left-20 rounded-lg bg-blue-500">
-                                <div className="w-full h-full flex flex-col justify-center text-white items-center border-4 border-white absolute rounded-lg text-3xl p-2 visible group-hover:invisible">
-                                    Upload File(s) +
-                                </div>
-                                <div className="w-full h-full flex flex-col justify-center text-white items-center border-4 border-white absolute rounded-lg text-3xl p-2 invisible group-hover:visible text-center">
-                                    Click here or Drag and Drop to Upload +
-                                </div>
-                            </div> */}
                         </div>
                     </div>
                 </div>

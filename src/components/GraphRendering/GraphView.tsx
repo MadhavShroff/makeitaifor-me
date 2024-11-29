@@ -39,7 +39,7 @@ export const GraphView = ({ graph }) => {
   const [nodeSelected, setNodeSelected] = useState<Node>();
   // (BlockId -> Point)
   // Update the coordsMap on every block update
-  console.log(graph);
+  console.log(nodeSelected);
   const getOutputCoord = (blockId: string): Point => {
     if (blockId === "0") return promptOutputCoordinate;
     else {
@@ -70,6 +70,9 @@ export const GraphView = ({ graph }) => {
             <Block
               key={index}
               node={node}
+              onClick={() => {
+                setNodeSelected(node);
+              }}
               onUpdatePoints={(inputs, outputs) => {
                 setInputCoordsMap((prevMap) => {
                   const newMap = new Map(prevMap);

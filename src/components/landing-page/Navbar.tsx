@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { cognitoHostedUI } from '@/utils/constants';
 import { getGuestAccess } from '@/utils/fetches';
 import { User } from '@/utils/types';
+import Avatar from 'boring-avatars';
 
 interface LinkProps {
   href: string;
@@ -59,10 +60,9 @@ const Navbar: React.FC<NavbarProps> = (props) => {
               {isHovered ? "View Profile" : 'Hi ' + props.user.name.split(" ")[0] + '!'}
             </span>
             <div className="h-7 w-7 rounded-full object-cover">
-              <img
-                src={`https://source.boringavatars.com/marble/100/${props.user.userId}?colors=EF233C,FED4E7,313638,003E1F`}
-                alt="Profile Picture"
-              />
+              <div className="rounded-full w-40 h-40">
+                <Avatar name="${user.id}"/>
+              </div>
             </div>
           </Link>
         ) : (

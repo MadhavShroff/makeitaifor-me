@@ -7,7 +7,7 @@ const TestPage = () => {
   const [prompt, setPrompt] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const [graph, setGraph] = useState<Graph>({
-    "prompt": "Tell me about the Uffitzi Gallery",
+    "prompt": "Tell me about the Uffitzi Gallery in Florence.",
     "nodes": [
       {
         "id": "1",
@@ -96,7 +96,7 @@ const TestPage = () => {
       {
         "id": "4",
         "color": "#86efac",
-        "name": "Export to PDF",
+        "name": "Display Output",
         "level": 3,
         "inputs": [
           {
@@ -114,10 +114,33 @@ const TestPage = () => {
             "name": "Generated PDF"
           }
         ]
-      }
+      },
+      // {
+      //   "id": "4",
+      //   "color": "#86efac",
+      //   "name": "Export to PDF",
+      //   "level": 3,
+      //   "inputs": [
+      //     {
+      //       "number": 1,
+      //       "type": "Markdown",
+      //       "typeName": "Extracted Information",
+      //       "name": "Extracted Information"
+      //     }
+      //   ],
+      //   "outputs": [
+      //     {
+      //       "number": 1,
+      //       "type": "PDF URL",
+      //       "typeName": "Downloadable PDF Link",
+      //       "name": "Generated PDF"
+      //     }
+      //   ]
+      // }
     ],
     "edges": [
       { "from": "0", "to": "1.1" },
+      { "from": "0", "to": "2.1" },
       { "from": "1.1", "to": "2.1" },
       { "from": "1.2", "to": "2.1" },
       { "from": "1.3", "to": "2.1" },
