@@ -14,7 +14,8 @@ const ModulesIndex = () => {
 
   return (
     <main className="min-h-screen flex flex-col bg-black w-full">
-      <div className="w-full flex justify-center md:pl-48 ">
+      <CitedContentDisplay/>
+      {/* <div className="w-full flex justify-center md:pl-48 ">
         <Navbar user={user} />
       </div>
       <div className="flex flex-col md:flex-row w-full">
@@ -28,7 +29,7 @@ const ModulesIndex = () => {
             Module 2
           </section>
         </div>
-      </div>
+      </div> */}
     </main>
   );
 };
