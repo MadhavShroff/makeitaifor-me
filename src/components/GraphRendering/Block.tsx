@@ -4,7 +4,7 @@ import { Node } from "./GraphView";
 import { ModuleType } from "../../pages/modules/index";
 
 interface IBlockProps {
-  node: Node | ModuleType ;
+  node: Node;
   onClick: () => void;
   onUpdatePoints: (
     inputs: { blockId: string; updatedPoint: Point }[],

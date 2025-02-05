@@ -20,11 +20,11 @@ function GoogleSearch() {
       setIsLoading(true);
       setSearchResult(null);
       try {
-        const result: SearchResult = await fetchGoogleSearchModuleResult(
-          query,
-          4
-        );
-        setSearchResult(result);
+        // const result: SearchResult = await fetchGoogleSearchModuleResult(
+        //   query,
+        //   4
+        // );
+        setSearchResult(null);
       } catch (error) {
         console.error("Error fetching search results:", error);
       } finally {
