@@ -38,14 +38,14 @@ const postsData = [
     title: 'Workflow Automation: What is it? How does it help?',
     description:
       'Our goal is to streamline SMB trade, making it easier and faster than ever.',
-    imageUrl: 'bhutan2.png',
+    imageUrl: 'bhutan1.png',
   },
   {
     id: 'best-workflow-automation-tools-for-streamlining-your-business',
     title: 'Best Workflow Automation Tools for Streamlining Your Business',
     description:
       'Take control of your finances with our advanced invoicing system.',
-    imageUrl: 'bhutan2.png',
+    imageUrl: 'artwork_blog.png',
   },
 ];
 

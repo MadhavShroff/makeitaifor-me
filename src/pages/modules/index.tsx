@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "@/components/landing-page/Navbar";
 import { AnimatePresence, motion } from "motion/react"
 import Block from "@/components/GraphRendering/Block";
+import CitedContentDisplay from "@/components/CitedContentDisplay"; // Add this import
 
 class EntityType {
   constructor() { }
@@ -676,7 +677,7 @@ const ModulesIndex = () => {
 
   return (
     <main className="min-h-screen flex flex-col bg-black w-full">
-      <CitedContentDisplay/>
+      {/* <CitedContentDisplay/> */}
       {/* <div className="w-full flex justify-center md:pl-48 ">
         <Navbar user={user} />
       </div>
