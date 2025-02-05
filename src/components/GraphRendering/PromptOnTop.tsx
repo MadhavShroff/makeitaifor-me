@@ -11,7 +11,7 @@ export class PromptOnTop extends React.Component<{
   
     constructor(props) {
       super(props);
-      (this.output = new Point(3, -5)), (this.outputDotRef = createRef());
+      (this.output = new Point(2, -5)), (this.outputDotRef = createRef());
     }
   
     componentDidMount() {

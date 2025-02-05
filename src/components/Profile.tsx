@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from './Button';
 import Img from 'next/image';
+import Avatar from "boring-avatars";
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { cognitoHostedUI, cognitoLogoutUrl, cookieName } from '@/utils/constants';
@@ -29,11 +30,9 @@ const Profile = (props) => {
             <div className='flex flex-col items-center justify-center p-6 shadow-lg bg-black text-white border-4 border-white rounded-lg max-w-4xl'>
                 <div className="flex flex-col md:flex-row">
                     <div id='profilePic' className="flex p-10 items-center justify-center md:w-1/4 md:h-auto md:w-auto relative antialiased">
-                        <img
-                            className="rounded-full w-40 h-40"
-                            src={`https://source.boringavatars.com/marble/100/${user.id}?colors=EF233C,FED4E7,313638,003E1F`}
-                            alt="Profile Picture"
-                        />
+                        <div className="rounded-full w-40 h-40">
+                            <Avatar name="${user.id}"/>
+                        </div>
                     </div>
                     <div id='profileMetadata' className="flex flex-col justify-center text-6xl font-bold text-center md:text-left mb-4 md:mb-0">
                         <h2 className="text-5xl sm:text-3xl lg:text-8xl leading-7 font-normal mb-4">

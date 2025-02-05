@@ -1,0 +1,181 @@
+{
+    "messages": [
+        {
+          "role": "system", 
+          "content": "You are an internal Function generator, that writes a highly composed function that is used to generate a workflow that performs the task given by the user. You take a list of available Modules with their input and output types. The composed function you output generates an analogous workflow that connects the modules(individual function calls within the composed function) in a way that the output of one module is the input of the next module. The output composed function also ensures that the output of the last module is Display Result or Done. The workflow must end at either Display Result or Done."
+        },
+        {
+          "role": "user", 
+          "content": 
+          "Read the data from this csv and merge the last 2 columns(price_per_unit, units) of it into a single column by multiplying the values. 
+
+          Modules available: 
+            GenerateReport(ETable) -> EFile // generates a report from the table
+            LLMInstruction(input: EText, instruction: EText, context?: EContext) -> llm_output: EText // takes an instruction, sends it to o1-preview for advanced reasoning, and returns the output, ex: LLMInstruction('Lorep Impsum', 'Summarize this text') -> '...summary')
+            SQLOperation(ETable, ESQL) -> ETable
+            ExportToPDF(EText) -> EFile // exports the text to a PDF file
+            ShowTable(ETable) -> void // for the frontend to display the table
+            GenerateImage(EText) -> EImage // generates an image from the text
+            SendEmail(EText, EEmail) -> void // sends an email with the text as the content
+            GenerateChart(ETable, chartParams: EMap) -> EImage // generates a chart from the table
+            ReadFile(input: EFile) -> EData // Reads data from a file and outputs it as structured data.
+            WriteFile(input: EData, fileType: EText) -> EFile // Writes structured data to a file of the specified type (e.g., CSV, JSON).
+            ReadDatabase(query: EQuery, connection: EConnection) -> EData // Executes a database query and returns the result as structured data.
+            ReadCSV(EFile) -> ETable 
+            WriteDatabase(input: EData, tableName: EText, connection: EConnection) -> void // Writes structured data to a database table.
+            JoinData(left: EData, right: EData, key: EText) -> EData // Joins two datasets on a specified key.
+            SortData(input: EData, key: EText, order: EText) -> EData // Sorts data based on a key in ascending or descending order.
+            GroupData(input: EData, key: EText) -> EData // Groups data by a specified key.
+            LLMInstruction(input: EText, instruction: EText, context?: EContext) -> EText // Processes text using a language model based on the given instruction.
+            GenerateReport(input: EData, template: EText) -> EDocument // Generates a report document from data using a template.
+            ExportToFormat(input: EDocument, format: EText) -> EFile // Exports a document to a specified file format (e.g., PDF, DOCX).
+            SendEmail(content: EDocument, recipient: EEmail, subject: EText) -> void // Sends an email with the given content and subject to the recipient.
+            GenerateChart(input: EData, chartType: EText, parameters?: EMap) -> EImage // Generates a chart image from data.
+            DisplayData(input: EData) -> void // Displays data in a user interface or dashboard.
+            APICall(endpoint: EURL, method: EText, headers?: EMap, body?: EData) -> EData // Makes an API request and returns the response data.
+            ParseJSON(input: EText) -> EData // Parses a JSON string into structured data.
+            SerializeToJSON(input: EData) -> EText // Serializes structured data into a JSON string.
+            ForEach(input: EData, operation: EWorkflow) -> void // Iterates over a dataset and performs an operation on each item.
+            Condition(input: EBoolean, trueBranch: EWorkflow, falseBranch?: EWorkflow) -> void // Executes a function based on a condition being true or false.
+            CompressData(input: EData, format: EText) -> EData // Compresses data using a specified compression format.
+            DecompressData(input: EData, format: EText) -> EData // Decompresses data using a specified compression format.
+            GenerateRandomNumber(range: ERange) -> ENumber // Generates a random number within a specified range.
+            HashData(input: EData, algorithm: EText) -> EText // Generates a hash of the data using a specified algorithm.
+            TranslateText(input: EText, targetLanguage: EText) -> EText // Translates text into a target language.
+            ExtractEntities(input: EText, entityType: EText) -> EData // Extracts entities (e.g., dates, names) from text.
+            AnalyzeSentiment(input: EText) -> EData // Analyzes the sentiment of the text and returns a sentiment score.
+            ResizeImage(input: EImage, dimensions: EMap) -> EImage // Resizes an image to specified dimensions.
+            ConvertFormat(input: EFile, targetFormat: EText) -> EFile // Converts a file to a different format.
+            EvaluateExpression(expression: EText, variables?: EMap) -> EResult // Evaluates a mathematical or logical expression.
+            ExtractData(input: EText, pattern: ERegex) -> EData // Extracts data from text using a regular expression pattern.
+        "},
+        {"role": "assistant", "content": "ShowTable(SQLOperation(ReadCSV('input.csv'), 'SELECT *, price_per_unit * units as total_price FROM ETable'))", "weight": 1}
+    ]
+}, {
+  "messages": [
+    {"role": "system", "content": "Benji writes a highly composed function that generates a workflow that performs the task given by the user. Benji takes a list of available Modules with their input and output types. The function generates a workflow that connects the modules in a way that the output of one module is the input of the next module. The function also ensures that the output of the last module is the final output of the workflow." },
+
+    {"role": "user", "content": }
+  ]
+},{
+  "messages": [
+    {
+      "role": "system",
+      "content": "Benji writes a highly composed function that generates a workflow that performs the task given by the user. Benji takes a list of available Modules with their input and output types. The function generates a workflow that connects the modules in a way that the output of one module is the input of the next module. The function also ensures that the output of the last module is the final output of the workflow."
+    },
+    {
+      "role": "user",
+      "content": "Read the product reviews from 'reviews.csv', perform sentiment analysis on each review, add a new column 'sentiment_score' with the results, and display the updated table.
+        Modules available:
+          ReadCSV(EFile) -> ETable
+            GenerateReport(ETable) -> EFile // generates a report from the table
+            LLMInstruction(input: EText, instruction: EText, context?: EContext) -> llm_output: EText // takes an instruction, sends it to o1-preview for advanced reasoning, and returns the output, ex: LLMInstruction('Lorep Impsum', 'Summarize this text') -> '...summary')
+            SQLOperation(ETable, ESQL) -> ETable
+            ExportToPDF(EText) -> EFile // exports the text to a PDF file
+            ShowTable(ETable) -> void // for the frontend to display the table
+            GenerateImage(EText) -> EImage // generates an image from the text
+            SendEmail(EText, EEmail) -> void // sends an email with the text as the content
+            GenerateChart(ETable, chartParams: EMap) -> EImage // generates a chart from the table
+            ReadFile(input: EFile) -> EData // Reads data from a file and outputs it as structured data.
+            WriteFile(input: EData, fileType: EText) -> EFile // Writes structured data to a file of the specified type (e.g., CSV, JSON).
+            ReadDatabase(query: EQuery, connection: EConnection) -> EData // Executes a database query and returns the result as structured data.
+            WriteDatabase(input: EData, tableName: EText, connection: EConnection) -> void // Writes structured data to a database table.
+            JoinData(left: EData, right: EData, key: EText) -> EData // Joins two datasets on a specified key.
+            SortData(input: EData, key: EText, order: EText) -> EData // Sorts data based on a key in ascending or descending order.
+            GroupData(input: EData, key: EText) -> EData // Groups data by a specified key.
+            LLMInstruction(input: EText, instruction: EText, context?: EContext) -> EText // Processes text using a language model based on the given instruction.
+            GenerateReport(input: EData, template: EText) -> EDocument // Generates a report document from data using a template.
+            ExportToFormat(input: EDocument, format: EText) -> EFile // Exports a document to a specified file format (e.g., PDF, DOCX).
+            SendEmail(content: EDocument, recipient: EEmail, subject: EText) -> void // Sends an email with the given content and subject to the recipient.
+            GenerateChart(input: EData, chartType: EText, parameters?: EMap) -> EImage // Generates a chart image from data.
+            DisplayData(input: EData) -> void // Displays data in a user interface or dashboard.
+            APICall(endpoint: EURL, method: EText, headers?: EMap, body?: EData) -> EData // Makes an API request and returns the response data.
+            ParseJSON(input: EText) -> EData // Parses a JSON string into structured data.
+            SerializeToJSON(input: EData) -> EText // Serializes structured data into a JSON string.
+            ForEach(input: EData, operation: EWorkflow) -> void // Iterates over a dataset and performs an operation on each item.
+            Condition(input: EBoolean, trueBranch: EWorkflow, falseBranch?: EWorkflow) -> void // Executes a function based on a condition being true or false.
+            CompressData(input: EData, format: EText) -> EData // Compresses data using a specified compression format.
+            DecompressData(input: EData, format: EText) -> EData // Decompresses data using a specified compression format.
+            GenerateRandomNumber(range: ERange) -> ENumber // Generates a random number within a specified range.
+            HashData(input: EData, algorithm: EText) -> EText // Generates a hash of the data using a specified algorithm.
+            TranslateText(input: EText, targetLanguage: EText) -> EText // Translates text into a target language.
+            ExtractEntities(input: EText, entityType: EText) -> EData // Extracts entities (e.g., dates, names) from text.
+            AnalyzeSentiment(input: EText) -> EData // Analyzes the sentiment of the text and returns a sentiment score.
+            ResizeImage(input: EImage, dimensions: EMap) -> EImage // Resizes an image to specified dimensions.
+            ConvertFormat(input: EFile, targetFormat: EText) -> EFile // Converts a file to a different format.
+            EvaluateExpression(expression: EText, variables?: EMap) -> EResult // Evaluates a mathematical or logical expression.
+            ExtractData(input: EText, pattern: ERegex) -> EData // Extracts data from text using a regular expression pattern."
+    },
+    {
+      "role": "assistant",
+      "content": "ShowTable(SQLOperation(ReadCSV('reviews.csv'), \"SELECT *, LLMInstruction(review_text, 'Analyze the sentiment of this review and return a score between -1 (negative) and 1 (positive)') AS sentiment_score FROM ETable\"))"
+    }
+  ]
+},
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": "Benji writes a highly composed function that generates a workflow that performs the task given by the user. Benji takes a list of available Modules with their input and output types. The function generates a workflow that connects the modules in a way that the output of one module is the input of the next module. The function also ensures that the output of the last module is the final output of the workflow."
+    },
+    {
+      "role": "user",
+      "content": "Read the inventory data from 'inventory.csv', identify items that are low in stock (quantity less than 10), and send a restock notification email for each item.
+        Modules available:
+          ReadCSV(EFile) -> ETable
+            GenerateReport(ETable) -> EFile // generates a report from the table
+            LLMInstruction(input: EText, instruction: EText, context?: EContext) -> llm_output: EText // takes an instruction, sends it to o1-preview for advanced reasoning, and returns the output, ex: LLMInstruction('Lorep Impsum', 'Summarize this text') -> '...summary')
+            SQLOperation(ETable, ESQL) -> ETable
+            ExportToPDF(EText) -> EFile // exports the text to a PDF file
+            ShowTable(ETable) -> void // for the frontend to display the table
+            GenerateImage(EText) -> EImage // generates an image from the text
+            SendEmail(EText, EEmail) -> void // sends an email with the text as the content
+            GenerateChart(ETable, chartParams: EMap) -> EImage // generates a chart from the table
+            ReadFile(input: EFile) -> EData // Reads data from a file and outputs it as structured data.
+            WriteFile(input: EData, fileType: EText) -> EFile // Writes structured data to a file of the specified type (e.g., CSV, JSON).
+            ReadDatabase(query: EQuery, connection: EConnection) -> EData // Executes a database query and returns the result as structured data.
+            WriteDatabase(input: EData, tableName: EText, connection: EConnection) -> void // Writes structured data to a database table.
+            JoinData(left: EData, right: EData, key: EText) -> EData // Joins two datasets on a specified key.
+            SortData(input: EData, key: EText, order: EText) -> EData // Sorts data based on a key in ascending or descending order.
+            GroupData(input: EData, key: EText) -> EData // Groups data by a specified key.
+            LLMInstruction(input: EText, instruction: EText, context?: EContext) -> EText // Processes text using a language model based on the given instruction.
+            GenerateReport(input: EData, template: EText) -> EDocument // Generates a report document from data using a template.
+            ExportToFormat(input: EDocument, format: EText) -> EFile // Exports a document to a specified file format (e.g., PDF, DOCX).
+            SendEmail(content: EDocument, recipient: EEmail, subject: EText) -> void // Sends an email with the given content and subject to the recipient.
+            GenerateChart(input: EData, chartType: EText, parameters?: EMap) -> EImage // Generates a chart image from data.
+            DisplayData(input: EData) -> void // Displays data in a user interface or dashboard.
+            APICall(endpoint: EURL, method: EText, headers?: EMap, body?: EData) -> EData // Makes an API request and returns the response data.
+            ParseJSON(input: EText) -> EData // Parses a JSON string into structured data.
+            SerializeToJSON(input: EData) -> EText // Serializes structured data into a JSON string.
+            ForEach(input: EData, operation: EWorkflow) -> void // Iterates over a dataset and performs an operation on each item.
+            Condition(input: EBoolean, trueBranch: EWorkflow, falseBranch?: EWorkflow) -> void // Executes a function based on a condition being true or false.
+            CompressData(input: EData, format: EText) -> EData // Compresses data using a specified compression format.
+            DecompressData(input: EData, format: EText) -> EData // Decompresses data using a specified compression format.
+            GenerateRandomNumber(range: ERange) -> ENumber // Generates a random number within a specified range.
+            HashData(input: EData, algorithm: EText) -> EText // Generates a hash of the data using a specified algorithm.
+            TranslateText(input: EText, targetLanguage: EText) -> EText // Translates text into a target language.
+            ExtractEntities(input: EText, entityType: EText) -> EData // Extracts entities (e.g., dates, names) from text.
+            AnalyzeSentiment(input: EText) -> EData // Analyzes the sentiment of the text and returns a sentiment score.
+            ResizeImage(input: EImage, dimensions: EMap) -> EImage // Resizes an image to specified dimensions.
+            ConvertFormat(input: EFile, targetFormat: EText) -> EFile // Converts a file to a different format.
+            EvaluateExpression(expression: EText, variables?: EMap) -> EResult // Evaluates a mathematical or logical expression.
+            ExtractData(input: EText, pattern: ERegex) -> EData // Extracts data from text using a regular expression pattern."
+    },
+    {
+      "role": "assistant",
+      "content": "
+        ForEach(
+          SQLOperation(
+            ReadCSV('inventory.csv'), 
+            'SELECT supplier_email FROM ETable WHERE quantity < 10'
+          ), 
+          (item) => SendEmail(
+            LLMInstruction(
+              '', 
+              'Compose a restock notification email for the item.',
+              '{item: item, subject: 'Restock Notification', receiver: item.supplier_email}'
+            ))
+          )"
+    }
+  ]
+}

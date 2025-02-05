@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { cognitoHostedUI } from '@/utils/constants';
 import { getGuestAccess } from '@/utils/fetches';
 import { User } from '@/utils/types';
+import Avatar from 'boring-avatars';
 
 interface LinkProps {
   href: string;
@@ -28,7 +29,10 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <nav className={`inline-flex items-center bg-orange-500 px-1 flex-wrap rounded-full navsm:rounded mt-3 mx-3`}>
+    <nav 
+      className={`inline-flex items-center bg-orange-500 px-1 flex-wrap rounded-full navsm:rounded mt-3 mx-3`} 
+      style={{ boxShadow: '0 0 15px rgba(255, 165, 0, 0.7)' }}
+    >
       <div className='flex gap-1 flex-wrap my-1'>
         <Link
           href="/"
@@ -40,8 +44,8 @@ const Navbar: React.FC<NavbarProps> = (props) => {
           <Link
             key={index}
             href={link.href}
-            className="px-3 sm:px-4 py-1 text-lg sm:text-xl text-black border border-black rounded-full bg-white hover:bg-black whitespace-nowrap 
-            font-bold sm:h-8 sm:py-0 hover:text-white"
+            className="px-3 sm:px-3 py-1 text-lg sm:text-sm text-black border border-black rounded-full bg-white hover:bg-black whitespace-nowrap 
+            font-bold sm:h-8 hover:text-white"
           >
             {link.text}
           </Link>
@@ -50,8 +54,8 @@ const Navbar: React.FC<NavbarProps> = (props) => {
           <Link
             key={11}
             href={'/profile'}
-            className="flex items-center pr-1 pt-1 pb-1 pl-3 text-lg text-black sm:text-xl border border-black rounded-full bg-white hover:bg-black 
-             hover:text-white whitespace-nowrap font-bold mx-1 sm:h-8 sm:py-0"
+            className="flex items-center pr-1 pt-1 pb-1 pl-3 text-lg text-black sm:text-sm border border-black rounded-full bg-white hover:bg-black 
+             hover:text-white whitespace-nowrap font-bold mx-1 sm:h-8"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
@@ -59,10 +63,9 @@ const Navbar: React.FC<NavbarProps> = (props) => {
               {isHovered ? "View Profile" : 'Hi ' + props.user.name.split(" ")[0] + '!'}
             </span>
             <div className="h-7 w-7 rounded-full object-cover">
-              <img
-                src={`https://source.boringavatars.com/marble/100/${props.user.userId}?colors=EF233C,FED4E7,313638,003E1F`}
-                alt="Profile Picture"
-              />
+              <div className="rounded-full w-40 h-40">
+                <Avatar name="${props.user.id}"/>
+              </div>
             </div>
           </Link>
         ) : (
@@ -70,17 +73,17 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             <Link
               key={12}
               href={cognitoHostedUI}
-              className="px-3 py-1 text-lg sm:text-xl border border-black text-[var(--background-color)] 
-              rounded-full bg-white hover:bg-black hover:text-white whitespace-nowrap text-center font-bold sm:h-8 sm:py-0"
+              className="px-3 py-1 text-lg sm:text-sm border border-black text-[var(--background-color)] 
+              rounded-full bg-white hover:bg-black hover:text-white whitespace-nowrap text-center font-bold sm:h-8"
             >
               {'Login'}
             </Link>
             <Link
-              key={12}
+              key={13}
               href={'#'}
               onClick={() => getGuestAccess()}
-              className="px-3 py-1 text-lg sm:text-xl border border-black text-[var(--background-color)] 
-              rounded-full bg-white hover:bg-black hover:text-white whitespace-nowrap text-center font-bold sm:h-8 sm:py-0">
+              className="px-3 py-1 text-lg sm:text-sm border border-black text-[var(--background-color)] 
+              rounded-full bg-white hover:bg-black hover:text-white whitespace-nowrap text-center font-bold sm:h-8">
               {'Continue as Guest'}
             </Link>
           </>

@@ -101,8 +101,7 @@ const Footer: React.FC = () => {
             <div>
               <ul className="md:ml-16 flex space-x-4">
                 <li><a href='https://github.com/MadhavShroff'><Image src="/github.png" alt="Instagram" width={50} height={50} className="border-4 border-black border-2 rounded"/></a></li>
-                <li><a href='https://github.com/MadhavShroff'><Image src="/twitter.png" alt="Twitter" width={50} height={50} /></a></li>
-                <li><Image src="/linkedin.png" alt="Facebook" width={50} height={50} /></li>
+                <li><a href='https://x.com/wemakeaiforyou'><Image src="/twitter.png" alt="Twitter" width={50} height={50} /></a></li>
               </ul>
             </div>
             <div className="md:space-x-16">
@@ -112,8 +111,6 @@ const Footer: React.FC = () => {
               </ul>
             </div>
           </div>
-
-          <Image src="/image3.svg" alt="image" className="absolute w-[24vh] right-0 bottom-0" width={500} height={500} />
         </div>
       </div>
     </footer>

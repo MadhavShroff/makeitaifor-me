@@ -7,7 +7,14 @@ const nextConfig = {
   // Optionally, add any other Next.js config below
   // For example, to enable image optimization:
   images: {
-    domains: ['assets.codepen.io'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: "assets.codepen.io",
+        port: "",
+        pathname: '/',
+      }
+    ],
   },
 }
  

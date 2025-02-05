@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, createRef } from "react";
+import React, { useState, useEffect } from "react";
 
 export class Point {
   x: number; y: number;
@@ -11,47 +11,34 @@ interface IArrowHeadProps {
   to: Point;
 };
 
-interface ILine extends IArrowHeadProps {
+interface ILine {
   from: Point;
+  to: Point;
 }
 
 interface ICurvedLine extends ILine {
-  radius: number;
+  radius?: number;
 }
 
 const ArrowHead: React.FC<IArrowHeadProps> = ({ to }) => {
-  const headLength = 10; // The length of the sides of the arrowhead triangle
-  const headWidth = 5;  // Half the base width of the triangle
-  const points = [
-    `${to.x}, ${to.y}`, // Tip of the arrowhead
-    `${to.x - headLength}, ${to.y - headWidth}`, // Bottom left of the triangle
-    `${to.x - headLength}, ${to.y + headWidth}` // Bottom right of the triangle 
-  ].join(' ');
+  const headLength = 10; // Length of the arrowhead (distance from base to tip)
+  const headWidth = 5;   // Half the width of the arrowhead base
+
+  // Define the size of the SVG canvas
+  const width = headLength;
+  const height = headWidth * 2;
+
   return (
-    <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} className="z-10">
-      <polygon points={points} fill="white" />
+    <svg width={width} height={height} style={{
+        position: 'absolute',
+        left: to.x - headLength,
+        top: to.y - headWidth,
+        pointerEvents: 'none', // Ensure the arrowhead doesn't block mouse events
+      }}>
+      <polygon points={`${width}, ${headWidth} 0, 0 0, ${height}`} fill="white" />
     </svg>
   );
 };
-
-const StraightLine: React.FC<ILine> = ({ from, to }) => {
-  return (
-    <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} className="z-10">
-      <line x1={from.x} y1={from.y} x2={to.x} y2={to.y} stroke="white" strokeWidth="2" />
-    </svg>
-  );
-}
-
-const CurvedLine: React.FC<ICurvedLine> = ({ from, to, radius }) => {
-  // Defines the path using an SVG arc
-  // The arc spans from`from` point to `to` points, forming a 90 degree curve.
-  // The large-arc-flag is set to 0 and the sweep-flag is set to 0 to ensure the arc curves 90 degrees in a "negative" direction.
-  return (
-    <svg style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }} className="z-10">
-      <path d={`M ${from.x} ${from.y} A ${radius} ${radius} 0 0 0 ${to.x} ${to.y}`} fill="none" stroke="white" strokeWidth="2" />
-    </svg>
-  );
-}
 
 export const CurvedArrow: React.FC<ILine> = ({ from, to }) => {
   const [radius, setRadius] = useState(50);
@@ -64,15 +51,82 @@ export const CurvedArrow: React.FC<ILine> = ({ from, to }) => {
   if (!from || !to || from.x === 0 || from.y === 0 || to.x === 0 || to.y === 0) return null;
   return (
     <>
-      <StraightLine from={{ ...from }} to={{ x: from.x, y: to.y - radius }} />
+      {/* <StraightLine from={{ ...from }} to={{ x: from.x, y: to.y - radius }} /> */}
       <CurvedLine 
-        from={{ x: from.x, y: to.y - radius - 0.25 }} 
-        to={{ x: from.x + radius, y: to.y }} 
-        radius={radius} />
-      <StraightLine from={{ x: from.x + radius - 0.25, y: to.y }} to={{ ...to }} />
+        from={from} 
+        to={to}
+        radius={radius}
+      />
+      {/* <StraightLine from={{ x: from.x + radius - 0.25, y: to.y }} to={{ ...to }} /> */}
       <ArrowHead to={{ ...to }} />
     </>
   )
 }
 
-export default CurvedArrow;
+const CurvedLine: React.FC<ICurvedLine> = ({
+  from,
+  to,
+  radius = 20
+}) => {
+  const strokeColor = 'white'; // Color of the line
+  const strokeWidth = 2; // Width of the line
+  const fixedRadius = 20; // Fixed radius for the curve
+
+  // Calculate the differences in x and y
+  const deltaX = to.x - from.x;
+  const deltaY = to.y - from.y;
+
+  // Ensure the line is going down and to the right
+  if (deltaX <= 0 || deltaY <= 0) {
+    console.error('The "to" point must be down and to the right of the "from" point.');
+    return null;
+  }
+
+  // Adjust the radius if necessary
+  radius = Math.min(fixedRadius, deltaX, deltaY);
+
+  // Starting point (from)
+  const startX = from.x;
+  const startY = from.y;
+
+  // Vertical line end point (where the arc begins)
+  const vertLineEndX = startX;
+  const vertLineEndY = to.y - radius;
+
+  // Arc end point (where the horizontal line begins)
+  const arcEndX = startX + radius;
+  const arcEndY = to.y;
+
+  // Path definition using SVG path commands
+  const pathData = `
+    M ${startX} ${startY}
+    L ${vertLineEndX} ${vertLineEndY}
+    A ${radius} ${radius} 0 0 0 ${arcEndX} ${arcEndY}
+    L ${to.x} ${to.y}
+  `;
+
+  // Calculate SVG boundaries to prevent clipping
+  const minX = startX - strokeWidth;
+  const minY = startY - strokeWidth;
+  const maxX = Math.max(startX + radius, to.x) + strokeWidth;
+  const maxY = Math.max(to.y, startY) + strokeWidth;
+
+  const width = maxX - minX;
+  const height = maxY - minY;
+
+  return (
+    <svg
+      width={width}
+      height={height}
+      viewBox={`${minX} ${minY} ${width} ${height}`}
+      style={{ position: 'absolute', left: minX, top: minY }}
+    >
+      <path
+        d={pathData}
+        stroke={strokeColor}
+        strokeWidth={strokeWidth}
+        fill="none"
+      />
+    </svg>
+  );
+};
