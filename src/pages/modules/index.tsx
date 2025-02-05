@@ -675,30 +675,23 @@ const ModulesIndex = () => {
   }, []);
 
   return (
-    <main className={'min-h-screen flex flex-col items-center grid-lines overflow-hidden'}>
-      <Navbar user={user} />
-      {/* Floating sidebar (rounded rectangle) */}
-      <Sidebar />
-      <Modal moduleName={moduleSelected} onClick={() => setModuleSelected(null)}/>
-      <div className="w-full">
-        <div className="mt-10 px-10 sm:px-4 sm:mt-6 w-[75%] sm:w-[100%] flex flex-col items-left border-red-500">
-          {packs.map((pkg) => (
-            <section
-              id={`group${pkg.id}`}
-              className="bg-neutral-900 text-white border border-orange-500 rounded-md shadow p-6 mb-8 sm:mb-4"
-            >
-              <h2 className="text-xl font-semibold mb-4">{pkg.name}</h2>
-              <div className="flex flex-wrap gap-4">
-                {pkg.modules.map((m) => (
-                  <>
-                  <Module moduleName={m} onClick={() => setModuleSelected(m)}/>
-                  </>
-                ))}
-              </div>
-            </section>
-          ))}
-        </div>
+    <main className="min-h-screen flex flex-col bg-black w-full">
+      <CitedContentDisplay/>
+      {/* <div className="w-full flex justify-center md:pl-48 ">
+        <Navbar user={user} />
       </div>
+      <div className="flex flex-col md:flex-row w-full">
+        <Sidebar />
+        <div className="md:ml-48 p-4 w-full min-h-screen center-div mx-auto">
+          <GoogleSearch />
+          <section
+            id="section2"
+            className="h-screen bg-orange-500 mb-4 rounded p-4 pb-20"
+          >
+            Module 2
+          </section>
+        </div>
+      </div> */}
     </main>
   );
 };
