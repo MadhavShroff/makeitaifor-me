@@ -37,7 +37,7 @@
     "mathpix-markdown-it": "^2.0.8",
     "mongoose": "^7.1.0",
     "motion": "^11.14.4",
-    "next": "^14.2.3",
+    "next": "^14.2.21",
     "next-mdx-remote": "^4.4.1",
     "noisejs": "^2.1.0",
     "postcss": "^8.4.24",
