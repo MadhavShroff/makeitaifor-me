@@ -23,7 +23,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ slug, title, description, date, thu
             className="rounded-lg"
           />
         </div>
-        <div className="relative z-10 p-4 md:p-6 bg-gradient-to-t from-black/50 to-transparent text-white rounded-lg h-full flex flex-col justify-end">
+        <div className="relative z-10 p-4 md:p-6 bg-linear-to-t from-black/50 to-transparent text-white rounded-lg h-full flex flex-col justify-end">
           <h2 className="text-xl md:text-2xl font-semibold mb-2">{title}</h2>
           <p className="text-gray-300 mb-4">{description}</p>
           <p className="text-gray-400 text-sm">{date}</p>

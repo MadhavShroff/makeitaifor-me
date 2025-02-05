@@ -73,7 +73,7 @@ function GoogleSearch() {
             <label className="input input-bordered flex items-center gap-2 w-full md:w-auto">
               <input
                 type="text"
-                className="grow outline-none"
+                className="grow outline-hidden"
                 placeholder="Search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}

@@ -175,7 +175,7 @@ const TestPage = () => {
         <div className="flex flex-row basis-1/12 border-4 rounded-xl">
           <input
             ref={inputRef}
-            className="flex-grow basis-1/12 text-white text-3xl px-3 font-bold bg-black placeholder-gray-800 focus:outline-none focus:border-blue-500 rounded-l-lg"
+            className="grow basis-1/12 text-white text-3xl px-3 font-bold bg-black placeholder-gray-800 focus:outline-hidden focus:border-blue-500 rounded-l-lg"
             placeholder="What do you wanna get done?"
           // Set a ref to the input element, so we can access its content
           />

@@ -24,11 +24,11 @@ const SearchBar = ({ onSearch }) => {
         value={query}
         onChange={handleInputChange}
         placeholder="Search..."
-        className="px-4 py-2 border border-black rounded-l-full focus:outline-none focus:ring-2 focus:ring-orange-500 bg-black text-white placeholder-gray-500 -mr-px"
+        className="px-4 py-2 border border-black rounded-l-full focus:outline-hidden focus:ring-2 focus:ring-orange-500 bg-black text-white placeholder-gray-500 -mr-px"
       />
       <button
         type="submit"
-        className="px-4 py-2 bg-white text-black border border-black rounded-r-full hover:bg-black hover:text-orange-500 focus:outline-none -ml-px"
+        className="px-4 py-2 bg-white text-black border border-black rounded-r-full hover:bg-black hover:text-orange-500 focus:outline-hidden -ml-px"
       >
         Search
       </button>

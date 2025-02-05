@@ -75,7 +75,7 @@ export const ChatComponentTopBar = (props: ChatComponentTopBarPropType) => {
                         </button>
                     </div>
                     {isCollectionsDropdownVisible && (
-                        <div className="absolute right-0 z-10 mt-1 w-auto origin-top-right rounded-md bg-black shadow-lg ring-1 ring-white focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+                        <div className="absolute right-0 z-10 mt-1 w-auto origin-top-right rounded-md bg-black shadow-lg ring-1 ring-white focus:outline-hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
                             <div className="py-1" role="none">
                                 {fileNamesArr.length == 0 &&
                                     <a key={1} href="/documents" className="flex items-center px-2 py-1 hover:text-black hover:bg-white rounded mx-1" role="menuitem">
@@ -101,7 +101,7 @@ export const ChatComponentTopBar = (props: ChatComponentTopBarPropType) => {
                                             setCollectionsDropdownVisible(false);
                                         }
                                     }>
-                                        <svg className='mr-2 h-10 w-10 flex-shrink-0' width="40" height="40" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
+                                        <svg className='mr-2 h-10 w-10 shrink-0' width="40" height="40" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">
                                             <rect x="40" y="0" width="80" height="50" fill="#8B5CF6" rx="5" ry="5" stroke="white" stroke-width="1" />
                                             <rect x="32" y="6" width="80" height="50" fill="#000000" rx="5" ry="5" stroke="white" stroke-width="1" />
                                             <rect x="24" y="12" width="80" height="50" fill="#EF4444" rx="5" ry="5" stroke="white" stroke-width="1" />
@@ -136,7 +136,7 @@ export const ChatComponentTopBar = (props: ChatComponentTopBarPropType) => {
                         </button>
                     </div>
                     {isModelDropdownVisible && (
-                        <div className="absolute right-0 z-10 mt-1 w-40 origin-top-right rounded-md bg-black shadow-lg ring-1 ring-white focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+                        <div className="absolute right-0 z-10 mt-1 w-40 origin-top-right rounded-md bg-black shadow-lg ring-1 ring-white focus:outline-hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
                             <div className="py-1" role="none">
                                 {modelsAvailable.map((model, index) => (
                                     <a key={index} href="#" className="flex items-center px-4 py-2 hover:text-black hover:bg-white rounded mx-1" role="menuitem"

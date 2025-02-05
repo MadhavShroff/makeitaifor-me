@@ -35,7 +35,7 @@ export class PromptOnTop extends React.Component<{
     render() {
       return (
         <div className="border-2 rounded-xl m-2 inline-block align-middle w-1/2 sm:w-full relative overflow-visible">
-          <div className="text-white text-3xl sm:text-2xl px-3 font-bold bg-black placeholder-gray-800 focus:outline-none focus:border-blue-500 rounded-lg my-2">
+          <div className="text-white text-3xl sm:text-2xl px-3 font-bold bg-black placeholder-gray-800 focus:outline-hidden focus:border-blue-500 rounded-lg my-2">
             {this.props.prompt}
           </div>
           {/* Dots rendering */}

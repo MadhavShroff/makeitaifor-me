@@ -113,7 +113,7 @@ export default class Block extends React.Component<IBlockProps> {
             + "hover:text-orange-500"
           }
         >
-          <div className={this.getNodeBg(this.props.node.color) + "bg-opacity-0 text-white text-2xl sm:text-sm px-3 font-bold placeholder-gray-800 focus:outline-none focus:border-blue-500 rounded-lg my-3"}>
+          <div className={this.getNodeBg(this.props.node.color) + "bg-opacity-0 text-white text-2xl sm:text-sm px-3 font-bold placeholder-gray-800 focus:outline-hidden focus:border-blue-500 rounded-lg my-3"}>
             {this.props.node.name}
           </div>
           {/* Output dots rendering */}

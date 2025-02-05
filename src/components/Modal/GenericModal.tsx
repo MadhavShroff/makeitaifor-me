@@ -12,7 +12,7 @@ export default function CustomModal({ visible, onClose, children }) {
         <div
             id="backdrop"
             onClick={handleOnBackDropClick}
-            className="bg-black bg-opacity-50 backdrop-blur-sm fixed inset-0 flex items-center justify-center z-50"
+            className="bg-black bg-opacity-50 backdrop-blur-xs fixed inset-0 flex items-center justify-center z-50"
         >
             {children}
         </div>

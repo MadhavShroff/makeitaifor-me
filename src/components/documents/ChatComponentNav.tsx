@@ -78,7 +78,7 @@ export const ChatComponentNav = ({ toggleSideNav, showSideNav } : { toggleSideNa
         {showSideNav &&
             <nav className="flex h-full w-full flex-col p-2" aria-label="Chat history">
                 <div className="mb-1 flex flex-row space-x-2">
-                    <a className="flex p-3 items-center transition-colors duration-200 text-white cursor-pointer text-sm rounded-md border-2 border-white hover:bg-orange-500 h-11 flex-shrink-0 flex-grow" onClick={onNewChatClicked}>
+                    <a className="flex p-3 items-center transition-colors duration-200 text-white cursor-pointer text-sm rounded-md border-2 border-white hover:bg-orange-500 h-11 shrink-0 grow" onClick={onNewChatClicked}>
                         <div className="text-xl p-2">
                             +
                         </div>
@@ -89,7 +89,7 @@ export const ChatComponentNav = ({ toggleSideNav, showSideNav } : { toggleSideNa
                 <div className="flex-col flex-1 duration-500 overflow-y-auto">
                     <div className="flex flex-col space-y-2 pb-2 text-white text-sm">
                         <div className="relative w-80" style={{ height: "auto", transform: "none", transformOrigin: "50% 50% 0px" }}>
-                            <div className="sticky top-0 z-[16]" style={{ transform: "none", transformOrigin: "50% 50% 0px" }}>
+                            <div className="sticky top-0 z-16" style={{ transform: "none", transformOrigin: "50% 50% 0px" }}>
                                 {/* <h3 className="h-9 pt-3 pl-1 text-xs text-white font-medium text-ellipsis overflow-hidden break-all">Today</h3> */}
                             </div>
                             <ol>

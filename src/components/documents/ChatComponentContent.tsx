@@ -141,14 +141,14 @@ const ChatComponentInputField = ({ textareaRef, onChatSubmitted }) => {
     <div className="md:border-t-0 md:border-transparent md:border-transparent pt-2 md:pl-2 md:w-[calc(100%-.5rem)]">
       <form onSubmit={handleFormSubmit} className="stretch mx-2 flex flex-row gap-3 lg:mx-auto lg:max-w-3xl xl:max-w-6xl">
         <div className="relative flex h-full flex-1 items-stretch md:flex-col" role="presentation">
-          <div className="flex flex-row w-full flex-grow md:pl-4 relative border border-black/10 bg-black border-gray-900/50 border-white rounded-xl shadow-xs shadow-xs">
+          <div className="flex flex-row w-full grow md:pl-4 relative border border-black/10 bg-black border-gray-900/50 border-white rounded-xl shadow-xs shadow-xs">
             <textarea
               ref={textareaRef}
               id="prompt-textarea"
               tabIndex={0}
               data-id="root"
               placeholder="Send a message"
-              className="m-0 w-full h-[24px] p-0 my-[10px] pr-10 bg-transparent md:pr-12 pl-3 md:pl-0 outline-none resize-none"
+              className="m-0 w-full h-[24px] p-0 my-[10px] pr-10 bg-transparent md:pr-12 pl-3 md:pl-0 outline-hidden resize-none"
               value={inputValue}
               onChange={handleInputChange}
               onInput={handleInputChange}

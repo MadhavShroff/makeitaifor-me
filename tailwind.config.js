@@ -14,7 +14,7 @@ module.exports = withMT({
   ],
   plugins: [
     require("daisyui"),
-      require("tailwindcss-animate")
+    require("tailwindcss-animate")
 ],
   daisyui: {
     themes: [

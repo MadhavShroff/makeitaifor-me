@@ -26,7 +26,7 @@ const FileUploadModal = ({ visible, onClose, onDrop, files, removeFile }) => {
     <div
       id="backdrop"
       onClick={handleOnBackDropClick}
-      className="bg-black bg-opacity-50 backdrop-blur-sm fixed inset-0 flex items-center justify-center z-50"
+      className="bg-black bg-opacity-50 backdrop-blur-xs fixed inset-0 flex items-center justify-center z-50"
     >
       <div className="bg-black w-4/5 sm:w-full lg:w-1/2 p-4 h-fit rounded-xl border-4 border-white overflow-auto">
         <ModalContent onDrop={onDrop} files={files} removeFile={removeFile} />
@@ -64,7 +64,7 @@ export const ModalContent: React.FC<ModalContentProps> = ({ onDrop, files, remov
         </div>
       </div>
       <div key={11} className="flex items-center pr-1 pt-1 pb-1 pl-3 mb-2 border sm:text-sm rounded-full whitespace-nowrap font-bold">
-        <input type="url" placeholder="Enter URL of a document, Youtube video or any other source..." className="pr-2 appearance-none bg-transparent border-none w-full text-orange-500 leading-tight focus:outline-none"></input>
+        <input type="url" placeholder="Enter URL of a document, Youtube video or any other source..." className="pr-2 appearance-none bg-transparent border-none w-full text-orange-500 leading-tight focus:outline-hidden"></input>
         <button className="h-7 w-14 rounded-full object-cover border-white border-2 pl-1 pr-1 hover:bg-orange-500 hover:text-black">
           Add
         </button>
