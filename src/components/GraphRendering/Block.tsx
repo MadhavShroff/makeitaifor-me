@@ -1,9 +1,10 @@
 import React, { createRef } from "react";
 import { Point } from "./CurvedArrow";
 import { Node } from "./GraphView";
+import { ModuleType } from "../../pages/modules/index";
 
 interface IBlockProps {
-  node: Node;
+  node: Node | ModuleType ;
   onClick: () => void;
   onUpdatePoints: (
     inputs: { blockId: string; updatedPoint: Point }[],
@@ -43,11 +44,17 @@ export default class Block extends React.Component<IBlockProps> {
 
   getIntendStyle = (indent: number) => {
     switch (indent) {
-      case 0: return "h-auto flex flex-row ml-[3rem]";
+      case 0: return "h-auto flex flex-row ml-[4rem]";
       case 1: return "h-auto flex flex-row ml-[8rem]";
       case 2: return "h-auto flex flex-row ml-[12rem]";
       case 3: return "h-auto flex flex-row ml-[16rem]";
       case 4: return "h-auto flex flex-row ml-[20rem]";
+      case 5: return "h-auto flex flex-row ml-[24rem]";
+      case 6: return "h-auto flex flex-row ml-[28rem]";
+      case 7: return "h-auto flex flex-row ml-[32rem]";
+      case 8: return "h-auto flex flex-row ml-[36rem]";
+      case 9: return "h-auto flex flex-row ml-[40rem]";
+      case 10: return "h-auto flex flex-row ml-[44rem]";
       default: return "h-auto flex flex-row ml-[" + Number(20 + 4 * (indent - 4)).toString + "rem]";
     }
   };

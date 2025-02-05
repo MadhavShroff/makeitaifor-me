@@ -1,0 +1,416 @@
+{
+  "modules": [
+    {
+      "name": "GenerateImage",
+      "inputs": [
+        "EText",
+        "EAspectRatio",
+        "EContext"
+      ],
+      "outputs": []
+    },
+    {
+      "name": "ExtractText",
+      "inputs": [
+        "EImage"
+      ],
+      "outputs": []
+    },
+    {
+      "name": "SummarizeText",
+      "inputs": [
+        "EText"
+      ],
+      "outputs": []
+    },
+    {
+      "name": "GoogleSearch",
+      "inputs": [
+        "ESearchInput",
+        "EContext",
+        "EImage"
+      ],
+      "outputs": []
+    },
+    {
+      "name": "TableOperation",
+      "inputs": [
+        "ETable",
+        "EText"
+      ],
+      "outputs": []
+    },
+    {
+      "name": "ExtractTables",
+      "inputs": [
+        "EText"
+      ],
+      "outputs": []
+    },
+    {
+      "name": "GetSiteContent",
+      "inputs": [
+        "EURL"
+      ],
+      "outputs": []
+    },
+    {
+      "name": "LanguageTranslate",
+      "inputs": [
+        "EText",
+        "EText"
+      ],
+      "outputs": []
+    },
+    {
+      "name": "GenerateMarkdown",
+      "inputs": [
+        "EText"
+      ],
+      "outputs": []
+    },
+    {
+      "name": "MarkdownToHTML",
+      "inputs": [
+        "EMarkdown"
+      ],
+      "outputs": []
+    },
+    {
+      "name": "HTMLtoPDF",
+      "inputs": [
+        "EText"
+      ],
+      "outputs": []
+    }
+  ],
+  "entities": [
+    {
+      "name": "IFundamentalEntity",
+      "properties": [
+        {
+          "name": "value",
+          "type": "T"
+        },
+        {
+          "name": "pendingExecution",
+          "type": "boolean"
+        },
+        {
+          "name": "getEntityTypeName",
+          "type": "() => string"
+        }
+      ]
+    },
+    {
+      "name": "ICollectionEntity",
+      "properties": [
+        {
+          "name": "pendingExecution",
+          "type": "boolean"
+        },
+        {
+          "name": "getEntityTypeName",
+          "type": "() => string"
+        }
+      ]
+    },
+    {
+      "name": "EContext",
+      "properties": [
+        {
+          "name": "id",
+          "type": "string"
+        },
+        {
+          "name": "isEmpty",
+          "type": "boolean"
+        },
+        {
+          "name": "getEntityTypeName",
+          "type": "() => string"
+        },
+        {
+          "name": "pendingExecution",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "EText",
+      "properties": [
+        {
+          "name": "getEntityTypeName",
+          "type": "() => string"
+        },
+        {
+          "name": "value",
+          "type": "string"
+        },
+        {
+          "name": "pendingExecution",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "ENumber",
+      "properties": [
+        {
+          "name": "getEntityTypeName",
+          "type": "() => string"
+        },
+        {
+          "name": "value",
+          "type": "number"
+        },
+        {
+          "name": "pendingExecution",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "EAspectRatio",
+      "properties": [
+        {
+          "name": "getEntityTypeName",
+          "type": "() => string"
+        },
+        {
+          "name": "value",
+          "type": "number"
+        },
+        {
+          "name": "pendingExecution",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "EImage",
+      "properties": [
+        {
+          "name": "getEntityTypeName",
+          "type": "() => string"
+        },
+        {
+          "name": "value",
+          "type": "string"
+        },
+        {
+          "name": "pendingExecution",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "EURL",
+      "properties": [
+        {
+          "name": "getEntityTypeName",
+          "type": "() => string"
+        },
+        {
+          "name": "value",
+          "type": "string"
+        },
+        {
+          "name": "pendingExecution",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "ES3URL",
+      "properties": [
+        {
+          "name": "getEntityTypeName",
+          "type": "() => string"
+        },
+        {
+          "name": "value",
+          "type": "string"
+        },
+        {
+          "name": "pendingExecution",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "ESearchInput",
+      "properties": [
+        {
+          "name": "query",
+          "type": "string"
+        },
+        {
+          "name": "settings",
+          "type": "any"
+        },
+        {
+          "name": "setSettings",
+          "type": "(settings: any) => void"
+        },
+        {
+          "name": "getEntityTypeName",
+          "type": "() => string"
+        },
+        {
+          "name": "pendingExecution",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "EMarkdown",
+      "properties": [
+        {
+          "name": "getEntityTypeName",
+          "type": "() => string"
+        },
+        {
+          "name": "value",
+          "type": "string"
+        },
+        {
+          "name": "pendingExecution",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "EList",
+      "properties": [
+        {
+          "name": "values",
+          "type": "T[]"
+        },
+        {
+          "name": "getEntityTypeName",
+          "type": "() => string"
+        },
+        {
+          "name": "length",
+          "type": "() => number"
+        },
+        {
+          "name": "get",
+          "type": "(index: number) => T"
+        },
+        {
+          "name": "add",
+          "type": "(item: T) => void"
+        },
+        {
+          "name": "delete",
+          "type": "(item: T) => void"
+        },
+        {
+          "name": "pendingExecution",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "EMap",
+      "properties": [
+        {
+          "name": "values",
+          "type": "{ [key: string]: V; }"
+        },
+        {
+          "name": "getEntityTypeName",
+          "type": "() => string"
+        },
+        {
+          "name": "get",
+          "type": "(key: string) => V"
+        },
+        {
+          "name": "set",
+          "type": "(key: string, value: V) => void"
+        },
+        {
+          "name": "delete",
+          "type": "(key: string) => void"
+        },
+        {
+          "name": "keys",
+          "type": "() => string[]"
+        },
+        {
+          "name": "valuesArray",
+          "type": "() => V[]"
+        },
+        {
+          "name": "has",
+          "type": "(key: string) => boolean"
+        },
+        {
+          "name": "clear",
+          "type": "() => void"
+        },
+        {
+          "name": "pendingExecution",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "ETable",
+      "properties": [
+        {
+          "name": "rows",
+          "type": "EList<EList<IEntity>>"
+        },
+        {
+          "name": "getEntityTypeName",
+          "type": "() => string"
+        },
+        {
+          "name": "getRow",
+          "type": "(index: number) => EList<IEntity>"
+        },
+        {
+          "name": "addRow",
+          "type": "(row: EList<IEntity>) => void"
+        },
+        {
+          "name": "deleteRow",
+          "type": "(row: EList<IEntity>) => void"
+        },
+        {
+          "name": "pendingExecution",
+          "type": "boolean"
+        }
+      ]
+    },
+    {
+      "name": "EWebLookupResult",
+      "properties": [
+        {
+          "name": "url",
+          "type": "string"
+        },
+        {
+          "name": "searchQuery",
+          "type": "string"
+        },
+        {
+          "name": "images",
+          "type": "string[]"
+        },
+        {
+          "name": "getEntityTypeName",
+          "type": "() => string"
+        },
+        {
+          "name": "pendingExecution",
+          "type": "boolean"
+        }
+      ]
+    }
+  ]
+}
